@@ -1,0 +1,7 @@
+title: CS-104 - Introduction to Programming
+description: Course website for CS-104 - Introduction to Programming at Calvin University
+markdown: kramdown
+theme: null
+
+exclude:
+  - "weeks/**/slides.md"

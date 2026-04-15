@@ -1,0 +1,62 @@
+// Week 01 Retrieval Quiz -- GIFT format
+// Import into Moodle: Question bank > Import > GIFT format
+// 7 questions covering the Week 01 reading
+
+$CATEGORY: Week 01 / Retrieval 01
+
+// -- Page 1: What Is Programming? ---------------------------------------------
+
+::W01-Q1 Programming definition::
+Which statement best describes programming?{
+=Programming is writing precise instructions that a computer can execute. #Correct. The reading emphasizes that computers follow exact instructions rather than guessing what we mean.
+~Programming is teaching a computer to guess what the user wants. #A computer does not infer missing steps the way a human often can.
+~Programming only matters when building large software systems. #Programming also matters in short scripts and simple practice problems.
+~Programming means memorizing commands without understanding them. #Understanding problem solving and logic matters more than memorization alone.
+}
+
+::W01-Q2 Precision matters::
+Why does the reading describe programming as "picky"?{
+=Because computers need instructions written clearly and in the right order. #Correct. Precision matters because the computer follows exactly what you wrote.
+~Because programming languages change every time a program runs. #That is not the reason given in the reading.
+~Because good programmers avoid testing their code. #The reading argues the opposite.
+~Because only advanced students can understand syntax. #The reading does not make that claim.
+}
+
+// -- Page 2: A Beginner Workflow ----------------------------------------------
+
+::W01-Q3 Workflow order::Match each step in the beginner workflow to its description.{
+=Write -> Start with a small piece of code
+=Run -> See what the computer actually does
+=Revise -> Change the program and test again
+}
+
+::W01-Q4 NameError meaning::
+According to the reading, a `NameError` usually means that a variable {
+=was used before it was defined #Correct. The reading explains that this error often points to an undefined name.
+~contains the wrong data type #Type-related issues are different from undefined-name issues.
+~has too many characters in it #Variable length is not the issue described.
+~was printed instead of returned #That is not what `NameError` means.
+}.
+
+::W01-Q5 SyntaxError meaning::
+TRUE or FALSE: A `SyntaxError` usually means Python cannot parse the code as written.{
+TRUE #Correct. The reading frames a SyntaxError as a sign that the code is not written in a valid form for Python.
+}
+
+// -- Page 3: Habits That Help -------------------------------------------------
+
+::W01-Q6 Good beginner habit::
+Which habit is recommended in the reading?{
+=Test code with simple examples before adding more complexity. #Correct. Small, frequent testing is presented as a strong beginner habit.
+~Rewrite the whole program whenever one line fails. #Changing one thing at a time is usually better.
+~Make code as clever and compact as possible. #The reading favors readability over cleverness.
+~Avoid variable names that reveal too much. #The reading recommends clear variable names.
+}
+
+::W01-Q7 Clear debugging strategy::
+When debugging, what does the reading recommend?{
+=Change one thing at a time and test again. #Correct. Small controlled changes make it easier to see what actually fixed the issue.
+~Make several major changes at once to save time. #That usually makes the cause of the problem harder to identify.
+~Ignore error messages until the end of the assignment. #The reading says error messages are useful information.
+~Delete working code and restart from memory. #That is not the recommended workflow.
+}

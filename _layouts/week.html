@@ -1,0 +1,40 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>{{ page.title }} | {{ site.title }}</title>
+    <meta name="description" content="{{ site.description }}">
+    <link rel="stylesheet" href="{{ '/assets/styles.css' | relative_url }}">
+  </head>
+  <body>
+    <header class="site-header">
+      <div class="container">
+        <h1 class="site-title"><a href="{{ '/' | relative_url }}">{{ site.title }}</a></h1>
+        <p class="site-subtitle">Spring 2026 · Calvin University</p>
+        <nav class="site-nav" aria-label="Primary">
+          <a href="{{ '/' | relative_url }}">Home</a>
+          <a href="{{ '/syllabus/' | relative_url }}">Syllabus</a>
+          <a href="{{ '/weeks/' | relative_url }}">Weeks</a>
+          <a href="{{ '/resources/' | relative_url }}">Resources</a>
+        </nav>
+      </div>
+    </header>
+
+    <main class="container content">
+      <div class="week-nav">
+        <a href="{{ '/weeks/' | relative_url }}">&larr; All Weeks</a>
+        {% if page.week_number > 1 %}
+          &nbsp;&nbsp;
+          <a href="{{ '/weeks/' | relative_url }}{{ page.week_number | minus: 1 | prepend: '0' | slice: -2, 2 }}/">&larr; Week {{ page.week_number | minus: 1 }}</a>
+        {% endif %}
+        {% if page.week_number < 7 %}
+          &nbsp;&nbsp;
+          <a href="{{ '/weeks/' | relative_url }}{{ page.week_number | plus: 1 | prepend: '0' | slice: -2, 2 }}/">Week {{ page.week_number | plus: 1 }} &rarr;</a>
+        {% endif %}
+      </div>
+
+      {{ content }}
+    </main>
+  </body>
+</html>
