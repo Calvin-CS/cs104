@@ -6,9 +6,13 @@
 - Shared layout in `_layouts/default.html`
 - Styles in `assets/styles.css`
 
-## Deployment (cs106-style)
+## Deployment (GitHub Pages via `web-build`)
 
-This repo now uses the same branch pattern as `Calvin-Data-Science/cs106`: the built static site is published to a dedicated branch named `web-build`.
+This site deploys only through GitHub Pages using the `web-build` branch.
+
+Published URL:
+
+- https://calvin-cs.github.io/cs104/
 
 ### Automatic publish from `main`
 
@@ -20,69 +24,20 @@ On each push to `main`, GitHub Actions will:
 
 Workflow file: `.github/workflows/deploy-web-build.yml`
 
-### Repository settings
+### Required GitHub settings
 
 1. In GitHub, open **Settings > Actions > General**.
 2. Under **Workflow permissions**, choose **Read and write permissions**.
-3. Save.
+3. In **Settings > Pages**, set source to **Deploy from a branch**.
+4. Select branch `web-build` and folder `/ (root)`.
 
-### Hooking into `cs.calvin.edu`
-
-Use the `web-build` branch as the deploy source, matching the cs106 pattern.
-
-- If your `cs.calvin.edu` process pulls from a branch, point it to `web-build`.
-- If your process expects a GitHub Pages branch, set Pages to deploy from `web-build` (root).
-
-#### Step 2: switch the `cs.calvin.edu` working copy to `web-build`
-
-Run these on the server where the site is pulled/deployed:
-
-```bash
-cd /path/to/cs104/site/repo
-git fetch origin
-git checkout -B web-build origin/web-build
-git branch --set-upstream-to=origin/web-build web-build
-git pull
-```
-
-After this, your deploy-side repo tracks `origin/web-build`, so future pulls use the built site.
-
-If your deploy script runs a pull command, use:
-
-```bash
-git pull origin web-build
-```
-
-### Optional: local manual publish to `web-build`
+### Optional manual publish to `web-build`
 
 If you need to publish manually from your machine:
 
 ```powershell
 bundle exec jekyll build
 git subtree push --prefix _site origin web-build
-```
-
-### Step 3: one-command local deploy target
-
-A `Makefile` is included so you can deploy to `web-build` with one command:
-
-```bash
-make deploy
-```
-
-Useful targets:
-
-- `make build` -> build `_site/`
-- `make serve` -> run local server with live reload
-- `make publish-web-build` -> push built `_site/` to `web-build`
-- `make deploy` -> alias for `publish-web-build`
-
-If `make` is not installed on Windows, use the manual PowerShell commands above.
-
-For a one-command Windows deploy, run:
-
-```powershell
-powershell -ExecutionPolicy Bypass -File .\scripts\deploy_web_build.ps1
 ```
 
 ## Preview Locally (Without Deploying)

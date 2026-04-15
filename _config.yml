@@ -1,5 +1,7 @@
 title: CS-104 - Introduction to Programming
 description: Course website for CS-104 - Introduction to Programming at Calvin University
+url: "https://calvin-cs.github.io"
+baseurl: "/cs104"
 markdown: kramdown
 theme: null
 
