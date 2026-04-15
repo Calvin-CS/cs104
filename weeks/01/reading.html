@@ -1,0 +1,174 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Week 1: Introduction | CS-104 - Introduction to Programming</title>
+    <meta name="description" content="Course website for CS-104 - Introduction to Programming at Calvin University">
+    <link rel="stylesheet" href="/cs104/assets/styles.css">
+  </head>
+  <body>
+    <header class="site-header">
+      <div class="container">
+        <h1 class="site-title"><a href="/cs104/">CS-104 - Introduction to Programming</a></h1>
+        <p class="site-subtitle">Spring 2026 · Calvin University</p>
+        <nav class="site-nav" aria-label="Primary">
+          <a href="/cs104/">Home</a>
+          <a href="/cs104/syllabus/">Syllabus</a>
+          <a href="/cs104/weeks/">Weeks</a>
+          <a href="/cs104/resources/">Resources</a>
+        </nav>
+      </div>
+    </header>
+
+    <main class="container content">
+      <div class="week-nav">
+        <a href="/cs104/weeks/">&larr; All Weeks</a>
+        
+        
+          &nbsp;&nbsp;
+          <a href="/cs104/weeks/02/">Week 2 &rarr;</a>
+        
+      </div>
+
+      <h1 id="what-is-programming">What Is Programming?</h1>
+
+<h2 id="giving-a-computer-instructions">Giving a Computer Instructions</h2>
+
+<p>Programming is the practice of writing instructions that a computer can follow exactly. Computers are fast, but they are not flexible in the way people are. If you tell a friend, “add these numbers and show me the answer,” they can fill in missing details. A computer cannot. It needs each step written clearly and in the right order.</p>
+
+<p>That is why beginners often feel that programming is “picky.” It is. The benefit of that precision is that once a program works, the computer can repeat the same process reliably as many times as you want.</p>
+
+<hr />
+
+<h2 id="a-tiny-example">A Tiny Example</h2>
+
+<p>Here is a small Python program:</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">name</span> <span class="o">=</span> <span class="s">"Ava"</span>
+<span class="k">print</span><span class="p">(</span><span class="s">"Hello, "</span> <span class="o">+</span> <span class="n">name</span><span class="p">)</span>
+</code></pre></div></div>
+
+<p>This program stores a value in the variable <code class="language-plaintext highlighter-rouge">name</code> and then prints a greeting. The computer does not infer anything extra. It follows the instructions exactly: store, then print.</p>
+
+<hr />
+
+<h2 id="programming-is-problem-solving">Programming Is Problem Solving</h2>
+
+<p>Writing code is not only about syntax. It is also about breaking a problem into smaller steps.</p>
+
+<p>Suppose you want a program that tells a student whether they passed a quiz. A programmer might break the task into pieces like this:</p>
+
+<ol>
+  <li>Read the quiz score.</li>
+  <li>Compare the score to the passing cutoff.</li>
+  <li>Print the correct message.</li>
+</ol>
+
+<p>Good programmers learn to move back and forth between the big goal and the small steps.</p>
+
+<hr />
+
+<h2 id="check-your-understanding">Check Your Understanding</h2>
+
+<!-- QUESTION:multiple-choice -->
+
+<p><strong>Which statement best describes programming?</strong></p>
+
+<ul class="task-list">
+  <li class="task-list-item"><input type="checkbox" class="task-list-item-checkbox" disabled="disabled" />Programming is teaching a computer to guess what the user wants.</li>
+  <li class="task-list-item"><input type="checkbox" class="task-list-item-checkbox" disabled="disabled" checked="checked" />Programming is writing precise instructions that a computer can execute.</li>
+  <li class="task-list-item"><input type="checkbox" class="task-list-item-checkbox" disabled="disabled" />Programming only matters when building large software systems.</li>
+  <li class="task-list-item"><input type="checkbox" class="task-list-item-checkbox" disabled="disabled" />Programming means memorizing lots of commands without understanding them.</li>
+</ul>
+
+<!-- END QUESTION -->
+
+<hr />
+
+<!-- QUESTION:true-false
+answer: false
+-->
+
+<p>If a program is almost correct, the computer will usually figure out what the programmer meant.</p>
+
+<!-- END QUESTION -->
+
+<h1 id="a-beginner-workflow">A Beginner Workflow</h1>
+
+<h2 id="build-run-check-revise">Build, Run, Check, Revise</h2>
+
+<p>Most programming happens in a simple cycle:</p>
+
+<p><strong>1. Write a small piece of code.</strong> Start with one step, not the whole problem.</p>
+
+<p><strong>2. Run it.</strong> See what the computer actually does.</p>
+
+<p><strong>3. Compare the result to your expectation.</strong> If they match, continue. If they do not, investigate.</p>
+
+<p><strong>4. Revise and test again.</strong> Programming improves through iteration.</p>
+
+<p>This cycle matters because errors are normal. Good programmers do not avoid mistakes completely; they learn how to find and fix them efficiently.</p>
+
+<hr />
+
+<h2 id="reading-error-messages">Reading Error Messages</h2>
+
+<p>An error message is not just bad news. It is information.</p>
+
+<p>If Python shows a <code class="language-plaintext highlighter-rouge">SyntaxError</code>, it usually means the code is not written in a form Python can parse. If it shows a <code class="language-plaintext highlighter-rouge">NameError</code>, it usually means you tried to use a variable name that has not been defined.</p>
+
+<p>Learning to slow down and read the message carefully is one of the most important early programming habits.</p>
+
+<hr />
+
+<h2 id="check-your-understanding-1">Check Your Understanding</h2>
+
+<!-- QUESTION:fill-in-the-blank -->
+
+<p>Complete the beginner workflow.</p>
+
+<p>First, <em>[write]</em> a small piece of code. Next, <em>[run]</em> it and compare the result to what you expected. If something is wrong, <em>[revise]</em> the program and test it again.</p>
+
+<!-- END QUESTION -->
+
+<hr />
+
+<!-- QUESTION:drag-the-words -->
+
+<p>Drag the correct term into each sentence.</p>
+
+<p>A <code class="language-plaintext highlighter-rouge">SyntaxError</code> usually means Python cannot <em>[parse]</em> the code as written. A <code class="language-plaintext highlighter-rouge">NameError</code> usually means a variable name was used before it was <em>[defined]</em>. Careful <em>[testing]</em> helps programmers catch problems early.</p>
+
+<!-- END QUESTION -->
+
+<h1 id="habits-that-help">Habits That Help</h1>
+
+<h2 id="start-small-and-stay-clear">Start Small and Stay Clear</h2>
+
+<p>Students often assume that strong programmers write long complicated code quickly. In reality, strong programmers usually do the opposite. They begin with a small working version, test often, and improve the code in stages.</p>
+
+<p>Useful habits include:</p>
+
+<ul>
+  <li>choosing clear variable names</li>
+  <li>testing code with simple examples first</li>
+  <li>changing one thing at a time when debugging</li>
+  <li>keeping programs readable instead of overly clever</li>
+</ul>
+
+<p>These habits make your code easier to understand now and easier to fix later.</p>
+
+<hr />
+
+<!-- QUESTION:true-false
+answer: true
+-->
+
+<p>Testing a small piece of code before adding more is usually a good strategy for beginners.</p>
+
+<!-- END QUESTION -->
+
+    </main>
+  </body>
+</html>
