@@ -5,5 +5,9 @@ baseurl: "/cs104"
 markdown: kramdown
 theme: null
 
+# weeks/**/slides.md has no YAML front matter, so Jekyll already treats it as a
+# static file and copies it through untouched — the reveal.js viewer in each
+# weeks/0N/slides.html fetches it client-side and renders it as slides.
+
 exclude:
-  - "weeks/**/slides.md"
+  - "26fa-plan.xlsx"

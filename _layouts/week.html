@@ -26,11 +26,11 @@
         <a href="{{ '/weeks/' | relative_url }}">&larr; All Weeks</a>
         {% if page.week_number > 1 %}
           &nbsp;&nbsp;
-          <a href="{{ '/weeks/' | relative_url }}{{ page.week_number | minus: 1 | prepend: '0' | slice: -2, 2 }}/">&larr; Week {{ page.week_number | minus: 1 }}</a>
+          <a href="{{ '/weeks/' | relative_url }}#week-{{ page.week_number | minus: 1 }}">&larr; Week {{ page.week_number | minus: 1 }}</a>
         {% endif %}
         {% if page.week_number < 7 %}
           &nbsp;&nbsp;
-          <a href="{{ '/weeks/' | relative_url }}{{ page.week_number | plus: 1 | prepend: '0' | slice: -2, 2 }}/">Week {{ page.week_number | plus: 1 }} &rarr;</a>
+          <a href="{{ '/weeks/' | relative_url }}#week-{{ page.week_number | plus: 1 }}">Week {{ page.week_number | plus: 1 }} &rarr;</a>
         {% endif %}
       </div>
 

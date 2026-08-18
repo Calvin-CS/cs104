@@ -1,10 +1,3 @@
----
-marp: true
-title: "Week 7: Modules, Dependencies, and Virtual Environments"
-theme: default
-paginate: true
----
-
 # Modules, Dependencies, and Virtual Environments
 
 ### CS-104 · Week 7

@@ -172,62 +172,6 @@ td {
   color: var(--header-accent);
 }
 
-.week-overview-cell-deadlines {
-  font-size: 0.9rem;
-  min-width: 260px;
-}
-
-.deadlines-title {
-  font-size: 0.72rem;
-  text-transform: uppercase;
-  letter-spacing: 0.08em;
-  color: var(--muted);
-  margin-bottom: 0.5rem;
-}
-
-.deadline-list {
-  list-style: none;
-  margin: 0;
-  padding: 0;
-  display: flex;
-  flex-direction: column;
-  gap: 0.35rem;
-}
-
-.deadline-list li {
-  display: flex;
-  align-items: center;
-  gap: 0.5rem;
-}
-
-.deadline-type {
-  font-size: 0.72rem;
-  font-weight: 600;
-  text-transform: uppercase;
-  letter-spacing: 0.05em;
-  padding: 0.1rem 0.45rem;
-  border-radius: 999px;
-  background: var(--border);
-  color: var(--muted);
-  white-space: nowrap;
-}
-
-.deadline-type.quiz {
-  background: #d6eef4;
-  color: #0b5e73;
-}
-
-.deadline-type.forum {
-  background: #e8e4f4;
-  color: #4a3a80;
-}
-
-.deadline-break {
-  margin: 0;
-  color: var(--muted);
-  font-style: italic;
-}
-
 /* ── Week page nav ── */
 .week-nav {
   font-size: 0.9rem;

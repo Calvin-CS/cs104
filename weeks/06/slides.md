@@ -1,44 +1,93 @@
----
-marp: true
-title: "Week 6: Functions"
-theme: default
-paginate: true
----
-
 # Functions
 
 ### CS-104 · Week 6
 
 ---
 
-## Why Functions?
-
-- Reuse code
-- Name an idea clearly
-- Test one piece at a time
-- Make larger programs manageable
+# POGIL Activity
 
 ---
 
-## Parts of a Function
+## Exercise 6.a
 
-- Name
-- Parameters
-- Body
-- Return value
+*Exercise*
 
----
+*Activities for CS1 in Python*, [Defining Functions](https://cs.calvin.edu/courses/cs/108/kvlinden/resources/pogil/Act06-Functions_Student.pdf)
 
-## Return vs Print
+Work through the following models:
 
-- `return` sends a value back to the caller.
-- `print` shows something to the screen.
-- They are not interchangeable.
+1. *Model 1*. Flow of Execution ([code: model one](https://cs.calvin.edu/courses/cs/108/kvlinden/07functions/code/pogil_1.py.txt))
+2. *Model 2*. Passing Arguments ([code: model two](https://cs.calvin.edu/courses/cs/108/kvlinden/07functions/code/pogil_2.py.txt))
+3. *Model 3*. Returning Values ([code: model three](https://cs.calvin.edu/courses/cs/108/kvlinden/07functions/code/pogil_3.py.txt))
 
 ---
 
-## Good Function Design
+# Function Exercises
 
-- Do one job well.
-- Use clear names.
-- Avoid hidden side effects when possible.
+---
+
+## Exercise 6.b.1
+
+*Exercise*
+
+Write a function that receives the width and height of a rectangle and returns the area of that rectangle.
+
+Write additional code that *uses* (aka *invokes*) this function to print the area of a unit square.
+
+---
+
+## Exercise 6.b.2
+
+*Exercise*
+
+Write a function that receives an integer and returns a list of that many integers read from the user.
+
+Write additional code that *uses* (aka *invokes*) this function to create a list of three integers.
+
+---
+
+## Exercise 6.b.3
+
+*Exercise*
+
+Download [this starter code](code/smiley.py.txt) and complete the following exercises:
+
+1. Modify the `draw_smiley` function to draw the second eye.
+2. Modify the main program to add a second smiley face just above the first one.
+3. Draw a whole "tower" of smiley faces, alternating colors.
+4. Write a function that draws a "tower" of smileys. The function should receive the starting position and the number and size of smileys from the calling program. Use this function to draw several smiley towers.
+
+---
+
+# Reflection
+
+---
+
+## Exercise 6.c
+
+*Exercise*
+
+As an exercise in finding your *vocation*, list examples of the things that you most enjoy doing and things that the world most needs to have done.
+
+<div class="columns" style="display:flex; gap:2rem;">
+<div style="flex:1">
+
+**My deep gladness:**
+
+- 
+- 
+- 
+
+</div>
+<div style="flex:1">
+
+**The world's deep hunger:**
+
+- 
+- 
+- 
+
+</div>
+</div>
+
+Consider your lists in the context of F. Buechner's description of a [*vocation*](https://www.frederickbuechner.com/quote-of-the-day/2017/7/18/vocation).

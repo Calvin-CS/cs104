@@ -17,9 +17,7 @@ CS-104 is organized into seven weekly units:
 - Week 4: conditionals
 - Week 5: loops
 - Week 6: functions
-- Week 7: modules, dependencies, and virtual environments
-
-Each week includes a reading, lecture slides, and a lab assignment.
+- Week 7: modules
 
 ## Instructor
 
