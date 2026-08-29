@@ -6,31 +6,9 @@ permalink: /syllabus/
 
 # Syllabus
 
-- [Syllabus](#syllabus)
-  - [Course Description {#course-description}](#course-description-course-description)
-    - [Why Programming?](#why-programming)
-    - [How?](#how)
-  - [Learning Outcomes {#learning-outcomes}](#learning-outcomes-learning-outcomes)
-    - [Topics Schedule](#topics-schedule)
-  - [Instructor {#instructor}](#instructor-instructor)
-  - [Materials {#materials}](#materials-materials)
-  - [Grading {#grading}](#grading-grading)
-    - [Late Work](#late-work)
-  - [Study Sessions {#study-sessions}](#study-sessions-study-sessions)
-  - [Policies](#policies)
-    - [Technology in Class {#technology-in-class}](#technology-in-class-technology-in-class)
-    - [Collaboration {#collaboration}](#collaboration-collaboration)
-    - [AI Use {#ai-use}](#ai-use-ai-use)
-      - [Guidelines for Thoughtful AI Use](#guidelines-for-thoughtful-ai-use)
-    - [Special Circumstances {#special-circumstances}](#special-circumstances-special-circumstances)
-    - [Wellness {#wellness}](#wellness-wellness)
-    - [Academic Integrity in Computing {#academic-integrity-in-computing}](#academic-integrity-in-computing-academic-integrity-in-computing)
-      - [Calvin's General Statement on Academic Integrity](#calvins-general-statement-on-academic-integrity)
-  - [Acknowledgments {#acknowledgments}](#acknowledgments-acknowledgments)
-
 ## Course Description {#course-description}
 
-An introduction to computing as a problem-solving discipline. A primary emphasis is on programming as a methodology for problem solving, including: the precise specification of a problem, the design of its solution, the encoding of that solution, and the testing, debugging, and maintenance of programs.
+An introduction tcomputing as a problem-solving discipline. A primary emphasis is on programming as a methodology for problem solving, including: the precise specification of a problem, the design of its solution, the encoding of that solution, and the testing, debugging, and maintenance of programs.
 
 A secondary emphasis covers topics from the breadth of computing including historical, theoretical, ethical, and biblical perspectives on computing as a discipline.
 
@@ -96,7 +74,7 @@ Course staff are responsive during the week, and less available on weekends (par
 
 Moodle is the home page for all class materials, with links to additional resources. See the [Resources](/resources/) page on this site for development-environment setup (Coder, Python, VS Code) and practice material.
 
-**Textbook:** *Programming in Python 3 with ZyLabs* (zyBooks)
+**Textbook:** *Programming in Python 3 with ZyLabs* (zyBooks) - use the code CALVINCS104Fall2026, or just access https://[learn.zybooks.com/zybook/CALVINCS104Fall2026](https://learn.zybooks.com/zybook/CALVINCS104Fall2026)
 
 - **Cost:** $94
 - **Access:** click any Reading link in Moodle — you'll be prompted to pay at that time
