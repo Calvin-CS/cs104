@@ -69,7 +69,7 @@ Programming is the practice of writing precise instructions that a computer can 
 # Tools for This Course
 
 - Python
-- VS Code or Coder
+- Thonny or Coder
 - GitHub Classroom
 - A terminal for running scripts and tools
 

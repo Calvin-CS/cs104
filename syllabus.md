@@ -72,7 +72,7 @@ Course staff are responsive during the week, and less available on weekends (par
 
 ## Materials {#materials}
 
-Moodle is the home page for all class materials, with links to additional resources. See the [Resources](/resources/) page on this site for development-environment setup (Coder, Python, VS Code) and practice material.
+Moodle is the home page for all class materials, with links to additional resources. See the [Resources](/resources/) page on this site for development-environment setup (Thonny, Coder, Python) and practice material.
 
 **Textbook:** *Programming in Python 3 with ZyLabs* (zyBooks) - use the code CALVINCS104Fall2026, or just access https://[learn.zybooks.com/zybook/CALVINCS104Fall2026](https://learn.zybooks.com/zybook/CALVINCS104Fall2026)
 
@@ -117,7 +117,7 @@ Study sessions are a great way to stay on track:
 
 You should regularly attend study sessions early in the semester to avoid falling behind.
 
-dvocate for yourself — ask clear questions, ask follow-up questions if needed, and remember that the tutors aren't there to give you the answers, but to help you learn how to find them. Attendance is drop-in.
+Advocate for yourself — ask clear questions, ask follow-up questions if needed, and remember that the tutors aren't there to give you the answers, but to help you learn how to find them. Attendance is drop-in.
 
 **Contact:** [Center for Student Success](https://calvin.edu/offices-services/center-for-student-success/support/)
 

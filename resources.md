@@ -18,10 +18,10 @@ New to programming entirely? Work through these before (or alongside) the first 
 
 ### Coder
 
-The course can use a cloud-based coding environment through **Coder**, so you do not need to install everything locally to get started.
+If you can't install Thonny locally (e.g., on a shared or locked-down computer), the course also offers a cloud-based coding environment through **Coder**.
 
-- Log in at [Calvin's Coder instance](https://coder.cs.calvin.edu) and open a workspace
-- Your workspace includes Python and the tools needed for class work
+- Log in at [Calvin's Coder instance](https://coder.cs.calvin.edu/workspaces) and open a workspace
+- Your workspace includes Python and Thonny, ready to use — no local installation needed
 - [What is Coder?](https://coder.com/docs/about) — remote development environments in a browser
 - **Tip:** your files persist within your workspace — save often and keep your work organized
 
@@ -31,13 +31,33 @@ The course can use a cloud-based coding environment through **Coder**, so you do
 - [Python tutorial](https://docs.python.org/3/tutorial/)
 - [Built-in functions](https://docs.python.org/3/library/functions.html)
 
-### VS Code
+### Thonny
 
-VS Code is a good editor for writing, running, and debugging Python programs.
+**Thonny** is the IDE we use in this class — a simple, beginner-friendly editor built specifically for learning Python. It's already installed on the lab computers, but you'll likely want it on your own laptop too.
 
-- [Download VS Code](https://code.visualstudio.com/)
-- [Python in VS Code](https://code.visualstudio.com/docs/languages/python)
-- [Debugging in VS Code](https://code.visualstudio.com/docs/editor/debugging)
+**Installing Thonny:**
+
+1. Go to [thonny.org](https://thonny.org/) and download the installer for your operating system (Windows, Mac, or Linux)
+2. Run the installer, accepting the default options
+3. Open Thonny — it comes with Python already bundled, so there's nothing extra to install
+
+**Getting set up:**
+
+- When Thonny opens, you'll see two main areas: the **editor** (top, where you write and save your program) and the **Shell** (bottom, where output appears and you can try out code interactively)
+- Write your code in the editor, then click the green **Run** button (or press <kbd>F5</kbd>) to run it
+- Save your file with <kbd>Ctrl+S</kbd> before running — Thonny will prompt you to save if you forget
+
+**Debugging in Thonny:**
+
+- Click the bug icon (or press <kbd>Ctrl+F5</kbd>) to step through your code line by line
+- Use the step buttons to watch variables change value as your program runs — this is one of Thonny's best features for beginners
+- The **Variables** pane (View → Variables) shows the current value of every variable while your program runs or is paused
+
+**If something looks different than expected:**
+
+- Check that "Standard" mode is selected (View → uncheck "Regular mode" is not needed for this course — the defaults work fine)
+- If packages are missing, use Tools → Manage Packages to install them
+- [Thonny documentation](https://thonny.org/) has more on installation and troubleshooting for each OS
 
 ### Debugging Help
 
