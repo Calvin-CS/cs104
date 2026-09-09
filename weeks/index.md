@@ -13,7 +13,7 @@ Each week below lists its learning objectives, a link to the lecture slides, and
 - [Week 4: Conditionals](#week-4)
 - [Week 5: Loops](#week-5)
 - [Week 6: Functions](#week-6)
-- [Week 7: Modules, Dependencies, and Virtual Environments](#week-7)
+- [Week 7: Libraries, NumPy, and Matplotlib](#week-7)
 
 ## Week 1: Introduction {#week-1}
 
@@ -67,9 +67,9 @@ Check this on ZyBooks! Deadline will be on Monday of next week.
 
 **Monday** — Labor day (no class)
 
-**Wednesday** — Slides, lab prep
+**Wednesday** — Lab recap, slides
 
-**Friday** — Lab recap, Forum 1
+**Friday** — Forum 1
 
 ---
 
@@ -197,16 +197,16 @@ Check this on ZyBooks! Deadline will be on Monday of next week.
 
 ---
 
-## Week 7: Modules, Dependencies, and Virtual Environments {#week-7}
+## Week 7: Libraries, NumPy, and Matplotlib {#week-7}
 
 ### Learning Objectives
 
 By the end of this week, students will be able to:
 
-- Import functions and variables from Python modules
-- Explain why external packages need to be installed before use
-- Describe the purpose of a virtual environment
-- Run a small multi-file Python project with clear organization
+- Install external libraries with `pip`, and briefly explain what a virtual environment is for
+- Create NumPy arrays and perform element-wise math on them
+- Produce a labeled plot using Matplotlib
+- Use NumPy and Matplotlib together to model and visualize an RC circuit's response over time
 
 ### Slides
 

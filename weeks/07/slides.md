@@ -1,201 +1,252 @@
-# Modules, Dependencies, and Virtual Environments
+# Libraries, NumPy, and Matplotlib
 
 ### CS-104 · Week 7
 
 ---
 
-# Recap
+# Installing Libraries
 
 ---
 
-## Modules
+## Libraries (a.k.a. Dependencies)
 
-- A **module** is just a Python file you can `import` and reuse.
-- Python ships with many built-in modules: `random`, `math`, `turtle`, `os`, ...
-- `import module_name` gives you `module_name.something`; `from module_name import something` gives you `something` directly.
-
----
-
-## Dependencies
-
-- A **dependency** is a package your project needs that *isn't* built into Python.
+- Python ships with many **built-in** modules: `random`, `math`, `turtle`, `os`, ...
+- A **library** (or *dependency*) is a package your project needs that *isn't* built into Python.
 - Install with `pip install package_name`; check what's installed with `pip list`.
   - In Thonny: **Tools → Manage Packages** does the same thing without a terminal.
-- Good projects record their dependencies (e.g. in a `requirements.txt`) so others can install the same things.
+- Good projects record their dependencies (e.g. in a `requirements.txt`, via `pip freeze > requirements.txt`) so others can install the same things.
 
 ---
 
-## Virtual Environments
+## Virtual Environments (briefly)
 
-- A **virtual environment** is an isolated, project-specific set of installed packages.
-- It keeps one project's dependencies from colliding with another's.
-- Create one with `python3 -m venv env`; activate it before installing anything.
-
----
-
-## References
-
-- [Python docs: Modules](https://docs.python.org/3/tutorial/modules.html)
-- [PyPI — the Python Package Index](https://pypi.org/)
-- [pip documentation](https://pip.pypa.io/en/stable/)
-- [Python docs: `venv`](https://docs.python.org/3/library/venv.html)
+- A **virtual environment** is an isolated, project-specific set of installed packages — it keeps one project's dependencies from colliding with another's.
+- Create one: `python3 -m venv env`
+- Activate it before installing anything:
+  - macOS/Linux: `source env/bin/activate`
+  - Windows: `env\Scripts\activate`
+- We won't dwell on this today — just know it exists for when a project needs it.
 
 ---
 
-# POGIL Activity
-
----
-
-## Exercise 7.a
-
-*Exercise*
-
-*Activities for CS1 in Python*, [Importing Modules](https://cs.calvin.edu/courses/cs/108/26sp/resources/pogil/Act08-Modules_Student.pdf)
-
-Work through the following models:
-
-1. *Model 1*. Random Numbers
-2. *Model 2*. Multiple Modules (`__name__ == "__main__"`)
-3. *Model 3*. Turtle Graphics
-
----
-
-# Dependency Exercises
-
----
-
-## Exercise 7.b.1: What's already installed?
-
-*Exercise*
-
-In your terminal (or Coder workspace), run:
+## This Week's Libraries
 
 ```
-pip list
+pip install numpy matplotlib
 ```
 
-- Is `turtle` in the list? Why or why not? *(Hint: it ships with Python — it's not a separate dependency.)*
-- Pick one package you don't recognize and look up what it's for.
+- **NumPy** — fast, array-based math in Python
+- **Matplotlib** — turns numbers into plots
+- Together: compute something, then *see* it
 
 ---
 
-## Exercise 7.b.2: Installing a dependency
+# NumPy Basics
 
-*Exercise*
+---
 
-Install a small, fun package:
+## Why Not Just Use Lists?
 
-```
-pip install cowsay
-```
-
-Then write a two-line program that uses it:
+- Plain Python lists are flexible, but awkward for math.
 
 ```python
-import cowsay
-cowsay.cow("Hello, CS-104!")
+prices = [10, 20, 30]
+prices * 1.1          # TypeError! can't multiply a list by a float
 ```
 
-Run `pip list` again — what changed?
+- **NumPy arrays** let you do math on a whole collection of numbers at once.
+
+```python
+import numpy as np
+
+prices = np.array([10, 20, 30])
+print(prices * 1.1)   # [11. 22. 33.]
+```
 
 ---
 
-## Exercise 7.b.3: Recording dependencies
+## Creating Arrays
+
+```python
+import numpy as np
+
+a = np.array([1, 2, 3, 4])
+b = np.arange(0, 10, 2)     # 0, 2, 4, 6, 8
+c = np.linspace(0, 1, 5)    # 5 evenly spaced points from 0 to 1
+```
+
+- `np.arange(start, stop, step)` — like `range()`, but returns an array
+- `np.linspace(start, stop, num)` — `num` evenly spaced points from `start` to `stop` (inclusive)
+
+---
+
+## Array Math is Element-by-Element
+
+- No loop needed — the operation applies to every value at once:
+
+```python
+import numpy as np
+
+t = np.array([0, 1, 2, 3])
+print(t * 2 + 1)   # [1 3 5 7]
+print(np.exp(t))   # e^0, e^1, e^2, e^3
+print(np.sqrt(t))  # square root of each value
+```
+
+- Useful constants and functions: `np.pi`, `np.e`, `np.exp()`, `np.sin()`, `np.sqrt()`, ...
+
+---
+
+## Exercise 7.a: Array Practice
 
 *Exercise*
 
-Generate a `requirements.txt` for the project above:
+```python
+import numpy as np
 
-```
-pip freeze > requirements.txt
+t = np.linspace(0, 10, 5)
 ```
 
-- Open the file — what's in it?
-- If a classmate ran `pip install -r requirements.txt` on their own machine, what would happen?
+- What are the 5 values in `t`?
+- Without running it, predict what `t * 2` will be. Check your answer.
+- Compute `np.exp(-t)` — what happens to the values as `t` gets bigger?
 
 ---
 
-# Virtual Environment Exercises
+# Matplotlib Basics
 
 ---
 
-## Exercise 7.c.1: Create and activate
+## Your First Plot
+
+```python
+import numpy as np
+import matplotlib.pyplot as plt
+
+x = np.linspace(0, 10, 100)
+y = np.sin(x)
+
+plt.plot(x, y)
+plt.show()
+```
+
+- `plt.plot(x, y)` draws a line through the (x, y) points
+- `plt.show()` opens the plot window
+
+---
+
+## Labeling a Plot
+
+```python
+plt.plot(x, y)
+plt.xlabel("Time (s)")
+plt.ylabel("Voltage (V)")
+plt.title("My First Plot")
+plt.grid(True)
+plt.show()
+```
+
+- Always label your axes — a plot without labels doesn't tell anyone anything!
+
+---
+
+## Exercise 7.b: Plot Something of Your Own
 
 *Exercise*
 
-From your project folder:
-
-```
-python3 -m venv env
-```
-
-Activate it:
-
-<div class="columns" style="display:flex; gap:2rem;">
-<div style="flex:1">
-
-**macOS / Linux:**
-
-```
-source env/bin/activate
-```
-
-</div>
-<div style="flex:1">
-
-**Windows:**
-
-```
-env\Scripts\activate
-```
-
-</div>
-</div>
-
-How can you tell the environment is active?
+- Make an array `x = np.linspace(0, 20, 200)`.
+- Plot `y = x ** 2`, with axis labels and a title.
+- Then plot `y = np.sin(x)` on its own, separate plot.
+- Which one needed more points in `x` to look smooth? Why?
 
 ---
 
-## Exercise 7.c.2: Isolation in action
+# Main Activity: Plotting an RC Circuit Response
+
+---
+
+## The RC Circuit
+
+- A **resistor (R)** and **capacitor (C)** in series, connected to a voltage source `V0`.
+- When the switch closes, the capacitor **charges up** over time — it doesn't jump instantly to `V0`.
+- Charging voltage across the capacitor, as a function of time:
+
+```
+V(t) = V0 * (1 - e^(-t / (R * C)))
+```
+
+- `R * C` is called the **time constant**, `tau` — how fast the circuit responds.
+
+---
+
+## Exercise 7.c: Charging Curve
 
 *Exercise*
 
-With your virtual environment **active**:
+```python
+import numpy as np
+import matplotlib.pyplot as plt
 
+V0 = 5       # source voltage, in volts
+R = 1000     # resistance, in ohms
+C = 0.001    # capacitance, in farads
+
+tau = R * C
+t = np.linspace(0, 5 * tau, 200)
+v = V0 * (1 - np.exp(-t / tau))
+
+plt.plot(t, v)
+plt.xlabel("Time (s)")
+plt.ylabel("Voltage (V)")
+plt.title("RC Circuit Charging Response")
+plt.grid(True)
+plt.show()
 ```
-pip install cowsay
-pip list
-```
 
-Now **deactivate** it:
-
-```
-deactivate
-```
-
-Run `pip list` again.
-
-- Is `cowsay` still there?
-- Why might this matter when two different projects need different versions of the same package?
+- What is `tau` for these values of R and C?
+- Around what time does the voltage look like it's "basically done" charging?
 
 ---
 
-# Class Activity
-
----
-
-## Exercise 7.d: A small multi-file project
+## Exercise 7.d: Marking the Time Constant
 
 *Exercise*
 
-Work with a partner. Structure a small project across multiple files:
+Add a vertical line at `t = tau`, and a horizontal line at `V0 * (1 - e^(-1))` (about 63% of `V0`) — the voltage reached after exactly one time constant.
 
-1. Create `helpers.py` with at least one function (e.g. one that formats or validates input).
-2. Create `main.py` that imports `helpers` and uses it to solve a small problem of your choosing.
-3. Add `if __name__ == "__main__":` to `helpers.py` — confirm it behaves differently when run directly vs. imported.
-4. Set up a virtual environment for the project, install at least one external package (even a small one like `cowsay`), and write its `requirements.txt`.
+```python
+plt.axvline(tau, color="gray", linestyle="--")
+plt.axhline(V0 * (1 - np.exp(-1)), color="gray", linestyle="--")
+```
 
-Be ready to explain your file structure to another pair.
+- Confirm on your plot: after one time constant, the capacitor has charged to about 63% of `V0`.
+
+---
+
+## Exercise 7.e: Discharging
+
+*Exercise*
+
+Now plot the **discharging** response instead — the capacitor starts fully charged at `V0` and decays back to 0 once the source is removed:
+
+```
+V(t) = V0 * e^(-t / (R * C))
+```
+
+- Modify your charging code to plot this instead.
+- Compare the two shapes — how are charging and discharging related?
+
+---
+
+## Exercise 7.f: Try Your Own Values
+
+*Exercise*
+
+With a partner, pick your own R and C values.
+
+- Predict (before running!) whether the circuit will respond faster or slower than the example.
+- Plot it and check your prediction.
+- Put both your charging and discharging curves on the **same plot**, and add `plt.legend()` so they're labeled.
 
 ---
 
@@ -203,8 +254,9 @@ Be ready to explain your file structure to another pair.
 
 By now you should be able to:
 
-- Import and use both built-in and third-party modules
-- Install, check, and record a project's dependencies
-- Create and use a virtual environment to keep projects isolated
+- Install external libraries with `pip`, and explain briefly what a virtual environment is for
+- Create NumPy arrays and do element-wise math on them
+- Make a labeled plot with Matplotlib
+- Use NumPy and Matplotlib together to model and visualize an RC circuit's response over time
 
-That covers the whole first half of the sequence — nice work!
+You just turned a physics equation into a picture — nice work!

@@ -1,0 +1,74 @@
+// Week 02 Retrieval Quiz 2 — arithmetic, division operators, and int/float, with two Week 1 review questions — GIFT format
+// Import into Moodle: Question bank > Import > GIFT format
+// 7 questions covering: Lab 2.10 (Expressions and Assignments), Lab 2.11 (Einstein's Number
+// Puzzle), Lab 2.12 (Turtle Stick Figure), and the POGIL activity Act02-Arithmetic
+// (Model 1: Python Calculator, Model 2: Dividing Numbers, Model 3: Integers and Floats).
+// Questions 1 and 5 are reviews carried over from Week 1's retrieval quiz (retrieval3.txt).
+
+$CATEGORY: Week 02 / Retrieval 2
+
+// ── Section 1: Review from Week 1 ───────────────────────────────────────────
+
+::W02-R2-Q1 Review: Valid Variable Names::
+Lab 2.10 asks whether <code>my_integer</code> and <code>4_an_integer</code> are legal Python variable names — the same rule tested in Week 1's retrieval quiz. Which of these is NOT a legal Python variable name?{
+=<code>4_an_integer</code> #Correct. Variable names can't start with a digit — Python would raise a SyntaxError, the same rule that made 3data illegal back in Week 1.
+~<code>my_integer</code> #This is legal: it starts with a letter and contains no spaces or reserved words.
+~<code>integer4</code> #This is legal too — digits are allowed anywhere in a name except as the very first character.
+~<code>_temp</code> #Legal — a variable name may start with an underscore, just not with a digit.
+}
+
+// ── Section 2: Arithmetic Expressions (Lab 2.10 / POGIL Model 1) ────────────
+
+::W02-R2-Q2 Mixing Ints and Floats::
+In the POGIL Python Calculator activity, <code>3 * 4 + 2</code> evaluates to <code>14</code>, but <code>3 * 4 + 2.0</code> evaluates to <code>14.0</code>. Based on this, what determines whether an arithmetic expression's result is an int or a float?{
+=If any number involved in the expression is a float, the overall result becomes a float #Correct. Mixing an int with a float "promotes" the result to a float, even when the value could be written as a whole number.
+~Python always converts the result of multiplication to a float #<code>3 * 4</code> alone (with no float involved) still gives the int 14 — multiplication itself doesn't force a float.
+~Adding .0 to a number is just a display style and doesn't change its type #14 and 14.0 are genuinely different types (int vs. float) in Python, not just different-looking versions of the same value.
+~The result is a float only when the expression uses more than one operator #<code>3.0 + 2</code> uses only one operator and one float, yet it still gives a float — the number of operators isn't what matters.
+}
+
+::W02-R2-Q3 Division Always Returns a Float::
+In the POGIL activity's Model 1 table, <code>5 / 10</code> evaluates to <code>0.5</code> — even though both 5 and 10 are integers. What does this tell you about Python's <code>/</code> operator?{
+=<code>/</code> (true division) always produces a float result, regardless of whether the operands are ints or floats #Correct. Unlike <code>//</code> and <code>%</code>, true division always returns a float — even <code>10 / 5</code> gives <code>2.0</code>, not 2.
+~<code>/</code> only produces a float when the result isn't a whole number #<code>10 / 5</code> still gives the float <code>2.0</code> in Python, even though the mathematical result happens to be a whole number.
+~<code>/</code> behaves the same as <code>//</code> when both operands are integers #<code>5 // 10</code> gives the int 0, not the float 0.5 — / and // behave very differently on the same integer inputs.
+~<code>/</code> converts its inputs to strings before dividing #Division works on numbers, not strings; string operands would raise a TypeError, not produce a numeric result.
+}
+
+::W02-R2-Q4 Built-in Functions vs. the math Module::
+In the POGIL activity, calling <code>abs(-2)</code> worked immediately, but calling <code>math.pow(2, 4)</code> raised a NameError until <code>import math</code> was run first. What explains the difference?{
+=<code>abs</code> is a built-in function always available in Python, while functions in the math module (like <code>pow</code>) must be imported before Python recognizes the name <code>math</code> #Correct. Built-ins need no import; module functions are accessed as module_name.function_name only after that module has been imported.
+~<code>abs</code> only works on negative numbers, which is why it doesn't need an import #abs works on both positive and negative numbers — its availability has nothing to do with the sign of its argument.
+~<code>math.pow</code> needs its arguments in a different order than <code>abs</code> #The NameError happened because math itself wasn't defined yet — reordering the arguments wouldn't fix that.
+~Once you run import math, every function becomes a built-in and no longer needs the math. prefix #Even after <code>import math</code>, you still have to write <code>math.pow(...)</code> — the prefix doesn't go away after importing.
+}
+
+// ── Section 3: Review from Week 1, connected to POGIL Model 3 ───────────────
+
+::W02-R2-Q5 Review: Converting Between Types::
+Week 1's retrieval quiz asked about converting input() text with int(). The POGIL Model 3 activity does something similar in reverse: <code>word = str(pi)</code> turns a float into a string, and <code>number = float(word)</code> turns it back into a float. What do <code>str()</code>, <code>int()</code>, and <code>float()</code> have in common?{
+=They are all type-conversion functions that take a value of one type and return an equivalent value of another type #Correct. Whether converting text to a number (as with input()) or a number to text and back (as in Model 3), these functions all convert between Python's data types.
+~They can only be used on values that came from the input() function #<code>str(pi)</code> converts a float that was assigned directly in the code, not something typed in by a user — these functions work on any compatible value.
+~They permanently change the variable's type everywhere else it's used in the program #<code>word = str(pi)</code> creates a new value assigned to word; the original pi variable keeps its own type, unaffected.
+~They round numbers to remove any decimal digits #str() and float() don't round anything — only functions like round() or int() change a number's precision, and even int() truncates rather than rounds.
+}
+
+// ── Section 4: Applying Division Operators (Lab 2.11) ───────────────────────
+
+::W02-R2-Q6 Extracting Digits with % and //::
+In the Einstein's Number Puzzle lab, if <code>number = 123</code>, which expression correctly extracts <code>digit3</code>, the 1's digit?{
+=<code>number % 10</code> #Correct. The remainder after dividing by 10 is always the last digit — 123 % 10 is 3.
+~<code>number // 10</code> #This chops off the last digit instead of extracting it — 123 // 10 gives 12, the number with the ones digit removed.
+~<code>number % 100</code> #This gives the remainder after dividing by 100 (23, the last two digits together), not just the single ones digit.
+~<code>number // 100</code> #This gives the hundreds digit (1), not the ones digit — 123 // 100 is 1.
+}
+
+// ── Section 5: Program Design in Turtle Graphics (Lab 2.12) ─────────────────
+
+::W02-R2-Q7 Why Use a UNIT Constant?::
+The Turtle Stick Figure lab has you store 50 in a constant named <code>UNIT</code> at the top of the program, then use <code>UNIT</code> (not the number 50 directly) in every turtle command that needs a length. What's the benefit of doing it this way?{
+=Changing the single UNIT value resizes the entire figure proportionally, instead of having to find and edit every length in the program by hand #Correct. That's the whole point of the requirement: rerunning with a different UNIT should produce a properly-scaled figure without touching the drawing commands themselves.
+~Turtle graphics runs faster when lengths are stored in variables instead of typed as numbers #Performance isn't the reason — a constant here is about making the program easy to resize and maintain, not about speed.
+~Python requires all arguments to turtle commands to be variables, not literal numbers #Turtle commands like forward(50) work perfectly well with a literal number — using UNIT is a design choice, not a requirement of the language.
+~It prevents the turtle from drawing outside the visible window #UNIT's value has no built-in connection to screen boundaries — a large enough UNIT could still draw off-screen.
+}

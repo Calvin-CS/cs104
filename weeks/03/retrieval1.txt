@@ -1,0 +1,74 @@
+// Week 03 Retrieval Quiz 1 (Monday) — cumulative review of Weeks 1–2 — GIFT format
+// Import into Moodle: Question bank > Import > GIFT format
+// 7 questions covering material from Week 1 (comments, running code as script vs.
+// interactive shell, properties of an algorithm) and Week 2 (left-to-right operator
+// associativity, float floor division, Turtle's circle() command, escape sequences),
+// drawing on POGIL Act01, Week 1/2 slides, and Lab 2.10/2.12. Chosen to avoid repeating
+// questions already used in weeks/01/retrieval3.txt, weeks/02/retrieval2.txt, and
+// weeks/02/retrieval3.txt.
+
+$CATEGORY: Week 03 / Retrieval 1
+
+// ── Section 1: Comments and Running Code (Week 1) ───────────────────────────
+
+::W03-R1-Q1 Purpose of a Comment::
+In the POGIL Intro to Python activity, two lines of hello.py started with # and never appeared in the Shell's output. What is the purpose of a comment line?{
+=To describe the purpose or behavior of the code for a human reader — Python ignores everything after the # on that line #Correct. Comments don't affect what the program does; they exist purely to make the code easier for people to understand.
+~To tell Python which lines of the program to run first #Comments don't control execution order — Python still runs the other lines top to bottom, exactly as if the comments weren't there.
+~To mark a line that should be deleted before submitting the program #Comments are meant to stay in the final program — they're part of good, readable code, not a to-do marker for deletion.
+~To separate the Editor window from the Shell window #That's not related to comments at all — the Editor and Shell are separate panels in Thonny, unaffected by comments in your code.
+}
+
+::W03-R1-Q2 Script vs. Interactive Shell::
+Week 1's slides described two ways to run Python: as a script (<code>python3 program.py</code>) and in the interactive shell (typing <code>python3</code> alone). What's the key difference between them?{
+=In script mode, every line runs straight through and only print() output appears; in the interactive shell, each line runs one at a time and typing a bare expression automatically shows its value #Correct. The shell echoes back the value of any expression you type, even without print() — a script never does that on its own.
+~Script mode is just for practice; only the interactive shell can run a real, submittable program #It's the other way around in this course — lab and homework programs are saved and submitted as script files (.py), not typed live into the shell.
+~The interactive shell can only be used for arithmetic, not for defining variables #You can define variables in the interactive shell exactly as you would in a script — it runs real Python code, one line at a time.
+~There's no real difference — both run code exactly the same way #There is a real difference in what gets displayed\: a script only shows what you explicitly print(), while the shell also echoes back typed expressions.
+}
+
+::W03-R1-Q3 Properties of an Algorithm::
+Week 1's slides listed properties that make something an algorithm: precise/unambiguous steps, definite results, being finite, and being generalizable to a range of inputs. Which of the following is NOT one of those properties?{
+=It must be written in a specific programming language, like Python #Correct. An algorithm is language-independent — the same algorithm can be expressed in English, pseudocode, or any programming language, as long as the steps are precise and unambiguous.
+~It must eventually stop after a finite number of steps #This is one of the actual properties (finite) — it's a real requirement, not the odd one out.
+~It must produce the same definite result every time #This is also one of the actual properties (definite results) — a real requirement, not the odd one out.
+~It must work correctly across a range of possible inputs, not just one #This is the "generalizable" property — also a real requirement, not the odd one out.
+}
+
+// ── Section 2: Evaluating Expressions (Lab 2.10) ────────────────────────────
+
+::W03-R1-Q4 Left-to-Right Associativity::
+In Lab 2.10's list of expressions to evaluate, what is the value of <code>8 - 4 - 2</code>?{
+=2 #Correct. Operators of the same precedence (like two subtractions) evaluate left to right\: (8 - 4) - 2 \= 4 - 2 \= 2.
+~6 #This computes 8 - (4 - 2) instead — grouping from the right — but Python evaluates same-precedence operators left to right, not right to left.
+~10 #This adds the second value instead of subtracting it.
+~-8 #This doesn't match evaluating the expression in order from left to right — double-check the order the subtractions actually happen in.
+}
+
+::W03-R1-Q5 Floor Division with a Float::
+In Lab 2.10, one of the expressions to evaluate is <code>8.2 // 4</code>. What type of result does this produce?{
+=A float (2.0) — floor division still returns a float whenever either operand is a float, even though the value is rounded down to a whole number #Correct. // rounds down, but it doesn't change the underlying type — mixing in a float keeps the result a float, the same "promotion" rule as with other operators.
+~An int (2) — // always produces an int, since it rounds down to a whole number #Rounding down doesn't force an int — <code>8.2 // 4</code> gives <code>2.0</code>, a float, because one of its operands (8.2) is a float.
+~A float (2.05) — // behaves the same as / here #That's what <code>8.2 / 4</code> would give — // specifically rounds its result down to a whole number, unlike true division.
+~A TypeError — // can't be used with a float operand #// works perfectly well with float operands; it isn't restricted to ints.
+}
+
+// ── Section 3: Turtle Graphics (Lab 2.12) ───────────────────────────────────
+
+::W03-R1-Q6 The circle() Command::
+In the Turtle Stick Figure lab, which of these best describes what <code>circle(radius)</code> does?{
+=It draws a circle of the given radius, starting from wherever the turtle is currently positioned #Correct. The turtle draws the circle relative to its current location and heading — it doesn't need to be told a center point separately.
+~It draws a circle centered exactly on the turtle's current position #The turtle's current position ends up tangent to the circle, not at its center — this is a common assumption that doesn't match how circle() actually draws.
+~It moves the turtle in a circular path without drawing anything, like penup() would #circle() does draw — it isn't a pen-up movement command at all.
+~It requires you to specify the circle's center coordinates as an argument #circle() only takes a radius; it uses the turtle's current position and heading rather than separate center coordinates.
+}
+
+// ── Section 4: Escape Sequences (Week 2 slides) ─────────────────────────────
+
+::W03-R1-Q7 Tabs vs. Newlines::
+Which escape sequence inserts a horizontal tab character, as opposed to <code>\n</code>, which starts a new line?{
+=<code>\t</code> #Correct. \t inserts a tab, which is useful for lining up output into columns, while \n instead moves to a new line entirely.
+~<code>\\</code> #That escape sequence produces a literal backslash character, not a tab.
+~<code>\'</code> #That escapes a single quote character — unrelated to spacing or tabs.
+~<code>\U0001F600</code> #That inserts a Unicode grinning-face emoji, not a tab character.
+}
