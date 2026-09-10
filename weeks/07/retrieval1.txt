@@ -1,0 +1,151 @@
+// Week 07 Retrieval Quiz 1 — review of last week's content — GIFT format
+// Import into Moodle: Question bank > Import > GIFT format
+// 7 questions covering the whole of Week 6's Functions material\: Exercises 6.b.1-6.b.3
+// (rectangle area, reading a list of integers, parameterized smiley towers), assert-based
+// testing and docstrings (Lab 6.12), and parameter scope. Chosen to avoid repeating
+// questions already used in weeks/06/retrieval1.txt and weeks/06/retrieval2.txt.
+
+$CATEGORY: Week 07 / Retrieval 1
+
+// ── Section 1: Rectangle Area (Exercise 6.b.1) ───────────────────────────────
+
+::W07-R1-Q1 Writing and Invoking a Rectangle Area Function::
+Exercise 6.b.1 asks for a function that receives a width and height and returns the rectangle's area, plus code that USES that function to print the area of a unit square (width 1, height 1). Which pair of statements correctly does both?{
+=<pre>
+def rectangle_area(width, height)\:
+    return width * height
+\# --- main program ---
+print(rectangle_area(1, 1))
+</pre> #Correct. The function returns the product of its two parameters, and the call passes 1 and 1 for a unit square, so the returned value (1) is printed.
+~<pre>
+def rectangle_area(width, height)\:
+    print(width * height)
+\# --- main program ---
+rectangle_area(1, 1)
+</pre> #This prints the area from INSIDE the function instead of returning it — it happens to still show 1 on screen here, but the function itself gives back None, so it couldn't be used in any further calculation.
+~<pre>
+def rectangle_area(width, height)\:
+    return width + height
+\# --- main program ---
+print(rectangle_area(1, 1))
+</pre> #This adds width and height instead of multiplying them — for a 1-by-1 square, it happens to also print 1, but it would give the wrong (and different) answer for any rectangle whose width and height aren't both 1.
+~<pre>
+def rectangle_area()\:
+    return width * height
+\# --- main program ---
+print(rectangle_area(1, 1))
+</pre> #The function is defined with no parameters at all, so calling it with two arguments (1, 1) raises a TypeError — width and height aren't parameters here, so they aren't in scope inside the function either.
+}
+
+// ── Section 2: Reading a List of Integers (Exercise 6.b.2) ──────────────────
+
+::W07-R1-Q2 A Function That Returns a List of User Inputs::
+Exercise 6.b.2 asks for a function that receives an integer n and returns a list of n integers read from the user. Which definition correctly does this?{
+=<pre>
+def read_integers(n)\:
+    values \= []
+    for i in range(n)\:
+        values.append(int(input("Enter an integer\: ")))
+    return values
+</pre> #Correct. It builds up an empty list, appends exactly n user-entered integers to it in a loop that runs n times, and returns the completed list.
+~<pre>
+def read_integers(n)\:
+    values \= []
+    for i in range(n)\:
+        values.append(int(input("Enter an integer\: ")))
+</pre> #This never actually returns values — calling the function and trying to use its result would get None instead of the list that was built.
+~<pre>
+def read_integers(n)\:
+    values \= []
+    for i in range(n)\:
+        value \= int(input("Enter an integer\: "))
+    return values
+</pre> #value is read but never appended to values, so the returned list stays empty regardless of what the user types in.
+~<pre>
+def read_integers(n)\:
+    values \= []
+    for i in range(n - 1)\:
+        values.append(int(input("Enter an integer\: ")))
+    return values
+</pre> #Looping over range(n - 1) reads and stores only n - 1 integers instead of n — one short of what was asked for.
+}
+
+// ── Section 3: Testing with assert (Lab 6.12 / Lab 6.0) ─────────────────────
+
+::W07-R1-Q3 Writing an assert Test for compute_cost::
+The Function Practice lab says to "implement at least three appropriate test cases for each [function] using assert." Given <code>compute_cost(200, 20, 4)</code> should return <code>40.0</code>, which line correctly tests this?{
+=<code>assert compute_cost(200, 20, 4) \=\= 40.0</code> #Correct. assert checks that the condition is True and does nothing if so; if compute_cost(200, 20, 4) doesn't actually equal 40.0, assert raises an AssertionError, flagging the bug immediately.
+~<code>compute_cost(200, 20, 4) \=\= 40.0</code> #Without assert, this expression is evaluated and then simply discarded — it doesn't raise anything or report a problem even if the two sides aren't equal.
+~<code>assert compute_cost(200, 20, 4) \= 40.0</code> #A single \= is assignment, not comparison — this is a SyntaxError, since you can't assign to a function call's result.
+~<code>print(compute_cost(200, 20, 4) \=\= 40.0)</code> #This only displays True or False on the screen for a human to notice — it doesn't automatically stop the program or flag a failure the way assert does.
+}
+
+// ── Section 4: Docstrings ─────────────────────────────────────────────────────
+
+::W07-R1-Q4 Where Does a Docstring Go?::
+The Function Practice lab asks you to "include a docstring for each function." Which of these correctly adds a docstring to compute_cost?{
+=<pre>
+def compute_cost(miles, miles_per_gallon, dollars_per_gallon)\:
+    """Return the dollar cost of driving the given miles."""
+    return (miles / miles_per_gallon) * dollars_per_gallon
+</pre> #Correct. A docstring is a string literal placed as the very first line inside the function body, describing what the function does.
+~<pre>
+\# Return the dollar cost of driving the given miles.
+def compute_cost(miles, miles_per_gallon, dollars_per_gallon)\:
+    return (miles / miles_per_gallon) * dollars_per_gallon
+</pre> #This is a regular comment placed ABOVE the function, not a docstring — a docstring is specifically a string literal that lives inside the function body, as its first statement.
+~<pre>
+def compute_cost(miles, miles_per_gallon, dollars_per_gallon)\:
+    return (miles / miles_per_gallon) * dollars_per_gallon
+    """Return the dollar cost of driving the given miles."""
+</pre> #Placing the string AFTER the return statement means it's unreachable dead code — a docstring must be the first statement in the function body, not the last.
+~<pre>
+def compute_cost(miles, miles_per_gallon, dollars_per_gallon)\:
+    return (miles / miles_per_gallon) * dollars_per_gallon  \# Return the dollar cost
+</pre> #This is an inline comment on the return line, not a docstring — it explains the code to a reader but isn't a string literal Python associates with the function itself.
+}
+
+// ── Section 5: Parameters Are Local Variables ────────────────────────────────
+
+::W07-R1-Q5 Does Reassigning a Parameter Change the Caller's Variable?::
+<pre>
+def double_it(n):
+    n = n * 2
+    print("Inside:", n)
+# --- main program ---
+x = 5
+double_it(x)
+print("Outside:", x)
+</pre>
+What does this print?{
+=Inside\: 10, then Outside\: 5 #Correct. n is a separate local variable that starts out holding a copy of x's value (5); reassigning n inside the function only changes that local variable, leaving the caller's x completely untouched.
+~Inside\: 10, then Outside\: 10 #This assumes reassigning a parameter reaches back and changes the caller's original variable — but n and x are two distinct variables, linked only at the moment of the call.
+~Inside\: 5, then Outside\: 5 #The line <code>n \= n * 2</code> does execute and does change n's value inside the function — "Inside\:" reflects that updated value (10), not the original 5.
+~A TypeError, since you can't reassign a parameter inside a function #Reassigning a parameter is completely ordinary and valid — parameters behave just like any other local variable once inside the function body.
+}
+
+// ── Section 6: Why Parameterize the Smiley Tower? (Exercise 6.b.3) ───────────
+
+::W07-R1-Q6 Parameterizing the Smiley Tower Function::
+Exercise 6.b.3 asks for a function that draws a "tower" of smileys, receiving the starting position and the number and size of smileys from the calling program. Why pass these as parameters instead of hardcoding fixed values inside the function?{
+=So the same function can draw different towers — at different positions, with different heights and sizes — just by calling it again with different arguments, rather than needing a separate, nearly-identical function for each tower #Correct. Parameters are exactly what let one function definition serve many different calls, which is the whole point of drawing "several smiley towers" as the exercise asks.
+~Because Python requires every function to have at least three parameters #There's no such rule — functions can have zero, one, or any number of parameters; the choice here is about reusability, not a language requirement.
+~Because hardcoded values inside a function are always a syntax error #Hardcoded values inside a function body are completely valid Python — the issue is only that they'd make the function unable to draw towers with different positions, counts, or sizes.
+~Because parameters make the function run faster than hardcoded values would #Performance isn't the reason here at all — the benefit of parameters is flexibility and reuse, not execution speed.
+}
+
+// ── Section 7: Calling a Function with the Wrong Number of Arguments ────────
+
+::W07-R1-Q7 Mismatched Argument Counts::
+<pre>
+def compute_cost(miles, miles_per_gallon, dollars_per_gallon):
+    return (miles / miles_per_gallon) * dollars_per_gallon
+# --- main program ---
+print(compute_cost(200, 20))
+</pre>
+What happens when this runs?{
+=A TypeError, because compute_cost requires exactly three arguments but the call only supplies two #Correct. Python matches positional arguments to parameters one-to-one; since dollars_per_gallon has no default value and no argument was given for it, the call is missing a required argument.
+~It runs fine, and dollars_per_gallon is automatically treated as 0 #Python doesn't silently fill in missing positional arguments with 0 (or any other value) unless the parameter is explicitly given a default value in the function's definition — this one isn't.
+~It runs fine, and dollars_per_gallon reuses whatever value miles_per_gallon has #Parameters don't share or borrow each other's values — each one is a separate variable that must be supplied its own argument (or have its own default).
+~It prints None, since the function can't compute a result without all three values #The function never even starts running — Python raises the TypeError before entering the function body at all, so nothing inside compute_cost executes.
+}

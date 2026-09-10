@@ -1,0 +1,132 @@
+// Week 06 Retrieval Quiz 1 — review of last week's content — GIFT format
+// Import into Moodle: Question bank > Import > GIFT format
+// 7 questions covering the whole of Week 5's Loops slide deck (for-loop string
+// exercises, the sum-of-1-to-4 exercise, index vs. value iteration, loop terminology,
+// while-to-for conversion, and cycling through a color list). Chosen to avoid repeating
+// questions already used in weeks/05/retrieval1.txt and weeks/05/retrieval2.txt.
+
+$CATEGORY: Week 06 / Retrieval 1
+
+// ── Section 1: for Loop String Reversal ──────────────────────────────────────
+
+::W06-R1-Q1 What Does new_s End Up Holding?::
+<pre>
+s = input("Please enter a string:")
+new_s = ''
+for c in s:
+    new_s = c + new_s
+</pre>
+Which best describes what ends up in <code>new_s</code>?{
+=new_s is the reverse of s #Correct. Each character is placed in FRONT of the string built so far, so the first character processed ends up last, and the last character processed ends up first — reversing the string.
+~new_s is a copy of s #Prepending each character (rather than appending it) doesn't preserve the original order — it reverses it instead.
+~new_s is the final character of s #new_s isn't overwritten each time — <code>c + new_s</code> keeps everything already accumulated and adds to it, so it grows to include every character.
+~new_s is the first character of s #The loop keeps building on new_s every pass rather than stopping after one character, so far more than just the first character ends up included.
+}
+
+// ── Section 2: for Loop Removing Spaces ──────────────────────────────────────
+
+::W06-R1-Q2 What Does new_s End Up Holding Now?::
+<pre>
+s = input("Please enter a string: ")
+new_s = ''
+for char in s:
+    if char != ' ':
+        new_s = new_s + char
+print(new_s)
+</pre>
+Which best describes what ends up in <code>new_s</code>?{
+=new_s is s with no spaces #Correct. Every character is appended to new_s EXCEPT when it's a space, so the result is the original string with all its spaces removed.
+~new_s is a copy of s #The <code>if char !\= ' '</code> check skips spaces entirely, so anything with spaces in the original won't be reproduced exactly.
+~new_s is the spaces of s #This is backwards — the condition adds a character only when it is NOT a space, so spaces are the one thing left OUT of new_s.
+~new_s is s with spaces between every character #Nothing in this loop inserts extra spaces — it only ever appends characters from s itself, and only the non-space ones.
+}
+
+// ── Section 3: Which Code Adds the Numbers 1 Through 4? ──────────────────────
+
+::W06-R1-Q3 Summing 1 Through 4 with range(1,5)::
+Which of these code segments correctly computes the sum of the numbers 1 through 4?{
+=<pre>
+sum \= 0
+for i in range(1,5)\:
+    sum \= sum + i
+</pre> #Correct. sum starts at 0 and accumulates each value of i (1, 2, 3, 4) in turn, ending at 1+2+3+4 \= 10.
+~<pre>
+for i in range(1,5)\:
+    sum \= 0
+    sum \= sum + i
+</pre> #Resetting sum \= 0 INSIDE the loop wipes out any progress made on previous passes, so sum ends up holding only the last value of i (4), not the total.
+~<pre>
+sum \= 0
+for i in range(1,5)\:
+    sum \= sum + sum
+</pre> #This doubles sum's own current value each pass instead of adding i to it — since sum starts at 0, doubling 0 forever just leaves sum at 0.
+~<pre>
+sum \= 0
+for i in range(1,5)\:
+    sum \= sum + 1
+</pre> #This adds 1 on every pass instead of adding i, so it just counts the 4 iterations (ending at 4) rather than summing the actual values 1 through 4.
+}
+
+// ── Section 4: Iterating by Index vs. by Value ───────────────────────────────
+
+::W06-R1-Q4 When Do You Need the Index, Not Just the Value?::
+Iterating "by value" (<code>for c in s</code>) never tells you which position a character came from. Which task actually requires iterating "by index" (e.g. using <code>range(len(s))</code>) instead?{
+=Printing each character together with its position number, like "0\: H", "1\: i" #Correct. By-value iteration only ever hands you the character itself — to also know its position, you need an index to look it up or print alongside it.
+~Printing each character of the string #By-value iteration already does this directly and more simply — <code>for c in s\: print(c)</code> needs no index at all.
+~Checking whether a character is a vowel #This only needs the character's identity, not its position — by-value iteration handles it fine.
+~Counting how many characters are in the string #This doesn't need a loop over positions at all — <code>len(s)</code> already gives the count directly.
+}
+
+// ── Section 5: Loop Terminology ───────────────────────────────────────────────
+
+::W06-R1-Q5 Identifying the Loop Variable and Loop Body::
+<pre>
+total = 0
+for i in range(1, 6):
+    total = total + i
+print(total)
+</pre>
+Which correctly identifies the loop variable and the loop body here?{
+=<code>i</code> is the loop variable (it changes each time through the loop), and <code>total \= total + i</code> is the loop body (the statement executed each pass) #Correct. i is what range(1, 6) updates on every pass, and the single indented line under the for is what actually repeats.
+~<code>total</code> is the loop variable, and <code>for i in range(1, 6)\:</code> is the loop body #This has both roles backwards\: total is the accumulator being updated, not the loop variable, and the for line itself isn't part of what repeats — it's the loop's header.
+~<code>range(1, 6)</code> is the loop body #range(1, 6) just produces the sequence of values to iterate over — it's not a statement that gets executed each pass through the loop.
+~<code>print(total)</code> is part of the loop body #print(total) sits at the same indentation as the for statement, not indented under it, so it runs once after the loop finishes, not on every pass.
+}
+
+// ── Section 6: Converting a while Loop to a for Loop ─────────────────────────
+
+::W06-R1-Q6 Rewriting an Index-Based while Loop::
+<pre>
+idx = 0
+while idx < len(a_str):
+    print(a_str[idx])
+    idx += 1
+</pre>
+Which for loop does exactly the same thing?{
+=<pre>
+for idx in range(len(a_str))\:
+    print(a_str[idx])
+</pre> #Correct. range(len(a_str)) produces every valid index from 0 up to (but not including) len(a_str), matching the while loop's condition and increment exactly.
+~<pre>
+for idx in a_str\:
+    print(a_str[idx])
+</pre> #This makes idx a CHARACTER from a_str, not a position — using a character as a string index would raise a TypeError.
+~<pre>
+for idx in range(len(a_str) - 1)\:
+    print(a_str[idx])
+</pre> #Subtracting 1 stops one index too early, so the very last character of a_str never gets printed.
+~<pre>
+for a_str in range(len(a_str))\:
+    print(a_str)
+</pre> #Reusing a_str as the loop variable overwrites the original string with an integer partway through, and prints the index itself rather than the character at that index.
+}
+
+// ── Section 7: Cycling Through a Short List of Colors ────────────────────────
+
+::W06-R1-Q7 Picking Colors Beyond the End of the List::
+The Colored Star and Rotated Squares exercises loop over a fixed list like <code>colors = ['red', 'black', 'blue']</code> while drawing more sides than there are colors, cycling back to 'red' once the list runs out. Which expression correctly picks the color for iteration <code>i</code> (starting at 0), no matter how large i gets?{
+=<code>colors[i % len(colors)]</code> #Correct. The remainder after dividing by the list's length always falls between 0 and len(colors) - 1, wrapping back around to the start exactly when i reaches a multiple of len(colors).
+~<code>colors[i]</code> #This raises an IndexError as soon as i reaches len(colors), since there's no cycling back to the start at all.
+~<code>colors[i // len(colors)]</code> #Integer division shrinks toward 0 rather than cycling — this stays at index 0 (repeating the first color) for the first several values of i before ever advancing.
+~<code>colors[len(colors) % i]</code> #This has the operands backwards, computing the list's length modulo i instead of i modulo the list's length — an unrelated, meaningless value (and a ZeroDivisionError when i is 0).
+}
