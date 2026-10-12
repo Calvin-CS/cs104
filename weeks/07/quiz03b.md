@@ -3,7 +3,7 @@ meta: Fall 2026
 
 This is an in-class, closed-book quiz. If you have any questions, please feel free to ask them. When you are finished, you can turn it in and go.
 
-## Q (8 points)
+## Q (4 points)
 
 Write a function called `cone_volume` that receives the radius (`radius`) and height (`height`) of a cone, and returns its volume. This can be computed as:
 
@@ -13,13 +13,13 @@ where `math.pi` gives the value of π (assume `import math` has already been don
 
 [[BLANK height=160]]
 
-## Q (4 points)
+## Q (2 points)
 
 Assume a function `square(x)` has already been defined that returns the square of `x`. Write a code segment that uses (calls) this function to compute and print the sum of `square(2)`, `square(4)`, and `square(6)`.
 
 [[BLANK height=90]]
 
-## Q (4 points)
+## Q (2 points)
 
 Consider the following code:
 
@@ -35,9 +35,9 @@ What does each `print` statement output, and why are the two results different?
 
 [[BLANK height=100]]
 
-## Q (4 points)
+## Q (2 points)
 
-The following code is supposed to plot a labeled graph of y = √x, but running it produces a plot with no axis labels or title. Add the line(s) needed to give the plot an x-axis label of `"x"`, a y-axis label of `"square root"`, and a title of `"Square Roots"`.
+Consider the following code:
 
 ```python
 import numpy as np
@@ -47,7 +47,12 @@ x = np.linspace(0, 10, 100)
 y = np.sqrt(x)
 
 plt.plot(x, y)
+plt.xlabel("x")
+plt.ylabel("square root")
+plt.title("Square Roots")
 plt.show()
 ```
 
-[[BLANK height=100]]
+In the space below, sketch roughly what the resulting plot will look like. Include the axes, the approximate shape of the curve, and where each label and the title appear. (It does not need to be precise.)
+
+[[BLANK height=180]]

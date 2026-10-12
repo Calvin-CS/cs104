@@ -7,6 +7,16 @@ title: Weekly Materials
 
 Each week below lists its learning objectives, a link to the lecture slides, and the class plan for each day. Readings, quizzes, and lab assignments are posted on Moodle.
 
+## Weekly Rhythm
+
+Each topic follows the same three-step cycle:
+
+- **Friday (of the previous week)** — POGIL activity introducing the next week's topic
+- **Monday** — Slides and prep for lab
+- **Wednesday** — Lab recap, then a quiz or a forum (alternating weeks)
+
+Week 1 is the exception: POGIL Activity 1 (plus lab recap) is on Wednesday, and POGIL Activity 2 follows on Friday.
+
 - [Week 1: Introduction](#week-1)
 - [Week 2: Operators](#week-2)
 - [Week 3: Data Types](#week-3)
@@ -34,9 +44,9 @@ By the end of this week, students will be able to:
 
 **Monday** — Logistics; intro concepts.
 
-**Wednesday** — POGIL Activity 1 (Intro to Python/Thonny)
+**Wednesday** — [POGIL Activity 1: Introduction to Python](../pogil/Act01-IntroPython_Student.pdf); lab recap
 
-**Friday** — Lab recap and discussion; ; POGIL Activity 2
+**Friday** — [POGIL Activity 2: Arithmetic Expressions](../pogil/Act02-Arithmetic_Student.pdf) (prepares for Week 2)
 
 ---
 
@@ -65,11 +75,11 @@ Check this on ZyBooks! Deadline will be on Monday of next week.
 
 ### Class Planning
 
-**Monday** — Labor day (no class)
+**Monday** — Labor Day (no class)
 
-**Wednesday** — Lab recap, slides
+**Wednesday** — Lab recap; slides; Forum 1
 
-**Friday** — Forum 1
+**Friday** — [POGIL Activity 3: Data Types](../pogil/Act03-DataStruct_Student.pdf) (prepares for Week 3)
 
 ---
 
@@ -88,17 +98,17 @@ By the end of this week, students will be able to:
 
 [View slides](03/slides.html)
 
-### Quiz 1 on Friday!
+### Quiz 1 on Wednesday!
 
 In-class, in paper, closed book.
 
 ### Class Planning
 
-**Monday** — *Class plan TBD*
+**Monday** — Slides; prep for lab
 
-**Wednesday** — *Class plan TBD*
+**Wednesday** — Lab recap; Quiz 1
 
-**Friday** — *Class plan TBD*
+**Friday** — [POGIL Activity 4: Conditionals](../pogil/Act04-Conditions_Student.pdf) (prepares for Week 4)
 
 ---
 
@@ -127,11 +137,11 @@ Check this on ZyBooks! Deadline will be on Monday of next week.
 
 ### Class Planning
 
-**Monday** — *Class plan TBD*
+**Monday** — Slides; prep for lab
 
-**Wednesday** — *Class plan TBD*
+**Wednesday** — Lab recap; Forum 2
 
-**Friday** — *Class plan TBD*
+**Friday** — [POGIL Activity 5: Loops](../pogil/Act05-Iteration_Student.pdf) (prepares for Week 5)
 
 ---
 
@@ -150,17 +160,17 @@ By the end of this week, students will be able to:
 
 [View slides](05/slides.html)
 
-### Quiz 2 on Friday!
+### Quiz 2 on Wednesday!
 
 In-class, in paper, closed book.
 
 ### Class Planning
 
-**Monday** — *Class plan TBD*
+**Monday** — Slides; prep for lab
 
-**Wednesday** — *Class plan TBD*
+**Wednesday** — Lab recap; Quiz 2
 
-**Friday** — *Class plan TBD*
+**Friday** — Holiday (no class)
 
 ---
 
@@ -189,11 +199,11 @@ Check this on ZyBooks! Deadline will be on Monday of next week.
 
 ### Class Planning
 
-**Monday** — *Class plan TBD*
+**Monday** — [POGIL Activity 6: Functions](../pogil/Act06-Functions_Student.pdf) (moved from the Week 5 holiday); short slides; prep for lab
 
-**Wednesday** — *Class plan TBD*
+**Wednesday** — Lab recap; Forum 3
 
-**Friday** — *Class plan TBD*
+**Friday** — [POGIL Activity 9: Libraries, NumPy, and Matplotlib](../pogil/Act09-Libraries_Student.pdf) (prepares for Week 7)
 
 ---
 
@@ -212,14 +222,14 @@ By the end of this week, students will be able to:
 
 [View slides](07/slides.html)
 
-### Quiz 3 on Friday!
+### Quiz 3 on Wednesday!
 
 In-class, in paper, closed book.
 
 ### Class Planning
 
-**Monday** — *Class plan TBD*
+**Monday** — Slides; prep for lab
 
-**Wednesday** — *Class plan TBD*
+**Wednesday** — Lab recap; Quiz 3
 
-**Friday** — *Class plan TBD*
+**Friday** — No class (the course ends on Wednesday)

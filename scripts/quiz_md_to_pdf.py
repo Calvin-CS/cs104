@@ -6,7 +6,13 @@ printed and answered with a pen), styled like the course's existing
 quiz1a.docx/quiz1b.docx etc. in practices/.
 
 Usage:
-    python scripts/quiz_md_to_pdf.py practices/source/quiz01a.md --out-dir practices
+    python scripts/quiz_md_to_pdf.py weeks/03/quiz01.md --out-dir weeks/03
+
+    A single source file can hold TWO versions of a quiz (see [[VERSION A]]
+    below) — in that case this writes two PDFs, one per version, named
+    <stem>a.pdf and <stem>b.pdf (e.g. quiz01.md -> quiz01a.pdf, quiz01b.pdf).
+    A source file with no [[VERSION ...]] blocks writes a single <stem>.pdf,
+    as before.
 
 ------------------------------------------------------------------------
 Markdown dialect
@@ -41,6 +47,19 @@ EX: >>> 'a' + 'b' -> 'ab'           each with blank space below it for a
 >>> 9 % 5                           "EX: " is a worked example instead —
 [[/PAIRS]]                          its answer (after "->") is printed in
                                      italics rather than left blank.
+
+[[VERSION A]] ... [[/VERSION]]      Marks content that belongs ONLY to
+[[VERSION B]] ... [[/VERSION]]      version A (or B) of the quiz — wrap
+                                     around a paragraph, a code block, a
+                                     [[BLANK]], a [[PAIRS]] block, or any
+                                     mix of these. Content outside any
+                                     [[VERSION ...]] block is shared by
+                                     both versions. These never nest, and
+                                     each [[VERSION X]] must be closed with
+                                     [[/VERSION]] before the next one opens.
+                                     A file with no [[VERSION ...]] blocks
+                                     at all produces a single, un-suffixed
+                                     PDF, exactly as before.
 ------------------------------------------------------------------------
 """
 
@@ -56,6 +75,7 @@ from reportlab.lib.units import inch
 from reportlab.platypus import (
     BaseDocTemplate,
     Frame,
+    KeepTogether,
     PageBreak,
     PageTemplate,
     Paragraph,
@@ -161,6 +181,8 @@ RE_BLANK = re.compile(r"^\[\[BLANK(?:\s+height=(\d+))?\s*\]\]$")
 RE_PAIRS_START = re.compile(r"^\[\[PAIRS\]\]$")
 RE_PAIRS_END = re.compile(r"^\[\[/PAIRS\]\]$")
 RE_EXAMPLE = re.compile(r"^EX:\s*(.+?)\s*->\s*(.+)$")
+RE_VERSION_START = re.compile(r"^\[\[VERSION\s+([A-Za-z])\]\]$")
+RE_VERSION_END = re.compile(r"^\[\[/VERSION\]\]$")
 
 
 def parse(text):
@@ -169,6 +191,7 @@ def parse(text):
     i = 0
     doc = {"title": None, "meta": "", "intro": [], "questions": []}
     current_q = None
+    current_version = None  # None = shared by all versions; else 'A', 'B', ...
     para_buf = []
 
     def flush_para():
@@ -181,11 +204,13 @@ def parse(text):
             if current_q is None:
                 doc["intro"].append(joined)
             else:
-                current_q["blocks"].append({"type": "para", "text": joined})
+                current_q["blocks"].append(
+                    {"type": "para", "text": joined, "version": current_version})
 
     while i < n:
         line = lines[i].rstrip("\n")
         stripped = line.strip()
+        lineno = i + 1
 
         if stripped == "":
             flush_para()
@@ -207,8 +232,29 @@ def parse(text):
         m = RE_QHEAD.match(line)
         if m:
             flush_para()
+            if current_version is not None:
+                sys.exit(f"error: line {lineno}: new question started before "
+                         f"[[/VERSION]] closed [[VERSION {current_version}]]")
             current_q = {"points": int(m.group(1)), "title": m.group(2).strip(), "blocks": []}
             doc["questions"].append(current_q)
+            i += 1
+            continue
+
+        m = RE_VERSION_START.match(stripped)
+        if m:
+            flush_para()
+            if current_version is not None:
+                sys.exit(f"error: line {lineno}: [[VERSION {m.group(1)}]] opened while "
+                         f"[[VERSION {current_version}]] is still open — these don't nest")
+            current_version = m.group(1).upper()
+            i += 1
+            continue
+
+        if RE_VERSION_END.match(stripped):
+            flush_para()
+            if current_version is None:
+                sys.exit(f"error: line {lineno}: [[/VERSION]] with no matching [[VERSION ...]]")
+            current_version = None
             i += 1
             continue
 
@@ -221,7 +267,8 @@ def parse(text):
                 i += 1
             i += 1
             if current_q is not None:
-                current_q["blocks"].append({"type": "code", "lines": code_lines})
+                current_q["blocks"].append(
+                    {"type": "code", "lines": code_lines, "version": current_version})
             continue
 
         m = RE_BLANK.match(stripped)
@@ -229,7 +276,8 @@ def parse(text):
             flush_para()
             height = int(m.group(1)) if m.group(1) else DEFAULT_BLANK_HEIGHT
             if current_q is not None:
-                current_q["blocks"].append({"type": "blank", "height": height})
+                current_q["blocks"].append(
+                    {"type": "blank", "height": height, "version": current_version})
             i += 1
             continue
 
@@ -248,14 +296,29 @@ def parse(text):
                 i += 1
             i += 1  # skip [[/PAIRS]]
             if current_q is not None:
-                current_q["blocks"].append({"type": "pairs", "items": items})
+                current_q["blocks"].append(
+                    {"type": "pairs", "items": items, "version": current_version})
             continue
 
         para_buf.append(line)
         i += 1
 
     flush_para()
+    if current_version is not None:
+        sys.exit(f"error: file ended with [[VERSION {current_version}]] still open "
+                  f"(missing [[/VERSION]])")
     return doc
+
+
+def versions_used(doc):
+    """Return the sorted set of version letters ('A', 'B', ...) actually used
+    in doc, or an empty set if the file has no [[VERSION ...]] blocks at all."""
+    return sorted({
+        block["version"]
+        for q in doc["questions"]
+        for block in q["blocks"]
+        if block.get("version")
+    })
 
 
 # ---------------------------------------------------------------------------
@@ -271,11 +334,11 @@ def build_styles():
     add(ParagraphStyle("QuizName", fontName="Times-Roman", fontSize=11, leading=14,
                         alignment=2, spaceBefore=2))
     add(ParagraphStyle("Intro", fontName="Times-Italic", fontSize=10, leading=13,
-                        spaceBefore=8, spaceAfter=10))
+                        spaceBefore=6, spaceAfter=8))
     add(ParagraphStyle("QHeading", fontName="Times-Bold", fontSize=11, leading=14,
-                        spaceBefore=12, spaceAfter=4))
+                        spaceBefore=8, spaceAfter=3))
     add(ParagraphStyle("Body", fontName="Times-Roman", fontSize=11, leading=14.5,
-                        alignment=4, spaceAfter=5))
+                        alignment=4, spaceAfter=4))
     add(ParagraphStyle("PairExpr", fontName="Courier", fontSize=10, leading=13))
     add(ParagraphStyle("PairAnswer", fontName="Times-Italic", fontSize=9, leading=11,
                         textColor=colors.Color(0.4, 0.4, 0.4)))
@@ -315,8 +378,8 @@ def render_code_block(lines, styles):
     t.setStyle(TableStyle([
         ("BACKGROUND", (0, 0), (-1, -1), CODE_BG),
         ("BOX", (0, 0), (-1, -1), 0.5, CODE_BORDER),
-        ("TOPPADDING", (0, 0), (-1, -1), 6),
-        ("BOTTOMPADDING", (0, 0), (-1, -1), 6),
+        ("TOPPADDING", (0, 0), (-1, -1), 4),
+        ("BOTTOMPADDING", (0, 0), (-1, -1), 4),
         ("LEFTPADDING", (0, 0), (-1, -1), 8),
         ("RIGHTPADDING", (0, 0), (-1, -1), 8),
     ]))
@@ -355,20 +418,43 @@ def render_pairs(items, styles):
     return t
 
 
-def render_question(n, q, styles):
-    flow = [Paragraph("%d. (%d points)" % (n, q["points"]), styles["QHeading"])]
+def render_question(n, q, styles, version=None):
+    """Render one question as a list of SEGMENTS (each a list of flowables),
+    keeping only blocks shared by all versions (block["version"] is None)
+    plus blocks tagged for the requested `version` letter. Pass version=None
+    to render every block (used for single-version files, where no block
+    ever has a version tag anyway).
+
+    A new segment starts right after each [[BLANK]] (the natural end of one
+    self-contained prompt + its answer space) and always right after the
+    question heading if no blank has appeared yet. The caller wraps each
+    segment in KeepTogether so a page break can only ever fall BETWEEN
+    segments — never in the middle of a prompt, a code block, or between a
+    prompt and its own answer space.
+    """
+    points = q["points"]
+    unit = "point" if points == 1 else "points"
+    segments = []
+    current = [Paragraph("%d. (%d %s)" % (n, points, unit), styles["QHeading"])]
     for block in q["blocks"]:
+        block_version = block.get("version")
+        if block_version is not None and block_version != version:
+            continue
         t = block["type"]
         if t == "para":
-            flow.append(Paragraph(inline_markup(block["text"]), styles["Body"]))
+            current.append(Paragraph(inline_markup(block["text"]), styles["Body"]))
         elif t == "code":
-            flow.append(render_code_block(block["lines"], styles))
-            flow.append(Spacer(1, 6))
+            current.append(render_code_block(block["lines"], styles))
+            current.append(Spacer(1, 4))
         elif t == "blank":
-            flow.append(Spacer(1, block["height"]))
+            current.append(Spacer(1, block["height"]))
+            segments.append(current)
+            current = []
         elif t == "pairs":
-            flow.append(render_pairs(block["items"], styles))
-    return flow
+            current.append(render_pairs(block["items"], styles))
+    if current:
+        segments.append(current)
+    return segments
 
 
 # ---------------------------------------------------------------------------
@@ -385,11 +471,12 @@ def make_on_page():
     return _on_page
 
 
-def build_pdf(doc_data, out_path):
+def build_pdf(doc_data, out_path, version=None):
     styles = build_styles()
     story = render_header(doc_data, styles)
     for idx, q in enumerate(doc_data["questions"], start=1):
-        story.extend(render_question(idx, q, styles))
+        for segment in render_question(idx, q, styles, version=version):
+            story.append(KeepTogether(segment))
 
     doc = BaseDocTemplate(
         str(out_path), pagesize=LETTER,
@@ -416,12 +503,22 @@ def main():
         sys.exit("error: could not find a title and/or any '## Q (...)' questions")
 
     total_points = sum(q["points"] for q in doc_data["questions"])
+    n_questions = len(doc_data["questions"])
 
     out_dir = args.out_dir or args.source.parent
     out_dir.mkdir(parents=True, exist_ok=True)
-    out_path = out_dir / f"{args.source.stem}.pdf"
-    build_pdf(doc_data, out_path)
-    print(f"wrote {out_path}  ({len(doc_data['questions'])} questions, {total_points} points)")
+
+    versions = versions_used(doc_data)
+    if versions:
+        for letter in versions:
+            out_path = out_dir / f"{args.source.stem}{letter.lower()}.pdf"
+            build_pdf(doc_data, out_path, version=letter)
+            print(f"wrote {out_path}  ({n_questions} questions, {total_points} points, "
+                  f"version {letter})")
+    else:
+        out_path = out_dir / f"{args.source.stem}.pdf"
+        build_pdf(doc_data, out_path)
+        print(f"wrote {out_path}  ({n_questions} questions, {total_points} points)")
 
 
 if __name__ == "__main__":

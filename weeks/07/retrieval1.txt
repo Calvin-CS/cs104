@@ -1,151 +1,113 @@
-// Week 07 Retrieval Quiz 1 — review of last week's content — GIFT format
+// Week 07 Retrieval Quiz 1 — Quiz 3 prep: writing and calling functions — GIFT format
 // Import into Moodle: Question bank > Import > GIFT format
-// 7 questions covering the whole of Week 6's Functions material\: Exercises 6.b.1-6.b.3
-// (rectangle area, reading a list of integers, parameterized smiley towers), assert-based
-// testing and docstrings (Lab 6.12), and parameter scope. Chosen to avoid repeating
-// questions already used in weeks/06/retrieval1.txt and weeks/06/retrieval2.txt.
+// 6 questions practicing the function skills Quiz 3 asks for next class\: writing a
+// function that receives parameters and returns a computed value (formulas, averages,
+// def syntax), and calling an existing function and combining its results.
+// Uses different functions and numbers than the quiz itself. The NumPy/Matplotlib
+// prep questions live in weeks/07/retrieval2.txt.
 
 $CATEGORY: Week 07 / Retrieval 1
 
-// ── Section 1: Rectangle Area (Exercise 6.b.1) ───────────────────────────────
+// ── Section 1: Writing a Function That Returns a Computed Value ─────────────
 
-::W07-R1-Q1 Writing and Invoking a Rectangle Area Function::
-Exercise 6.b.1 asks for a function that receives a width and height and returns the rectangle's area, plus code that USES that function to print the area of a unit square (width 1, height 1). Which pair of statements correctly does both?{
+::W07-R1-Q1 Writing cylinder_volume with math.pi::
+A cylinder's volume is π × radius² × height. Assume <code>import math</code> has already been done. Which definition of <code>cylinder_volume</code> correctly receives the radius and height and returns the volume?{
 =<pre>
-def rectangle_area(width, height)\:
-    return width * height
-\# --- main program ---
-print(rectangle_area(1, 1))
-</pre> #Correct. The function returns the product of its two parameters, and the call passes 1 and 1 for a unit square, so the returned value (1) is printed.
+def cylinder_volume(radius, height)\:
+&nbsp;&nbsp;&nbsp;&nbsp;return math.pi * radius ** 2 * height
+</pre> #Correct. The two values arrive as parameters, ** is Python's exponent operator, math.pi supplies π, and return hands the computed volume back to whoever called the function.
 ~<pre>
-def rectangle_area(width, height)\:
-    print(width * height)
-\# --- main program ---
-rectangle_area(1, 1)
-</pre> #This prints the area from INSIDE the function instead of returning it — it happens to still show 1 on screen here, but the function itself gives back None, so it couldn't be used in any further calculation.
+def cylinder_volume(radius, height)\:
+&nbsp;&nbsp;&nbsp;&nbsp;return math.pi * radius ^ 2 * height
+</pre> #^ is not the exponent operator in Python (it's bitwise XOR) — squaring is written <code>radius ** 2</code>. With a float like math.pi involved, this line actually raises a TypeError.
 ~<pre>
-def rectangle_area(width, height)\:
-    return width + height
-\# --- main program ---
-print(rectangle_area(1, 1))
-</pre> #This adds width and height instead of multiplying them — for a 1-by-1 square, it happens to also print 1, but it would give the wrong (and different) answer for any rectangle whose width and height aren't both 1.
+def cylinder_volume(radius, height)\:
+&nbsp;&nbsp;&nbsp;&nbsp;print(math.pi * radius ** 2 * height)
+</pre> #This displays the volume instead of returning it. The question says "returns" — a function that only prints gives back None, so the caller can't store the volume or use it in a further calculation.
 ~<pre>
-def rectangle_area()\:
-    return width * height
-\# --- main program ---
-print(rectangle_area(1, 1))
-</pre> #The function is defined with no parameters at all, so calling it with two arguments (1, 1) raises a TypeError — width and height aren't parameters here, so they aren't in scope inside the function either.
+def cylinder_volume()\:
+&nbsp;&nbsp;&nbsp;&nbsp;radius \= float(input("Radius\: "))
+&nbsp;&nbsp;&nbsp;&nbsp;height \= float(input("Height\: "))
+&nbsp;&nbsp;&nbsp;&nbsp;return math.pi * radius ** 2 * height
+</pre> #This asks the user for the values instead of RECEIVING them. "Receives the radius and height" means they are parameters listed in the parentheses of the def line, supplied by the caller as arguments.
 }
 
-// ── Section 2: Reading a List of Integers (Exercise 6.b.2) ──────────────────
-
-::W07-R1-Q2 A Function That Returns a List of User Inputs::
-Exercise 6.b.2 asks for a function that receives an integer n and returns a list of n integers read from the user. Which definition correctly does this?{
+::W07-R1-Q2 Averaging Two Values Inside a Function::
+A function <code>average_pay(rate1, rate2, hours)</code> should return the pay for a shift, computed as average_rate × hours, where average_rate is the average (mean) of <code>rate1</code> and <code>rate2</code>. Which function body is correct?{
 =<pre>
-def read_integers(n)\:
-    values \= []
-    for i in range(n)\:
-        values.append(int(input("Enter an integer\: ")))
-    return values
-</pre> #Correct. It builds up an empty list, appends exactly n user-entered integers to it in a loop that runs n times, and returns the completed list.
+&nbsp;&nbsp;&nbsp;&nbsp;average_rate \= (rate1 + rate2) / 2
+&nbsp;&nbsp;&nbsp;&nbsp;return average_rate * hours
+</pre> #Correct. The parentheses force the two rates to be added BEFORE dividing by 2, giving a true average, and the result of the final multiplication is returned.
 ~<pre>
-def read_integers(n)\:
-    values \= []
-    for i in range(n)\:
-        values.append(int(input("Enter an integer\: ")))
-</pre> #This never actually returns values — calling the function and trying to use its result would get None instead of the list that was built.
+&nbsp;&nbsp;&nbsp;&nbsp;return rate1 + rate2 / 2 * hours
+</pre> #Without parentheses, division and multiplication happen before addition, so only rate2 gets halved and multiplied by hours — rate1 is just added on at the end. An average needs <code>(rate1 + rate2) / 2</code>.
 ~<pre>
-def read_integers(n)\:
-    values \= []
-    for i in range(n)\:
-        value \= int(input("Enter an integer\: "))
-    return values
-</pre> #value is read but never appended to values, so the returned list stays empty regardless of what the user types in.
+&nbsp;&nbsp;&nbsp;&nbsp;average_rate \= (rate1 + rate2) / 2
+&nbsp;&nbsp;&nbsp;&nbsp;pay \= average_rate * hours
+</pre> #The math is right, but the answer is stored in a local variable and never returned. The local variable pay disappears when the function ends, and the caller gets None.
 ~<pre>
-def read_integers(n)\:
-    values \= []
-    for i in range(n - 1)\:
-        values.append(int(input("Enter an integer\: ")))
-    return values
-</pre> #Looping over range(n - 1) reads and stores only n - 1 integers instead of n — one short of what was asked for.
+&nbsp;&nbsp;&nbsp;&nbsp;return (rate1 + rate2) * hours
+</pre> #This uses the SUM of the two rates, not their average — the division by 2 is missing, so the result is twice what it should be.
 }
 
-// ── Section 3: Testing with assert (Lab 6.12 / Lab 6.0) ─────────────────────
-
-::W07-R1-Q3 Writing an assert Test for compute_cost::
-The Function Practice lab says to "implement at least three appropriate test cases for each [function] using assert." Given <code>compute_cost(200, 20, 4)</code> should return <code>40.0</code>, which line correctly tests this?{
-=<code>assert compute_cost(200, 20, 4) \=\= 40.0</code> #Correct. assert checks that the condition is True and does nothing if so; if compute_cost(200, 20, 4) doesn't actually equal 40.0, assert raises an AssertionError, flagging the bug immediately.
-~<code>compute_cost(200, 20, 4) \=\= 40.0</code> #Without assert, this expression is evaluated and then simply discarded — it doesn't raise anything or report a problem even if the two sides aren't equal.
-~<code>assert compute_cost(200, 20, 4) \= 40.0</code> #A single \= is assignment, not comparison — this is a SyntaxError, since you can't assign to a function call's result.
-~<code>print(compute_cost(200, 20, 4) \=\= 40.0)</code> #This only displays True or False on the screen for a human to notice — it doesn't automatically stop the program or flag a failure the way assert does.
-}
-
-// ── Section 4: Docstrings ─────────────────────────────────────────────────────
-
-::W07-R1-Q4 Where Does a Docstring Go?::
-The Function Practice lab asks you to "include a docstring for each function." Which of these correctly adds a docstring to compute_cost?{
+::W07-R1-Q3 Getting the Function Syntax Right::
+Which of these is a syntactically correct Python function that receives a temperature in Celsius and returns it in Fahrenheit?{
 =<pre>
-def compute_cost(miles, miles_per_gallon, dollars_per_gallon)\:
-    """Return the dollar cost of driving the given miles."""
-    return (miles / miles_per_gallon) * dollars_per_gallon
-</pre> #Correct. A docstring is a string literal placed as the very first line inside the function body, describing what the function does.
+def fahrenheit(celsius)\:
+&nbsp;&nbsp;&nbsp;&nbsp;return celsius * 9 / 5 + 32
+</pre> #Correct. A function definition needs the keyword def, the function's name, its parameters in parentheses, a colon at the end of that line, and an indented body.
 ~<pre>
-\# Return the dollar cost of driving the given miles.
-def compute_cost(miles, miles_per_gallon, dollars_per_gallon)\:
-    return (miles / miles_per_gallon) * dollars_per_gallon
-</pre> #This is a regular comment placed ABOVE the function, not a docstring — a docstring is specifically a string literal that lives inside the function body, as its first statement.
+def fahrenheit(celsius)
+&nbsp;&nbsp;&nbsp;&nbsp;return celsius * 9 / 5 + 32
+</pre> #The colon at the end of the def line is missing, which is a SyntaxError. Every def line ends with a colon, just like if, for, and while lines do.
 ~<pre>
-def compute_cost(miles, miles_per_gallon, dollars_per_gallon)\:
-    return (miles / miles_per_gallon) * dollars_per_gallon
-    """Return the dollar cost of driving the given miles."""
-</pre> #Placing the string AFTER the return statement means it's unreachable dead code — a docstring must be the first statement in the function body, not the last.
+function fahrenheit(celsius)\:
+&nbsp;&nbsp;&nbsp;&nbsp;return celsius * 9 / 5 + 32
+</pre> #Python's keyword for defining a function is def, not function (that's the keyword in some other languages, like JavaScript).
 ~<pre>
-def compute_cost(miles, miles_per_gallon, dollars_per_gallon)\:
-    return (miles / miles_per_gallon) * dollars_per_gallon  \# Return the dollar cost
-</pre> #This is an inline comment on the return line, not a docstring — it explains the code to a reader but isn't a string literal Python associates with the function itself.
+def fahrenheit(celsius)\:
+return celsius * 9 / 5 + 32
+</pre> #The body isn't indented, so Python raises an IndentationError — indentation is how Python knows which lines belong to the function.
 }
 
-// ── Section 5: Parameters Are Local Variables ────────────────────────────────
+// ── Section 2: Calling a Function That Already Exists ───────────────────────
 
-::W07-R1-Q5 Does Reassigning a Parameter Change the Caller's Variable?::
+::W07-R1-Q4 Defining a Function vs. Calling It::
+Assume <code>cylinder_volume(radius, height)</code> has already been defined and returns a cylinder's volume. Which line calls it for a radius of 2 and a height of 10 and saves the result in a variable?{
+=<code>v \= cylinder_volume(2, 10)</code> #Correct. A call is the function's name followed by the arguments in parentheses, and the value it returns is assigned to v.
+~<code>def cylinder_volume(2, 10)\:</code> #def is for DEFINING a function, which has already been done. To use the function you just write its name with arguments — and numbers can't be parameter names anyway, so this is a SyntaxError.
+~<code>v \= cylinder_volume[2, 10]</code> #Square brackets are for indexing into lists and other collections. Calling a function takes parentheses.
+~<code>cylinder_volume(2, 10) \= v</code> #The assignment is backwards. The variable receiving the value goes on the left of the \= sign and the function call goes on the right.
+}
+
+::W07-R1-Q5 Calling cube() and Adding Up the Results::
+Assume a function <code>cube(x)</code> has already been defined that returns <code>x</code> cubed. Which code segment uses (calls) this function to compute and print the sum of <code>cube(1)</code>, <code>cube(2)</code>, and <code>cube(3)</code>?{
+=<pre>
+total \= cube(1) + cube(2) + cube(3)
+print(total)
+</pre> #Correct. Each call is replaced by the value it returns, so this adds 1 + 8 + 27 and prints 36. Notice there's no need to define cube again — it already exists, so you just call it.
+~<pre>
+print(cube(1 + 2 + 3))
+</pre> #This adds the ARGUMENTS first and makes a single call, cube(6), which prints 216. The sum of three separate results needs three separate calls.
+~<pre>
+cube(1) + cube(2) + cube(3)
+</pre> #This does compute the sum, but the result is immediately thrown away — nothing stores it and nothing prints it, so the program shows no output.
+~<pre>
+print(cube(1), cube(2), cube(3))
+</pre> #This prints the three results side by side (1 8 27) rather than adding them together — commas inside print() separate values, they don't sum them.
+}
+
+::W07-R1-Q6 Using Returned Values in an Expression::
 <pre>
-def double_it(n):
-    n = n * 2
-    print("Inside:", n)
+def half(x):
+&nbsp;&nbsp;&nbsp;&nbsp;return x / 2
 # --- main program ---
-x = 5
-double_it(x)
-print("Outside:", x)
+total = half(10) + half(4)
+print(total)
 </pre>
 What does this print?{
-=Inside\: 10, then Outside\: 5 #Correct. n is a separate local variable that starts out holding a copy of x's value (5); reassigning n inside the function only changes that local variable, leaving the caller's x completely untouched.
-~Inside\: 10, then Outside\: 10 #This assumes reassigning a parameter reaches back and changes the caller's original variable — but n and x are two distinct variables, linked only at the moment of the call.
-~Inside\: 5, then Outside\: 5 #The line <code>n \= n * 2</code> does execute and does change n's value inside the function — "Inside\:" reflects that updated value (10), not the original 5.
-~A TypeError, since you can't reassign a parameter inside a function #Reassigning a parameter is completely ordinary and valid — parameters behave just like any other local variable once inside the function body.
-}
-
-// ── Section 6: Why Parameterize the Smiley Tower? (Exercise 6.b.3) ───────────
-
-::W07-R1-Q6 Parameterizing the Smiley Tower Function::
-Exercise 6.b.3 asks for a function that draws a "tower" of smileys, receiving the starting position and the number and size of smileys from the calling program. Why pass these as parameters instead of hardcoding fixed values inside the function?{
-=So the same function can draw different towers — at different positions, with different heights and sizes — just by calling it again with different arguments, rather than needing a separate, nearly-identical function for each tower #Correct. Parameters are exactly what let one function definition serve many different calls, which is the whole point of drawing "several smiley towers" as the exercise asks.
-~Because Python requires every function to have at least three parameters #There's no such rule — functions can have zero, one, or any number of parameters; the choice here is about reusability, not a language requirement.
-~Because hardcoded values inside a function are always a syntax error #Hardcoded values inside a function body are completely valid Python — the issue is only that they'd make the function unable to draw towers with different positions, counts, or sizes.
-~Because parameters make the function run faster than hardcoded values would #Performance isn't the reason here at all — the benefit of parameters is flexibility and reuse, not execution speed.
-}
-
-// ── Section 7: Calling a Function with the Wrong Number of Arguments ────────
-
-::W07-R1-Q7 Mismatched Argument Counts::
-<pre>
-def compute_cost(miles, miles_per_gallon, dollars_per_gallon):
-    return (miles / miles_per_gallon) * dollars_per_gallon
-# --- main program ---
-print(compute_cost(200, 20))
-</pre>
-What happens when this runs?{
-=A TypeError, because compute_cost requires exactly three arguments but the call only supplies two #Correct. Python matches positional arguments to parameters one-to-one; since dollars_per_gallon has no default value and no argument was given for it, the call is missing a required argument.
-~It runs fine, and dollars_per_gallon is automatically treated as 0 #Python doesn't silently fill in missing positional arguments with 0 (or any other value) unless the parameter is explicitly given a default value in the function's definition — this one isn't.
-~It runs fine, and dollars_per_gallon reuses whatever value miles_per_gallon has #Parameters don't share or borrow each other's values — each one is a separate variable that must be supplied its own argument (or have its own default).
-~It prints None, since the function can't compute a result without all three values #The function never even starts running — Python raises the TypeError before entering the function body at all, so nothing inside compute_cost executes.
+=7.0 #Correct. half(10) returns 5.0 and half(4) returns 2.0. Each call is replaced by its returned value, the two are added, and the single total is printed (as a float, because / always produces a float).
+~5.0 and then 2.0 on separate lines #The function returns its results rather than printing them, so nothing is displayed during the calls. The only print statement runs once, on the total.
+~None #That would happen if half printed its result instead of returning it. Because half uses return, each call gives back a real number that can be added.
+~14 #This adds the arguments (10 + 4) and ignores what the function does. Each argument is halved first, and it's the returned values, 5.0 and 2.0, that get added.
 }

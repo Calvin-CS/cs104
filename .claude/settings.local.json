@@ -2,7 +2,8 @@
   "permissions": {
     "allow": [
       "Bash(python scripts/md_to_h5p.py weeks/01/reading.md)",
-      "Bash(python -c ':*)"
+      "Bash(python -c ':*)",
+      "PowerShell(python scripts\\\\quiz_md_to_pdf.py weeks\\\\03\\\\quiz01.md --out-dir weeks\\\\03)"
     ]
   }
 }

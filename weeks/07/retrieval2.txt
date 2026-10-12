@@ -1,10 +1,9 @@
-// Week 07 Retrieval Quiz 2 — Libraries, NumPy, and Matplotlib — GIFT format
+// Week 07 Retrieval Quiz 2 — Quiz 3 prep: NumPy arrays and Matplotlib plots — GIFT format
 // Import into Moodle: Question bank > Import > GIFT format
-// 7 questions covering this week's in-class exercises (there's no separate POGIL/lab
-// this week — Exercises 7.a-7.f in the slides serve that role)\: NumPy array basics,
-// np.arange vs. np.linspace, Matplotlib plotting, and the RC circuit charging/
-// discharging activity. Chosen to avoid repeating questions already used in
-// weeks/07/retrieval1.txt.
+// 6 questions practicing the NumPy/Matplotlib skills Quiz 3 asks for\: list vs. NumPy
+// array multiplication, np.arange vs. np.linspace, element-wise array math, and
+// predicting what a labeled Matplotlib plot looks like. The function-writing prep
+// questions live in weeks/07/retrieval1.txt.
 
 $CATEGORY: Week 07 / Retrieval 2
 
@@ -32,57 +31,62 @@ What happens when this runs, and how would using a NumPy array instead change th
 ~arange and linspace are just two different names for the exact same function #They take their third argument to mean different things entirely (a step size vs. a point count) and disagree on whether stop is included — they are not interchangeable.
 }
 
-// ── Section 3: np.exp(-t) as t Grows (Exercise 7.a) ──────────────────────────
+// ── Section 3: Lists vs. NumPy Arrays ────────────────────────────────────────
 
-::W07-R2-Q3 What Happens to np.exp(-t) as t Gets Bigger?::
-For <code>t = np.linspace(0, 10, 5)</code>, Exercise 7.a asks what happens to the values of <code>np.exp(-t)</code> as t gets bigger. What's the answer?{
-=The values shrink toward 0 — np.exp(-t) is e raised to an increasingly negative power, and larger negative exponents produce values closer and closer to (but never reaching) 0 #Correct. e^(-t) decays toward 0 as t grows, which is exactly the exponential-decay shape used later in the RC circuit's discharging curve.
-~The values grow without bound, the same way np.exp(t) would #Flipping the sign of the exponent flips the behavior entirely — np.exp(t) grows as t increases, but np.exp(-t) shrinks, since a bigger t makes the exponent more and more negative.
-~The values oscillate between positive and negative as t increases #np.exp() never produces negative output at all for a real input — it only ever returns positive values, and here they shrink steadily rather than oscillating.
-~The values stay exactly the same regardless of t, since exp() is a constant function #exp() is definitely not constant — its output changes continuously with its input; here it decreases as -t becomes more negative.
-}
-
-// ── Section 4: Which Curve Needs More Points to Look Smooth? (Exercise 7.b) ──
-
-::W07-R2-Q4 y = x**2 vs. y = np.sin(x) Over the Same Range::
-Exercise 7.b has you plot <code>y = x ** 2</code> and, separately, <code>y = np.sin(x)</code>, both over <code>x = np.linspace(0, 20, 200)</code>. Which one needs more sample points to look smooth, and why?{
-=np.sin(x) needs more points — over x from 0 to 20 it completes several full oscillations (about 3, since one period is 2*pi ≈ 6.28), and each oscillation needs enough points of its own to avoid looking jagged, while x ** 2 is a single smooth curve with no repeated wiggles #Correct. A curve that oscillates many times across the plotted range needs proportionally more samples per oscillation than a curve — like a parabola — that just curves smoothly in one direction.
-~x ** 2 needs more points, since squaring makes the numbers grow much larger than sine's values ever do #The SIZE of the y-values plotted doesn't affect how many x points are needed for smoothness — what matters is how much the curve bends or oscillates across the range, not the magnitude of the output.
-~Both need exactly the same number of points, since they're evaluated over the identical x array #Using the same x array doesn't guarantee both curves look equally smooth with it — a rapidly oscillating function like sine needs finer sampling than a gently curving one like a parabola to avoid looking jagged.
-~Neither needs more than 2 points, since both are simple mathematical formulas #A plotting library only draws straight line segments between the sampled points — too few points would make either curve look like sharp, jagged line segments instead of a smooth curve, especially the oscillating sine.
-}
-
-// ── Section 5: The Time Constant tau (Exercise 7.c) ──────────────────────────
-
-::W07-R2-Q5 Computing tau and the Long-Run Voltage::
+::W07-R2-Q3 Multiplying a List vs. an Array by 3::
 <pre>
-R = 1000
-C = 0.001
-tau = R * C
+import numpy as np
+values = [4, 5]
+arr = np.array(values)
+print(values * 3)
+print(arr * 3)
 </pre>
-Given <code>V(t) = V0 * (1 - e^(-t / tau))</code>, what is tau here, and what does V(t) approach as t keeps growing?{
-=tau is 1 (1000 * 0.001), and V(t) approaches V0 — as t grows, -t/tau becomes a large negative number, so e^(-t/tau) shrinks toward 0, leaving V(t) approach V0 * (1 - 0) \= V0 #Correct. The capacitor's voltage climbs toward (but never quite reaches) the source voltage V0 as time goes on, with tau setting the pace of that climb.
-~tau is 1, and V(t) approaches 0 as t grows #This is backwards for the CHARGING formula\: as e^(-t/tau) shrinks toward 0, (1 - e^(-t/tau)) grows toward 1, so V(t) climbs toward V0, not down toward 0.
-~tau is 1000000 (1000 * 0.001 treated as 1000 * 1000), and V(t) oscillates around V0 #1000 * 0.001 is 1, not a million — and nothing about this formula oscillates; e^(-t/tau) changes smoothly and monotonically as t increases.
-~tau can't be computed without knowing V0, since the formula includes V0 #tau \= R * C depends only on the resistance and capacitance — V0 is a completely separate factor that scales the overall voltage but plays no role in computing tau itself.
+What do the two print statements output?{
+=[4, 5, 4, 5, 4, 5] and then [12 15] — multiplying a list by an integer REPEATS the list, while multiplying a NumPy array by a number multiplies EACH ELEMENT #Correct. The same * operator means two different things. For a list it is repetition (three copies joined end to end); for a NumPy array it is element-by-element math.
+~[12, 15] and then [12 15] — both multiply each element by 3 #Plain Python lists don't do element-by-element math. list * int repeats the list's contents; only the NumPy array scales each value.
+~[12, 15] and then [4 5 4 5 4 5] — the list is scaled and the array is repeated #This has the two behaviors backwards. It's the plain list that gets repeated and the NumPy array that gets multiplied element by element.
+~A TypeError on the first print, and then [12 15] — a list can't be multiplied by a number #A list can't be multiplied by a FLOAT (like 1.1), but multiplying by an INTEGER is allowed — it repeats the list that many times.
 }
 
-// ── Section 6: The 63% Marker (Exercise 7.d) ─────────────────────────────────
-
-::W07-R2-Q6 Why V0 * (1 - e^(-1)) Marks One Time Constant::
-Exercise 7.d adds a horizontal line at <code>V0 * (1 - np.exp(-1))</code>, describing it as "about 63% of V0" reached after exactly one time constant. Why does plugging in exactly <code>t = tau</code> produce this marker?{
-=Substituting t \= tau into V(t) \= V0 * (1 - e^(-t/tau)) makes the exponent -t/tau equal exactly -1, giving V(tau) \= V0 * (1 - e^(-1)) — and since e^(-1) ≈ 0.37, this works out to about V0 * 0.63, or 63% of V0 #Correct. This is precisely why the marker is placed at t \= tau on the plot — it shows the voltage reached at exactly one time constant into the charging process.
-~63% is just a rounded approximation used for convenience — the actual fraction reached at t \= tau is exactly 50% of V0 #This isn't a rounding convenience — plugging t \= tau in genuinely gives 1 - e^(-1), which numerically is about 0.63, not 0.5.
-~This 63% figure only applies to the DISCHARGING curve, not the charging one shown here #The exercise is explicitly about the charging formula, V(t) \= V0 * (1 - e^(-t/tau)); the marker describes how far charged the capacitor is at one time constant into charging, not discharging.
-~e^(-1) equals exactly 0, so V(tau) is exactly V0 #e^(-1) is not 0 — e raised to any finite power is always positive and nonzero; e^(-1) is approximately 0.37, which is what leaves V(tau) short of the full V0.
+::W07-R2-Q4 Squaring Every Element of an Array::
+<pre>
+import numpy as np
+x = np.array([0, 1, 2, 3])
+y = x ** 2
+print(y)
+</pre>
+What does this print?{
+=[0 1 4 9] #Correct. Array math is element-by-element, so ** 2 squares every value in x at once, with no loop needed. This is exactly how an array of x values gets turned into an array of y values for a plot.
+~[0 2 4 6] #This is what <code>x * 2</code> would give. The ** operator is exponentiation, so each element is squared, not doubled.
+~[0 1 2 3 0 1 2 3] #This is list-style repetition, which doesn't apply here — x is a NumPy array (and the operator is ** rather than *), so the math happens to each element.
+~A TypeError, because you need a for loop to square each element of an array #No loop is needed. Applying an operation to a whole NumPy array at once is the main reason to use arrays instead of lists.
 }
 
-// ── Section 7: Charging vs. Discharging (Exercise 7.e) ───────────────────────
+// ── Section 4: Reading a Matplotlib Plot from Its Code ──────────────────────
 
-::W07-R2-Q7 How the Charging and Discharging Curves Relate::
-Charging is <code>V(t) = V0 * (1 - e^(-t / tau))</code>; discharging is <code>V(t) = V0 * e^(-t / tau)</code>. How are these two curves related?{
-=At any given t, they add up to V0 — charging's "e^(-t/tau)" term is exactly what's subtracted from 1, so charging(t) + discharging(t) \= V0 * (1 - e^(-t/tau)) + V0 * e^(-t/tau) \= V0 * 1 \= V0 #Correct. Charging climbs from 0 toward V0 while discharging falls from V0 toward 0, and at every matching moment in time the two values are complementary, always summing back to V0.
-~They're identical curves, just plotted with different colors #They're mirror-image shapes, not identical\: charging rises from 0 toward V0 while discharging falls from V0 toward 0 — at t \= 0 they start at completely different values (0 vs. V0).
-~Discharging is charging shifted later in time by exactly one tau, with no other difference #The two formulas differ in more than a time shift — one has a "1 -" term subtracting the exponential from 1, and the other doesn't; discharging isn't simply a delayed copy of charging.
-~They only match at t \= 0, and diverge in unrelated ways for every t afterward #They're related at every value of t, not just t\=0 — the two always sum to exactly V0, which is a much stronger and more useful relationship than merely matching at the start.
+::W07-R2-Q5 Predicting What a Plot Looks Like::
+<pre>
+import numpy as np
+import matplotlib.pyplot as plt
+x = np.linspace(0, 5, 50)
+y = 2 * x
+plt.plot(x, y)
+plt.xlabel("Time (s)")
+plt.ylabel("Distance (m)")
+plt.title("Constant Speed")
+plt.show()
+</pre>
+If you had to sketch the resulting plot by hand, which description matches it?{
+=A straight line rising from (0, 0) to (5, 10), with "Time (s)" under the horizontal axis, "Distance (m)" along the vertical axis, and "Constant Speed" centered above the plot #Correct. x runs from 0 to 5, each y is twice its x (so y runs from 0 to 10), xlabel names the horizontal axis, ylabel names the vertical axis, and title goes on top.
+~A straight line rising from (0, 0) to (5, 10), with "Distance (m)" under the horizontal axis, "Time (s)" along the vertical axis, and "Constant Speed" centered above the plot #The axis labels are swapped. xlabel always labels the horizontal (x) axis and ylabel always labels the vertical (y) axis.
+~A curve that bends upward more and more steeply from (0, 0) to (5, 25), with "Time (s)" under the horizontal axis and "Distance (m)" along the vertical axis #That bending shape and the endpoint (5, 25) belong to <code>y \= x ** 2</code>. Here y is 2 * x, which grows at a steady rate and so plots as a straight line.
+~A straight line rising from (0, 0) to (50, 100), with "Time (s)" under the horizontal axis and "Distance (m)" along the vertical axis #The 50 in linspace is the NUMBER of points, not where x stops. x still only runs from 0 to 5; there are just 50 evenly spaced values along the way.
+}
+
+::W07-R2-Q6 What Each Plotting Function Does::Match each Matplotlib call to what it contributes to the plot.{
+=plt.plot(x, y) -> Draws a line through the (x, y) points
+=plt.xlabel("...") -> Puts a label under the horizontal axis
+=plt.ylabel("...") -> Puts a label along the vertical axis
+=plt.title("...") -> Puts a heading above the plot
+=plt.show() -> Opens the window that displays the finished plot
 }

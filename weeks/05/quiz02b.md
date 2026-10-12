@@ -3,7 +3,7 @@ meta: Fall 2026
 
 This is an in-class, closed-book quiz. If you have any questions, please feel free to ask them. When you are finished, you can turn it in and go.
 
-## Q (4 points)
+## Q (2 points)
 
 Give the value of each Python expression below. If it raises an error instead, name the error.
 
@@ -15,7 +15,7 @@ EX: >>> not True -> False
 >>> 2 < 1 or 4 > 3
 [[/PAIRS]]
 
-## Q (6 points)
+## Q (3 points)
 
 Write a code segment that inputs a numeric test score from the user (as a float, 0-100) and prints one of the following, based on the value:
 
@@ -28,7 +28,7 @@ Just write a code segment; you don't need to include documentation, an algorithm
 
 [[BLANK height=180]]
 
-## Q (4 points)
+## Q (2 points)
 
 Fill in the blanks in the `range(...)` call below so this code prints every multiple of 4 from 4 to 40, inclusive:
 
@@ -39,7 +39,7 @@ for n in range(___, ___, ___):
 
 [[BLANK height=60]]
 
-## Q (3 points)
+## Q (2 points)
 
 Consider the following (syntactically correct) code segment:
 
@@ -54,7 +54,7 @@ Write a `while` loop that does the same thing.
 
 [[BLANK height=110]]
 
-## Q (3 points)
+## Q (1 point)
 
 The following code is supposed to print the numbers 1 through 5, but it has a bug. Identify the bug and explain how to fix it.
 

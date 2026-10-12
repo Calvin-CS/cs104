@@ -3,7 +3,7 @@ meta: Fall 2026
 
 This is an in-class, closed-book quiz. If you have any questions, please feel free to ask them. When you are finished, you can turn it in and go.
 
-## Q (8 points)
+## Q (4 points)
 
 Write a function called `trapezoid_area` that receives the lengths of the two parallel sides (`base1` and `base2`) and the height (`height`) of a trapezoid, and returns its area. This can be computed as:
 
@@ -13,13 +13,13 @@ where `average_base` is the average (mean) of `base1` and `base2`. Be sure to us
 
 [[BLANK height=160]]
 
-## Q (4 points)
+## Q (2 points)
 
 Assume a function `double(x)` has already been defined that returns twice the value of `x`. Write a code segment that uses (calls) this function to compute and print the sum of `double(3)`, `double(5)`, and `double(10)`.
 
 [[BLANK height=90]]
 
-## Q (4 points)
+## Q (2 points)
 
 Consider the following code:
 
@@ -35,9 +35,9 @@ What does each `print` statement output, and why are the two results different?
 
 [[BLANK height=100]]
 
-## Q (4 points)
+## Q (2 points)
 
-The following code is supposed to plot a labeled graph of y = x², but running it produces a plot with no axis labels or title. Add the line(s) needed to give the plot an x-axis label of `"x"`, a y-axis label of `"y"`, and a title of `"Squares"`.
+Consider the following code:
 
 ```python
 import numpy as np
@@ -47,7 +47,12 @@ x = np.linspace(0, 10, 100)
 y = x ** 2
 
 plt.plot(x, y)
+plt.xlabel("x")
+plt.ylabel("y")
+plt.title("Squares")
 plt.show()
 ```
 
-[[BLANK height=100]]
+In the space below, sketch roughly what the resulting plot will look like. Include the axes, the approximate shape of the curve, and where each label and the title appear. (It does not need to be precise.)
+
+[[BLANK height=180]]
