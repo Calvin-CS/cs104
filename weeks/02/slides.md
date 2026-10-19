@@ -8,6 +8,104 @@
 
 ---
 
+# Why learn programming if AI can do this for me?
+
+---
+
+## The honest answer
+
+AI narrows the gap for some tasks.
+It widens it for others.
+
+Which one happens to *you* depends on how you use it —
+not on whether you use it.
+
+---
+
+## Exhibit A: AI can narrow the gap
+
+Consultants using GPT-4 on realistic BCG tasks:
+
+- Below-average performers: **+43%** on quality
+- Above-average performers: **+17%** on quality
+
+AI acted as a compensatory tool — it filled in what
+weaker performers didn't already know.
+
+*Dell'Acqua et al., "Navigating the Jagged Technological Frontier,"
+Organization Science (2026) — [SSRN](https://papers.ssrn.com/sol3/papers.cfm?abstract_id=4573321) · [DOI](https://doi.org/10.1287/orsc.2025.21838)*
+
+---
+
+## Exhibit B: AI can widen the gap
+
+Novice programmers using GitHub Copilot on a CS1 problem:
+
+- Students already showing confusion accepted
+  **34.1%** of Copilot's suggestions
+- Students who weren't confused accepted **24.5%**
+
+The struggling students leaned on AI *more* —
+and ended up with code they couldn't explain.
+
+*Prather et al., "The Widening Gap," ICER (2024) —
+[arXiv:2405.17739](https://arxiv.org/abs/2405.17739)*
+
+---
+
+## Same tool. Opposite outcome. Why?
+
+**Consulting task:** the answer is the deliverable.
+Getting a good answer *is* the win.
+
+**Learning to program:** the answer is not the point.
+The skill you build while getting there is.
+
+Copying a correct answer skips the part
+you're actually here to build.
+
+---
+
+## What the research says predicts the outcome
+
+Not raw talent. Not how "smart" you are on day one.
+
+**Metacognitive regulation** — whether you:
+
+- notice when you don't understand something
+- check AI output instead of trusting it
+- can explain *why* your code works
+
+---
+
+## So why learn to program?
+
+Because the parts of programming that AI
+makes fast — syntax, boilerplate, lookup —
+were never the hard part.
+
+The hard part — knowing *what* to build,
+*why* it's wrong, and *how* to fix it —
+is exactly what you're here to practice.
+
+AI can write the code.
+It can't do the understanding for you.
+
+### Sources
+
+- Dell'Acqua, F. et al. (2026). *Navigating the Jagged Technological
+  Frontier.* Organization Science.
+  [papers.ssrn.com/sol3/papers.cfm?abstract_id=4573321](https://papers.ssrn.com/sol3/papers.cfm?abstract_id=4573321)
+- Prather, J. et al. (2024). *The Widening Gap: The Benefits and
+  Harms of Generative AI for Novice Programmers.* ICER.
+  [arxiv.org/abs/2405.17739](https://arxiv.org/abs/2405.17739)
+- Adejumo, A. A. et al. (2026). *A systematic review of the impact
+  of GenAI on learning performance... in computer science education.*
+  Computers and Education: AI.
+  [doi.org/10.1016/j.caeai.2026.100570](https://doi.org/10.1016/j.caeai.2026.100570)
+
+---
+
 ## POGIL 2
 
 Process-Oriented Guided Inquiry Learning

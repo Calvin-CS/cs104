@@ -237,334 +237,6 @@ Serving each other by helping each other learn
 
 ---
 
-# Why learn programming if AI can do this for me?
-
----
-
-## The honest answer
-
-AI narrows the gap for some tasks.
-It widens it for others.
-
-Which one happens to *you* depends on how you use it —
-not on whether you use it.
-
----
-
-## Exhibit A: AI can narrow the gap
-
-Consultants using GPT-4 on realistic BCG tasks:
-
-- Below-average performers: **+43%** on quality
-- Above-average performers: **+17%** on quality
-
-AI acted as a compensatory tool — it filled in what
-weaker performers didn't already know.
-
-*Dell'Acqua et al., "Navigating the Jagged Technological Frontier,"
-Organization Science (2026) — [SSRN](https://papers.ssrn.com/sol3/papers.cfm?abstract_id=4573321) · [DOI](https://doi.org/10.1287/orsc.2025.21838)*
-
----
-
-## Exhibit B: AI can widen the gap
-
-Novice programmers using GitHub Copilot on a CS1 problem:
-
-- Students already showing confusion accepted
-  **34.1%** of Copilot's suggestions
-- Students who weren't confused accepted **24.5%**
-
-The struggling students leaned on AI *more* —
-and ended up with code they couldn't explain.
-
-*Prather et al., "The Widening Gap," ICER (2024) —
-[arXiv:2405.17739](https://arxiv.org/abs/2405.17739)*
-
----
-
-## Same tool. Opposite outcome. Why?
-
-**Consulting task:** the answer is the deliverable.
-Getting a good answer *is* the win.
-
-**Learning to program:** the answer is not the point.
-The skill you build while getting there is.
-
-Copying a correct answer skips the part
-you're actually here to build.
-
----
-
-## What the research says predicts the outcome
-
-Not raw talent. Not how "smart" you are on day one.
-
-**Metacognitive regulation** — whether you:
-
-- notice when you don't understand something
-- check AI output instead of trusting it
-- can explain *why* your code works
-
----
-
-## So why learn to program?
-
-Because the parts of programming that AI
-makes fast — syntax, boilerplate, lookup —
-were never the hard part.
-
-The hard part — knowing *what* to build,
-*why* it's wrong, and *how* to fix it —
-is exactly what you're here to practice.
-
-AI can write the code.
-It can't do the understanding for you.
-
-### Sources
-
-- Dell'Acqua, F. et al. (2026). *Navigating the Jagged Technological
-  Frontier.* Organization Science.
-  [papers.ssrn.com/sol3/papers.cfm?abstract_id=4573321](https://papers.ssrn.com/sol3/papers.cfm?abstract_id=4573321)
-- Prather, J. et al. (2024). *The Widening Gap: The Benefits and
-  Harms of Generative AI for Novice Programmers.* ICER.
-  [arxiv.org/abs/2405.17739](https://arxiv.org/abs/2405.17739)
-- Adejumo, A. A. et al. (2026). *A systematic review of the impact
-  of GenAI on learning performance... in computer science education.*
-  Computers and Education: AI.
-  [doi.org/10.1016/j.caeai.2026.100570](https://doi.org/10.1016/j.caeai.2026.100570)
-
----
-
-# Objects
-
----
-
-## Objects
-
-- Python syntax specifies some ways to represent different types of data. A data representation in Python is called an "object".
-
-| Type | Object type in Python | Example |
-|---|---|---|
-| Integer number | `int` | `123` |
-| Decimal number (floating point) | `float` | `3.14` |
-| Logic value | `bool` | `True`, `False` |
-| Text | `string` | `"Hello World!"` |
-
----
-
-# Variables
-
----
-
-## Variables
-
-- Variables are names we set to refer to objects.
-  - A not-so-good metaphor: variables are containers for objects
-  - A better metaphor: objects are houses, variables are addresses of these houses
-
-```python
-x = 123  # a variable x that contains the integer value 123
-x = x + 1  # x is updated with the value of x + 1, becoming 124...
-hello = "Hello World!"  # a variable that contains the string "Hello World!"
-is_done = True  # a variable is_done with the logic value True
-```
-
----
-
-## Assigning objects to variables
-
-![assigning objects to variables](images/assignment.jpg)
-
----
-
-## Objects x variables
-
-- It is **very important** to differentiate!
-- Which of the following are variables and which are objects?
-
-```
-"hello"
-
-hello
-
-132
-
-var_1
-
-truev
-
-True
-```
-
----
-
-## Variable naming conventions in Python
-
-- They MUST start with a letter or with _ (underline)
-- They are case sensitive ('C' is different from 'c')
-- They can't contain: `{ ( + - * / \ ; . , ?`
-- They can't have names of words already reserved for other purposes in Python:
-
-![Python reserved words](images/reserved.png)
-
----
-
-What happens if?
-
-```python
-True = 123
-```
-
-```python
-"Hello" = world
-```
-
-```python
-1stcar = 2000
-```
-
----
-
-# Input/Output
-
----
-
-## Input/Output
-
-- Programming is nothing without the design of an **interface**!
-  - I have to be able to **input** data in the program, and
-  - I have to be able to get results (**output**) from the program.
-
-![vending machine](images/vending-machine.gif)
-
----
-
-## Graphical user interface (GUI)
-
-- Kind of mimics the way we use mechanical input and output
-- Traditionally, [WIMP](https://www.interaction-design.org/literature/book/the-glossary-of-human-computer-interaction/wimp) (Windows, Icons, Menus and Pointers)
-
-![graphical user interface example](images/ui.jpg)
-
----
-
-## Text input/output
-
-- Even simpler, however, it is a good start for programming!
-
-```python
-name = input("Please enter your name:")
-reverse = name[::-1]
-print("Your name in reverse is", reverse)
-```
-
-The command-line interface will ask for input from our keyboard, and then:
-
-![input/output example](images/ioexample.png)
-
----
-
-## Python text output: `print()`
-
-- Put what you want to print between the parentheses: `print("Hello World")`
-- If you want to jump to a new line, use `\n`: `print("Hello\nWorld")`
-- You can also pass multiple arguments by separating them with commas: `print("x has the value:", x, "\nand y has the value:", y)`
-
----
-
-## Python text input: `input()`
-
-- The command waits until the user types some text in the command-line interface and finishes with ENTER
-- The term `input()` "turns" into the text entered, and is **ALWAYS** an object the type `string`!
-- Thus, it needs to be saved into a variable: `x = input()`
-  - After the user types "Hi", for example, it is as if: `x = "Hi"`
-- You can customize an input message by passing a string:
-
-```python
-x = input("Please enter your name: ")
-```
-
----
-
-## Input of numeric values
-
-- Now, suppose we want to calculate the sum of two numbers:
-
-```python
-x = input("Please enter first number: ")
-y = input("Please enter second number: ")
-z = x + y
-print("The sum is", z)
-```
-
-What happened???
-
-![wellwellwell reaction meme](images/wellwellwell.png)
-
-- We were adding two strings together, not two numbers! (`input()` gives strings!)
-
----
-
-## Converting string to number types
-
-- You can convert a string to a number using the methods `int()` and `float()`
-  - The string that goes inside the parentheses (which we call the "argument" of the method) will be turned to an integer/float
-
-```python
-xstring = input("Please enter your age: ")
-x = int(xstring)
-print("Your age is ", x)
-```
-
-- Just make things shorter by chaining one method into another!
-
-```python
-x = int(input("Please enter your age: "))
-print("Your age is ", x)
-```
-
----
-
-# Running code
-
----
-
-## Running code
-
-Try:
-
-- Saving some previous code as `program.py`
-- Open a command-line interface in your computer and run: `python3 program.py`
-  - You need to have python3 installed in your machine
-  - You need to be in the directory of the file `program.py`
-
----
-
-Python can be run in two modes:
-
-<div class="columns" style="display:flex; gap:2rem;">
-<div style="flex:1">
-
-### Script / Program
-
-- All lines of code executed without stop
-- Run in command-line as `python3 program.py`
-- Only print what is specifically passed through `print()`
-
-</div>
-<div style="flex:1">
-
-### Interactive shell
-
-- Run lines of code each at a time, as user enters them
-- Open in command-line just by typing `python3`
-- Typing an expression without being assigned to a variable will "print" the result
-
-</div>
-</div>
-
----
-
 ## Integrated Development Environment (IDE)
 
 - In our classes, we will be using [Thonny](https://thonny.org/)
@@ -704,25 +376,7 @@ Explain what the following *algorithm* does.
 
 ---
 
-## Exercise 1.a.3
-
-Form groups and use a stack of index cards according to these rules:
-
-- Write the first name of each person in the group on a separate card.
-- The cards start in a row, side-by-side, face down on the table.
-- The person moving the cards can only have one card in each hand at any point (i.e. they can only look at the values of two cards).
-- The instructions cannot require the person to remember the value of a card they've put down; such values must be written down.
-- The algorithm can use the space on the table in any manner.
-
-Write algorithms to do the following.
-
-1. *Count* — Count the number of cards.
-2. *Search* — Find a card by name.
-3. *Sort* — Reorder the set of cards in alphabetical order.
-
----
-
-# Friday
+# Wednesday class
 
 ---
 
@@ -774,15 +428,362 @@ These exercises are available as [editable PDFs](https://cs.calvin.edu/courses/c
 
 ---
 
-## Sabbath
-
-> Observe the Sabbath day, to keep it holy, as the LORD your God commanded you. Six days you shall labor and do all your work, but the seventh day is a Sabbath to the LORD your God. On it you shall not do any work, you or your son or your daughter or your male servant or your female servant, or your ox or your donkey or any of your livestock, or the sojourner who is within your gates, that your male servant and your female servant may rest as well as you.
->
-> **You shall remember that you were a slave in the land of Egypt, and the LORD your God brought you out from there** with a mighty hand and an outstretched arm. Therefore the LORD your God commanded you to keep the Sabbath day. (*Deut 5:12*)
+# Friday class
 
 ---
 
-## Traits
+## Objects
 
-What are the traits that you think make for a good computer scientist?
+- Python syntax specifies some ways to represent different types of data. A data representation in Python is called an "object".
 
+| Type | Object type in Python | Example |
+|---|---|---|
+| Integer number | `int` | `123` |
+| Decimal number (floating point) | `float` | `3.14` |
+| Logic value | `bool` | `True`, `False` |
+| Text | `string` | `"Hello World!"` |
+
+---
+
+# Variables
+
+---
+
+## Variables
+
+- Variables are names we set to refer to objects.
+  - A not-so-good metaphor: variables are containers for objects
+  - A better metaphor: objects are houses, variables are addresses of these houses
+
+```python
+x = 123  # a variable x that contains the integer value 123
+x = x + 1  # x is updated with the value of x + 1, becoming 124...
+hello = "Hello World!"  # a variable that contains the string "Hello World!"
+is_done = True  # a variable is_done with the logic value True
+```
+
+---
+
+## Assigning objects to variables
+
+![assigning objects to variables](images/assignment.jpg)
+
+---
+
+## Objects x variables
+
+- It is **very important** to differentiate!
+- Which of the following are variables and which are objects?
+
+```
+"hello"
+
+hello
+
+132
+
+var_1
+
+truev
+
+True
+```
+
+---
+
+## Variable naming conventions in Python
+
+- They MUST start with a letter or with _ (underline)
+- They are case sensitive ('C' is different from 'c')
+- They can't contain: `{ ( + - * / \ ; . , ?`
+- They can't have names of words already reserved for other purposes in Python:
+
+![Python reserved words](images/reserved.png)
+
+---
+
+What happens if?
+
+```python
+True = 123
+```
+
+```python
+"Hello" = world
+```
+
+```python
+1stcar = 2000
+```
+
+---
+
+## Exercise 1.c.1
+
+With a partner, decide which of these are **valid** variable names. For the invalid ones, say why.
+
+```
+my_score      2fast        _temp
+class         total-cost   Total
+firstName     print        x2
+```
+
+Note:
+Valid: `my_score`, `_temp`, `Total`, `firstName`, `x2`, `print` (valid but a bad idea — it hides the built-in `print()` function!).
+Invalid: `2fast` (starts with a digit), `class` (reserved word), `total-cost` (contains `-`, read as subtraction).
+
+---
+
+## Exercise 1.c.2
+
+Without running it, predict what each program prints. Then check in Thonny.
+
+<div class="columns" style="display:flex; gap:2rem;">
+<div style="flex:1">
+
+```python
+a = 5
+b = a
+a = 10
+print(a, b)
+```
+
+</div>
+<div style="flex:1">
+
+```python
+x = "7"
+y = 7
+print(x, y)
+print(type(x), type(y))
+```
+
+</div>
+<div style="flex:1">
+
+```python
+name = "Ada"
+name = "Grace"
+print("name")
+print(name)
+```
+
+</div>
+</div>
+
+Note:
+1. `10 5` — `b` refers to the object `5`; reassigning `a` doesn't change `b`.
+2. `7 7` then `<class 'str'> <class 'int'>` — they print the same but are different types.
+3. `name` then `Grace` — quotes make a string object, not a variable.
+
+---
+
+# Input/Output
+
+---
+
+## Input/Output
+
+- Programming is nothing without the design of an **interface**!
+  - I have to be able to **input** data in the program, and
+  - I have to be able to get results (**output**) from the program.
+
+![vending machine](images/vending-machine.gif)
+
+---
+
+## Graphical user interface (GUI)
+
+- Kind of mimics the way we use mechanical input and output
+- Traditionally, [WIMP](https://www.interaction-design.org/literature/book/the-glossary-of-human-computer-interaction/wimp) (Windows, Icons, Menus and Pointers)
+
+![graphical user interface example](images/ui.jpg)
+
+---
+
+## Text input/output
+
+- Even simpler, however, it is a good start for programming!
+
+```python
+name = input("Please enter your name:")
+reverse = name[::-1]
+print("Your name in reverse is", reverse)
+```
+
+The command-line interface will ask for input from our keyboard, and then:
+
+![input/output example](images/ioexample.png)
+
+---
+
+## Python text output: `print()`
+
+- Put what you want to print between the parentheses: `print("Hello World")`
+- If you want to jump to a new line, use `\n`: `print("Hello\nWorld")`
+- You can also pass multiple arguments by separating them with commas: `print("x has the value:", x, "\nand y has the value:", y)`
+
+---
+
+## Python text input: `input()`
+
+- The command waits until the user types some text in the command-line interface and finishes with ENTER
+- The term `input()` "turns" into the text entered, and is **ALWAYS** an object the type `string`!
+- Thus, it needs to be saved into a variable: `x = input()`
+  - After the user types "Hi", for example, it is as if: `x = "Hi"`
+- You can customize an input message by passing a string:
+
+```python
+x = input("Please enter your name: ")
+```
+
+---
+
+## Input of numeric values
+
+- Now, suppose we want to calculate the sum of two numbers:
+
+```python
+x = input("Please enter first number: ")
+y = input("Please enter second number: ")
+z = x + y
+print("The sum is", z)
+```
+
+What happened???
+
+![wellwellwell reaction meme](images/wellwellwell.png)
+
+- We were adding two strings together, not two numbers! (`input()` gives strings!)
+
+---
+
+## Converting string to number types
+
+- You can convert a string to a number using the methods `int()` and `float()`
+  - The string that goes inside the parentheses (which we call the "argument" of the method) will be turned to an integer/float
+
+```python
+xstring = input("Please enter your age: ")
+x = int(xstring)
+print("Your age is ", x)
+```
+
+- Just make things shorter by chaining one method into another!
+
+```python
+x = int(input("Please enter your age: "))
+print("Your age is ", x)
+```
+
+---
+
+## Exercise 1.c.3
+
+Suppose the user types `3` and then `4`. What does each program print?
+
+<div class="columns" style="display:flex; gap:2rem;">
+<div style="flex:1">
+
+```python
+a = input("First: ")
+b = input("Second: ")
+print(a + b)
+```
+
+</div>
+<div style="flex:1">
+
+```python
+a = int(input("First: "))
+b = int(input("Second: "))
+print(a + b)
+```
+
+</div>
+<div style="flex:1">
+
+```python
+a = float(input("First: "))
+b = input("Second: ")
+print(a, b)
+```
+
+</div>
+</div>
+
+What happens in the second program if the user types `3.5`?
+<!-- .element: class="fragment" -->
+
+Note:
+1. `34` — string concatenation.
+2. `7` — integer addition.
+3. `3.0 4` — `a` is a float, `b` is still a string.
+Typing `3.5` into `int(...)` gives a `ValueError`: `int()` can't convert a string with a decimal point.
+
+---
+
+## Exercise 1.c.4
+
+Write a program in Thonny that:
+
+1. asks the user for their name,
+2. asks for their favorite food,
+3. asks how many servings they could eat (an integer),
+4. prints a sentence using all three answers, for example:
+
+```
+Hi Ada! You could eat 3 servings of pizza.
+```
+
+**Challenge:** save it as `food.py` and run it from the command line with `python3 food.py`.
+
+Note:
+Possible solution:
+
+```python
+name = input("What is your name? ")
+food = input("What is your favorite food? ")
+servings = int(input("How many servings could you eat? "))
+print("Hi", name + "! You could eat", servings, "servings of", food + ".")
+```
+
+---
+
+# Running code
+
+---
+
+## Running code
+
+Try:
+
+- Saving some previous code as `program.py`
+- Open a command-line interface in your computer and run: `python3 program.py`
+  - You need to have python3 installed in your machine
+  - You need to be in the directory of the file `program.py`
+
+---
+
+Python can be run in two modes:
+
+<div class="columns" style="display:flex; gap:2rem;">
+<div style="flex:1">
+
+### Script / Program
+
+- All lines of code executed without stop
+- Run in command-line as `python3 program.py`
+- Only print what is specifically passed through `print()`
+
+</div>
+<div style="flex:1">
+
+### Interactive shell
+
+- Run lines of code each at a time, as user enters them
+- Open in command-line just by typing `python3`
+- Typing an expression without being assigned to a variable will "print" the result
+
+</div>
+</div>

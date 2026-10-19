@@ -12,11 +12,4 @@ temperature over time, with markers for the one-time-constant milestone.
 import numpy as np
 import matplotlib.pyplot as plt
 
-
-def main():
-    # Put your solution code here, replacing this line.
-    pass
-
-
-if __name__ == "__main__":
-    main()
+# Put your solution code here, replacing this line.

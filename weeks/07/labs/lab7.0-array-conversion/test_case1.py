@@ -15,8 +15,8 @@ import sys
 
 
 def run_with_input(path, text_input):
-    """Run `path` as a script (so its `if __name__ == "__main__":` guard
-    fires), with stdin feeding `text_input` and stdout captured. Returns
+    """Run `path` as a script, with stdin feeding `text_input` and stdout
+    captured. Returns
     the captured stdout text, or raises if the script errors."""
     original_stdin = sys.stdin
     original_stdout = sys.stdout

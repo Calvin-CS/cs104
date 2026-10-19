@@ -15,7 +15,7 @@ Each topic follows the same three-step cycle:
 - **Monday** — Slides and prep for lab
 - **Wednesday** — Lab recap, then a quiz or a forum (alternating weeks)
 
-Week 1 is the exception: POGIL Activity 1 (plus lab recap) is on Wednesday, and POGIL Activity 2 follows on Friday.
+Weeks 1 and 2 are the exception: POGIL Activity 1 (plus lab recap) is on Wednesday of Week 1, and POGIL Activity 2 is on Monday of Week 2.
 
 - [Week 1: Introduction](#week-1)
 - [Week 2: Operators](#week-2)
@@ -46,7 +46,7 @@ By the end of this week, students will be able to:
 
 **Wednesday** — [POGIL Activity 1: Introduction to Python](../pogil/Act01-IntroPython_Student.pdf); lab recap
 
-**Friday** — [POGIL Activity 2: Arithmetic Expressions](../pogil/Act02-Arithmetic_Student.pdf) (prepares for Week 2)
+**Friday** — Slides and exercises
 
 ---
 
@@ -75,7 +75,7 @@ Check this on ZyBooks! Deadline will be on Monday of next week.
 
 ### Class Planning
 
-**Monday** — Labor Day (no class)
+**Monday** — [POGIL Activity 2: Arithmetic Expressions](../pogil/Act02-Arithmetic_Student.pdf)
 
 **Wednesday** — Lab recap; slides; Forum 1
 

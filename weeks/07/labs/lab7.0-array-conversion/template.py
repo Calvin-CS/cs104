@@ -11,11 +11,4 @@ NumPy array (no explicit loop over the values).
 
 import numpy as np
 
-
-def main():
-    # Put your solution code here, replacing this line.
-    pass
-
-
-if __name__ == "__main__":
-    main()
+# Put your solution code here, replacing this line.

@@ -14,11 +14,4 @@ import matplotlib.pyplot as plt
 
 G = 9.8  # acceleration of gravity, m/s^2
 
-
-def main():
-    # Put your solution code here, replacing this line.
-    pass
-
-
-if __name__ == "__main__":
-    main()
+# Put your solution code here, replacing this line.
