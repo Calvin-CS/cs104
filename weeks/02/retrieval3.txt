@@ -1,0 +1,128 @@
+// Week 02 Retrieval Quiz 3 (Friday) — cumulative review of Weeks 1–2 — GIFT format
+// Import into Moodle: Question bank > Import > GIFT format
+// 12 questions covering: Week 1 (object types, variable naming, input(), Editor/Shell,
+// SyntaxError/NameError) and Week 2 (operator precedence, variable reassignment/tracing,
+// floor division and modulo, escape sequences, int overflow vs Python's unbounded ints,
+// float precision limits, implicit-multiplication TypeError, Turtle pen commands, and the
+// three division operators), drawing on both weeks' slides, POGIL Act01/Act02, and Labs 2.10-2.12.
+
+$CATEGORY: Week 02 / Retrieval 3
+
+// ── Section 1: Review from Week 1 ───────────────────────────────────────────
+
+::W02-R3-Q1 Review: Matching Object Types::Match each Python value to its object type.{
+=<code>42</code> -> int
+=<code>3.14</code> -> float
+=<code>"hello"</code> -> str
+=<code>True</code> -> bool
+}
+
+::W02-R3-Q2 Review: SyntaxError vs. NameError (New Example)::
+Running <code>2apples = 5</code> raises a SyntaxError, while running <code>print(total)</code> (when <code>total</code> was never assigned) raises a NameError. What's the real difference between these two errors?{
+=SyntaxError means the code isn't valid Python at all (like a name starting with a digit); NameError means the code is valid Python but uses a name that was never given a value #Correct. <code>2apples</code> can never be a legal name no matter what, but <code>total</code> is a legal-looking name Python simply hasn't seen defined yet.
+~NameError means the code isn't valid Python at all, and SyntaxError means it uses an undefined name #This swaps the two definitions — it's backwards.
+~They're really the same problem; Python just phrases the message differently depending on the situation #They flag different problems: one is about the code's structure, the other is about undefined names.
+~SyntaxError only happens with numbers, and NameError only happens with words #The real distinction is about structure (SyntaxError) vs. undefined names (NameError), not which characters are involved.
+}
+
+::W02-R3-Q3 Review: input() Returns a String::
+<code>age = input("Enter your age: ")</code> followed by <code>print(age + 1)</code> raises a TypeError, even after the user correctly types 20. Why?{
+=input() always returns a string, and Python's + operator can't add a string and an int together without converting one of them first #Correct. age holds the string '20', not the int 20 — it would need <code>int(age) + 1</code> instead.
+~The + operator can only be used with numbers, never with any value that came from input() #Once age is converted with int() or float(), + works on it just like any other number — the issue is age's type, not where it came from.
+~Python doesn't allow arithmetic on variables created using input() #Arithmetic works fine on a converted value; input() itself isn't the problem, its string return type is.
+~The variable name age conflicts with a Python reserved word #age is not a reserved word — it's a perfectly legal variable name.
+}
+
+// ── Section 2: Order of Operations and Tracing (Week 2 slides) ──────────────
+
+::W02-R3-Q4 Order of Operations::
+What is the value of <code>y</code> after running: <code>y = 1 + 2 * 3</code>?{
+=7 #Correct. Multiplication happens before addition, so 2 * 3 is computed first (6), then 1 is added.
+~9 #This is what you'd get by adding 1 + 2 first and then multiplying by 3 — but Python follows standard order of operations, not left-to-right.
+~6 #This only accounts for the multiplication and drops the + 1 entirely.
+~123 #This treats the numbers as if they were being joined as text instead of computed — 1, 2, and 3 are all part of one arithmetic expression, not separate values.
+}
+
+::W02-R3-Q5 Tracing Variable Reassignment::
+Given this code:
+<pre>
+x = 37
+y = x + 2
+x = 20
+x = x + 1
+print(x)
+print(y)
+</pre>
+What does <code>print(y)</code> output?{
+=39 #Correct. y was computed once, at the moment x was still 37 (37 + 2 \= 39). Reassigning x afterward doesn't reach back and change y.
+~21 #That's x's final value (20 + 1), not y's — y was already fixed before x changed.
+~23 #This assumes y automatically recalculates using x's newest value (21 + 2) — but y \= x + 2 only ran once, using x's value at that moment in time.
+~18 #This doesn't match any step of the trace — double check the order the lines actually run in.
+}
+
+// ── Section 3: Floor Division and Modulo (Week 2 Gather-Compute-Use) ────────
+
+::W02-R3-Q6 Weeks and Days::
+Using the Gather-Compute-Use pattern: <code>total_days = int(input("days: "))</code>, <code>weeks = total_days // 7</code>, <code>days = total_days % 7</code> — if the user enters 17, what are the values of <code>weeks</code> and <code>days</code>?{
+=weeks \= 2, days \= 3 #Correct. 17 // 7 is 2 full weeks (14 days), and 17 % 7 is the 3 days left over — 14 + 3 \= 17.
+~weeks \= 17, days \= 7 #This just restates the input and the divisor — it doesn't perform either division.
+~weeks \= 2.43, days \= 3 #This uses / instead of // for weeks — // always rounds down to a whole number, it doesn't leave a decimal.
+~weeks \= 3, days \= 2 #This swaps the two results — // (floor division) gives the whole weeks, and % (modulo) gives the leftover days, not the other way around.
+}
+
+// ── Section 4: Escape Sequences (Week 2 slides) ──────────────────────────────
+
+::W02-R3-Q7 Escaping a Quote Character::
+You want your program to print exactly: <code>Don't say "I can't"</code> — using a Python string written with double quotes as the outer delimiter, like <code>print("...")</code>. Which escape sequence do you need in order to include the double-quote characters inside that string?{
+=<code>\"</code> #Correct. A backslash before a double quote lets you include a literal double-quote inside a string that's itself delimited by double quotes.
+~<code>\\</code> #That escape sequence produces a literal backslash character, not a quote.
+~<code>\'</code> #That escapes a single quote — unnecessary here, since single quotes aren't the string's delimiter and don't need escaping inside a double-quoted string.
+~<code>\n</code> #That inserts a newline, not a quote character.
+}
+
+// ── Section 5: Number Representation Limits (Week 2 slides) ─────────────────
+
+::W02-R3-Q8 Why Python's Ints Don't Overflow::
+This week's slides described a 32-bit counter overflowing in both the Ariane 5 rocket and YouTube's Gangnam Style view count. Why doesn't Python's <code>int</code> type run into this same overflow problem?{
+=Python's ints automatically grow as large as needed (limited only by available memory), instead of being stored in a fixed number of bits #Correct. Unlike a fixed-width 32- or 64-bit integer, Python ints expand to hold arbitrarily large whole numbers.
+~Python doesn't allow numbers larger than 2^31 - 1, so overflow can never happen #This is backwards — a fixed upper limit is exactly what caused the overflow bugs described; Python specifically avoids that limit.
+~Python stores every integer internally as a float, which has no size limit #floats aren't unlimited either — they have their own precision limits, and int and float remain distinct types in Python with different behavior.
+~Python automatically switches to scientific notation once a number gets too large #Python's ints print out in full, however large they are — switching notation wouldn't solve an overflow problem anyway.
+}
+
+::W02-R3-Q9 Floating-Point Precision Limits::
+This week's slides showed that <code>2 ** 53 + 1.0 + 1.0 + 1.0</code> doesn't behave like exact math would suggest. What causes this?{
+=A float only has a limited number of bits of precision (64 bits total), so once a value is large enough, adding small amounts like 1.0 can't always be represented exactly #Correct. This is a fundamental limit of floating-point representation, not a mistake in the expression.
+~** has lower priority than + in Python, so the expression runs in the wrong order #** (exponentiation) correctly happens before any of the additions — operator precedence isn't the issue here.
+~Python rounds every float to the nearest whole number before doing arithmetic #Floats keep their fractional precision during arithmetic; Python doesn't round values like this automatically.
+~This is a bug in Python that will eventually be fixed #This isn't a Python-specific bug — it's a property of binary floating-point representation shared by virtually every programming language.
+}
+
+// ── Section 6: Arithmetic Expressions (POGIL Act02 / Lab 2.10) ──────────────
+
+::W02-R3-Q10 Implicit Multiplication Isn't a Thing::
+In the POGIL Arithmetic activity, typing <code>3(4 + 2)</code> raises a TypeError, even though <code>3 * (4 + 2)</code> works fine and gives 18. Why?{
+=Python interprets <code>3(4 + 2)</code> as trying to call 3 like a function with the argument (4 + 2); numbers aren't callable, so it fails — Python never assumes multiplication just because two things are next to each other #Correct. Unlike math notation on paper, Python always requires an explicit * for multiplication.
+~3(4 + 2) is valid syntax, but it always rounds down to the nearest integer #It isn't valid syntax at all — it raises an error rather than producing any numeric result.
+~Python requires numbers greater than 1 to use ** instead of parentheses #This isn't a real Python rule, and it doesn't explain why the parentheses specifically cause a TypeError.
+~Parentheses can only follow a function name, and using them elsewhere is silently ignored #They aren't silently ignored — using parentheses right after a value is exactly what causes Python to attempt (and fail at) a function call.
+}
+
+// ── Section 7: Turtle Graphics (Lab 2.12) ────────────────────────────────────
+
+::W02-R3-Q11 Moving Without Drawing::
+In the Turtle Stick Figure lab, you need to move the turtle to a new starting position for the legs without drawing a line connecting it to the body. Which pair of commands accomplishes this?{
+=Call penup(), move the turtle, then call pendown() before drawing again #Correct. Lifting the pen stops it from drawing while you reposition the turtle; putting it back down resumes drawing.
+~Call pendown(), move the turtle, then call penup() #This is backwards — the pen is still down while moving (so it draws anyway), and lifted afterward (so nothing draws next, either).
+~Call circle(), which automatically lifts the pen before drawing #circle() draws a circle wherever the turtle currently is — it doesn't change whether the pen is up or down.
+~There's no way to move the turtle without drawing — you have to erase the line afterward #This is exactly what penup() and pendown() are for; no erasing is necessary.
+}
+
+// ── Section 8: The Three Division Operators (POGIL Act02 Model 2) ──────────
+
+::W02-R3-Q12 Matching: Division and Exponent Operators::Match each Python operator to what it computes.{
+=<code>/</code> -> true division (always produces a float result)
+=<code>//</code> -> floor division (rounds down to the nearest whole number)
+=<code>%</code> -> the remainder left over after division
+=<code>**</code> -> exponentiation (raises a number to a power)
+}
