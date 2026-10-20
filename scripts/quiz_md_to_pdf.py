@@ -29,6 +29,7 @@ One paragraph of intro text under the header (e.g. the standard
 ## Q (<N> points)                   Starts a new question, numbered
                                      automatically (1., 2., ...) with its
                                      point value shown, e.g. "1. (4 points)".
+## Q                                Same, but with no point value ("1.").
 
 Prose for the question. Inline `**bold**`, `*italic*`, and `` `code` ``
 are all supported.
@@ -40,6 +41,9 @@ a fenced code block, shown in monospace, no line numbers
 [[BLANK height=140]]                Blank vertical writing space (in
                                      points) for a handwritten answer.
                                      Omit `height=NN` for a default of 60.
+
+- a bullet item                     Inside a question, a line starting with
+                                     "- " is shown as a bulleted item.
 
 [[PAIRS]]                           A 2-column grid of short expressions,
 EX: >>> 'a' + 'b' -> 'ab'           each with blank space below it for a
@@ -60,6 +64,26 @@ EX: >>> 'a' + 'b' -> 'ab'           each with blank space below it for a
                                      A file with no [[VERSION ...]] blocks
                                      at all produces a single, un-suffixed
                                      PDF, exactly as before.
+
+[[CHOICES]]                         A lettered multiple-choice list
+- wrong option                      (a, b, c, ...). Each option is one
+* correct option                    line starting with "- " or "* "; the
+- wrong option                      "* " marks the correct answer, which
+[[/CHOICES]]                        is only highlighted in the --key PDF.
+
+[[KEY]] ... [[/KEY]]                Content (paragraphs, code) shown ONLY
+                                     in the --key PDF, e.g. a sample
+                                     solution for a write-code question.
+
+[[PAGEBREAK]]                       Start a new page here (ignored in the
+                                     --key PDF). Put it just before a
+                                     "## Q" line, inside the previous question.
+
+<!-- ... -->                        HTML comments are ignored.
+
+--key                               Also write <stem>-key.pdf: correct
+                                     choices marked, [[KEY]] blocks shown,
+                                     and answer blanks shrunk.
 ------------------------------------------------------------------------
 """
 
@@ -176,23 +200,36 @@ def highlight_line(line):
 
 RE_TITLE = re.compile(r"^# (.+)$")
 RE_META = re.compile(r"^meta:\s*(.+)$")
-RE_QHEAD = re.compile(r"^## Q \((\d+) points?\)\s*(.*)$")
+RE_QHEAD = re.compile(r"^## Q(?: \((\d+) points?\))?\s*(.*)$")
 RE_BLANK = re.compile(r"^\[\[BLANK(?:\s+height=(\d+))?\s*\]\]$")
 RE_PAIRS_START = re.compile(r"^\[\[PAIRS\]\]$")
 RE_PAIRS_END = re.compile(r"^\[\[/PAIRS\]\]$")
 RE_EXAMPLE = re.compile(r"^EX:\s*(.+?)\s*->\s*(.+)$")
 RE_VERSION_START = re.compile(r"^\[\[VERSION\s+([A-Za-z])\]\]$")
 RE_VERSION_END = re.compile(r"^\[\[/VERSION\]\]$")
+RE_CHOICES_START = re.compile(r"^\[\[CHOICES\]\]$")
+RE_CHOICES_END = re.compile(r"^\[\[/CHOICES\]\]$")
+RE_KEY_START = re.compile(r"^\[\[KEY\]\]$")
+RE_KEY_END = re.compile(r"^\[\[/KEY\]\]$")
+RE_COMMENT = re.compile(r"<!--.*?-->", re.S)
 
 
 def parse(text):
+    text = RE_COMMENT.sub("", text)
     lines = text.split("\n")
     n = len(lines)
     i = 0
     doc = {"title": None, "meta": "", "intro": [], "questions": []}
     current_q = None
     current_version = None  # None = shared by all versions; else 'A', 'B', ...
+    in_key = False  # inside a [[KEY]] block (shown only in the answer key)
     para_buf = []
+
+    def add_block(block):
+        if current_q is not None:
+            block["version"] = current_version
+            block["key"] = in_key
+            current_q["blocks"].append(block)
 
     def flush_para():
         nonlocal para_buf
@@ -204,8 +241,7 @@ def parse(text):
             if current_q is None:
                 doc["intro"].append(joined)
             else:
-                current_q["blocks"].append(
-                    {"type": "para", "text": joined, "version": current_version})
+                add_block({"type": "para", "text": joined})
 
     while i < n:
         line = lines[i].rstrip("\n")
@@ -235,7 +271,7 @@ def parse(text):
             if current_version is not None:
                 sys.exit(f"error: line {lineno}: new question started before "
                          f"[[/VERSION]] closed [[VERSION {current_version}]]")
-            current_q = {"points": int(m.group(1)), "title": m.group(2).strip(), "blocks": []}
+            current_q = {"points": int(m.group(1)) if m.group(1) else None, "title": m.group(2).strip(), "blocks": []}
             doc["questions"].append(current_q)
             i += 1
             continue
@@ -258,6 +294,35 @@ def parse(text):
             i += 1
             continue
 
+        if stripped == "[[PAGEBREAK]]":
+            flush_para()
+            add_block({"type": "pagebreak"})
+            i += 1
+            continue
+
+        if RE_KEY_START.match(stripped) or RE_KEY_END.match(stripped):
+            flush_para()
+            in_key = bool(RE_KEY_START.match(stripped))
+            i += 1
+            continue
+
+        if RE_CHOICES_START.match(stripped):
+            flush_para()
+            options = []
+            i += 1
+            while i < n and not RE_CHOICES_END.match(lines[i].strip()):
+                opt = lines[i].strip()
+                if opt[:2] in ("- ", "* "):
+                    options.append({"text": opt[2:].strip(), "correct": opt[0] == "*"})
+                elif opt:
+                    sys.exit(f"error: line {i + 1}: choice lines must start with '- ' or '* '")
+                i += 1
+            i += 1  # skip [[/CHOICES]]
+            if sum(o["correct"] for o in options) != 1:
+                sys.exit(f"error: line {lineno}: [[CHOICES]] needs exactly one '* ' option")
+            add_block({"type": "choices", "options": options})
+            continue
+
         if stripped.startswith("```"):
             flush_para()
             code_lines = []
@@ -266,18 +331,14 @@ def parse(text):
                 code_lines.append(lines[i].rstrip("\n"))
                 i += 1
             i += 1
-            if current_q is not None:
-                current_q["blocks"].append(
-                    {"type": "code", "lines": code_lines, "version": current_version})
+            add_block({"type": "code", "lines": code_lines})
             continue
 
         m = RE_BLANK.match(stripped)
         if m:
             flush_para()
             height = int(m.group(1)) if m.group(1) else DEFAULT_BLANK_HEIGHT
-            if current_q is not None:
-                current_q["blocks"].append(
-                    {"type": "blank", "height": height, "version": current_version})
+            add_block({"type": "blank", "height": height})
             i += 1
             continue
 
@@ -295,9 +356,13 @@ def parse(text):
                         items.append({"expr": item_line, "answer": None})
                 i += 1
             i += 1  # skip [[/PAIRS]]
-            if current_q is not None:
-                current_q["blocks"].append(
-                    {"type": "pairs", "items": items, "version": current_version})
+            add_block({"type": "pairs", "items": items})
+            continue
+
+        if stripped.startswith("- ") and current_q is not None:
+            flush_para()
+            add_block({"type": "bullet", "text": stripped[2:].strip()})
+            i += 1
             continue
 
         para_buf.append(line)
@@ -307,6 +372,8 @@ def parse(text):
     if current_version is not None:
         sys.exit(f"error: file ended with [[VERSION {current_version}]] still open "
                   f"(missing [[/VERSION]])")
+    if in_key:
+        sys.exit("error: file ended with [[KEY]] still open (missing [[/KEY]])")
     return doc
 
 
@@ -343,6 +410,11 @@ def build_styles():
     add(ParagraphStyle("PairAnswer", fontName="Times-Italic", fontSize=9, leading=11,
                         textColor=colors.Color(0.4, 0.4, 0.4)))
     add(ParagraphStyle("CodeBlock", fontName="Courier", fontSize=9.5, leading=12))
+    add(ParagraphStyle("QuizBullet", fontName="Times-Roman", fontSize=11, leading=14.5,
+                        leftIndent=24, bulletIndent=12, spaceAfter=2))
+    add(ParagraphStyle("Choice", fontName="Times-Roman", fontSize=11, leading=14))
+    add(ParagraphStyle("KeyNote", fontName="Times-Bold", fontSize=10, leading=13,
+                        textColor=colors.Color(0.1, 0.45, 0.1), spaceBefore=2, spaceAfter=2))
     return ss
 
 
@@ -392,10 +464,10 @@ def render_pairs(items, styles):
     rows = []
     row = []
     for item in items:
-        cell_flow = [Paragraph(inline_markup(item["expr"]), styles["PairExpr"])]
+        cell_flow = [Paragraph(xml_escape(item["expr"]), styles["PairExpr"])]
         if item["answer"] is not None:
             cell_flow.append(Paragraph(
-                inline_markup(item["answer"]) + "  <i>&mdash; example answer</i>",
+                xml_escape(item["answer"]) + "  <i>&mdash; example answer</i>",
                 styles["PairAnswer"]))
         else:
             cell_flow.append(Spacer(1, DEFAULT_PAIR_BLANK_HEIGHT))
@@ -418,7 +490,42 @@ def render_pairs(items, styles):
     return t
 
 
-def render_question(n, q, styles, version=None):
+SHORT_CHOICE_CHARS = 34  # options at most this long are laid out two per row
+
+
+def render_choices(options, styles, key=False):
+    cells = []
+    for idx, opt in enumerate(options):
+        text = inline_markup(opt["text"])
+        label = "%s)" % chr(ord("a") + idx)
+        if key and opt["correct"]:
+            text = '<b>%s</b>  <font color="#1a731a"><b>[correct]</b></font>' % text
+            label = "<b>%s</b>" % label
+        cells.append([Paragraph(label, styles["Choice"]), Paragraph(text, styles["Choice"])])
+
+    two_cols = all(len(o["text"].replace("`", "")) <= SHORT_CHOICE_CHARS for o in options)
+    if two_cols:
+        half = (CONTENT_WIDTH - 12) / 2
+        rows = [cells[i] + (cells[i + 1] if i + 1 < len(cells) else ["", ""])
+                for i in range(0, len(cells), 2)]
+        widths = [24, half - 24, 24, half - 24]
+    else:
+        rows = cells
+        widths = [24, CONTENT_WIDTH - 24 - 12]
+    t = Table(rows, colWidths=widths)
+    t.setStyle(TableStyle([
+        ("VALIGN", (0, 0), (-1, -1), "TOP"),
+        ("LEFTPADDING", (0, 0), (-1, -1), 0),
+        ("LEFTPADDING", (0, 0), (0, -1), 12),
+        ("LEFTPADDING", (2 if two_cols else 0, 0), (2 if two_cols else 0, -1), 12),
+        ("RIGHTPADDING", (0, 0), (-1, -1), 0),
+        ("TOPPADDING", (0, 0), (-1, -1), 1.5),
+        ("BOTTOMPADDING", (0, 0), (-1, -1), 1.5),
+    ]))
+    return t
+
+
+def render_question(n, q, styles, version=None, key=False):
     """Render one question as a list of SEGMENTS (each a list of flowables),
     keeping only blocks shared by all versions (block["version"] is None)
     plus blocks tagged for the requested `version` letter. Pass version=None
@@ -433,25 +540,42 @@ def render_question(n, q, styles, version=None):
     prompt and its own answer space.
     """
     points = q["points"]
-    unit = "point" if points == 1 else "points"
     segments = []
-    current = [Paragraph("%d. (%d %s)" % (n, points, unit), styles["QHeading"])]
+    if points is None:
+        heading = "%d." % n
+    else:
+        heading = "%d. (%d %s)" % (n, points, "point" if points == 1 else "points")
+    current = [Paragraph(heading, styles["QHeading"])]
     for block in q["blocks"]:
         block_version = block.get("version")
         if block_version is not None and block_version != version:
             continue
+        if block.get("key") and not key:
+            continue
         t = block["type"]
         if t == "para":
-            current.append(Paragraph(inline_markup(block["text"]), styles["Body"]))
+            style = styles["KeyNote"] if block.get("key") else styles["Body"]
+            current.append(Paragraph(inline_markup(block["text"]), style))
         elif t == "code":
             current.append(render_code_block(block["lines"], styles))
             current.append(Spacer(1, 4))
         elif t == "blank":
-            current.append(Spacer(1, block["height"]))
+            current.append(Spacer(1, 8 if key else block["height"]))
             segments.append(current)
             current = []
+        elif t == "bullet":
+            current.append(Paragraph(inline_markup(block["text"]), styles["QuizBullet"],
+                                     bulletText="•"))
         elif t == "pairs":
             current.append(render_pairs(block["items"], styles))
+        elif t == "choices":
+            current.append(render_choices(block["options"], styles, key=key))
+            current.append(Spacer(1, 4))
+        elif t == "pagebreak" and not key:
+            if current:
+                segments.append(current)
+            segments.append([PageBreak()])
+            current = []
     if current:
         segments.append(current)
     return segments
@@ -471,12 +595,17 @@ def make_on_page():
     return _on_page
 
 
-def build_pdf(doc_data, out_path, version=None):
+def build_pdf(doc_data, out_path, version=None, key=False):
     styles = build_styles()
+    if key:
+        doc_data = dict(doc_data, title=doc_data["title"] + " (ANSWER KEY)")
     story = render_header(doc_data, styles)
     for idx, q in enumerate(doc_data["questions"], start=1):
-        for segment in render_question(idx, q, styles, version=version):
-            story.append(KeepTogether(segment))
+        for segment in render_question(idx, q, styles, version=version, key=key):
+            if len(segment) == 1 and isinstance(segment[0], PageBreak):
+                story.append(segment[0])
+            else:
+                story.append(KeepTogether(segment))
 
     doc = BaseDocTemplate(
         str(out_path), pagesize=LETTER,
@@ -495,6 +624,8 @@ def main():
     ap.add_argument("source", type=Path, help="Path to the quiz's .md source file")
     ap.add_argument("--out-dir", type=Path, default=None,
                      help="Directory to write the PDF into (default: source's folder)")
+    ap.add_argument("--key", action="store_true",
+                     help="Also write an answer-key PDF (<stem>-key.pdf)")
     args = ap.parse_args()
 
     text = args.source.read_text(encoding="utf-8")
@@ -502,7 +633,7 @@ def main():
     if not doc_data["title"] or not doc_data["questions"]:
         sys.exit("error: could not find a title and/or any '## Q (...)' questions")
 
-    total_points = sum(q["points"] for q in doc_data["questions"])
+    total_points = sum(q["points"] or 0 for q in doc_data["questions"])
     n_questions = len(doc_data["questions"])
 
     out_dir = args.out_dir or args.source.parent
@@ -515,10 +646,18 @@ def main():
             build_pdf(doc_data, out_path, version=letter)
             print(f"wrote {out_path}  ({n_questions} questions, {total_points} points, "
                   f"version {letter})")
+            if args.key:
+                key_path = out_dir / f"{args.source.stem}{letter.lower()}-key.pdf"
+                build_pdf(doc_data, key_path, version=letter, key=True)
+                print(f"wrote {key_path}  (answer key, version {letter})")
     else:
         out_path = out_dir / f"{args.source.stem}.pdf"
         build_pdf(doc_data, out_path)
         print(f"wrote {out_path}  ({n_questions} questions, {total_points} points)")
+        if args.key:
+            key_path = out_dir / f"{args.source.stem}-key.pdf"
+            build_pdf(doc_data, key_path, key=True)
+            print(f"wrote {key_path}  (answer key)")
 
 
 if __name__ == "__main__":

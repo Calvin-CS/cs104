@@ -131,7 +131,7 @@ Studies show that [internet-enabled electronic devices in the classroom reduce s
 
 Rather than banning devices, this course practices using technology **within limits**:
 
-- Use smartphones/laptops for completing retrieval quizzes and polls during designated times
+- Use smartphones/laptops for polls during designated times
 - Use laptops for taking notes or attempting programming tasks as directed
 - Beyond those uses, technology use in class is limited to critical messages only
 

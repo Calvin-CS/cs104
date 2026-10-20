@@ -19,6 +19,21 @@ Serving each other by helping each other learn
 
 ---
 
+# Let's read the syllabus!
+
+---
+
+# Failure Tips
+
+Great ways to **fail** this class:
+- Skim over the readings
+- Skip classes
+- Do the lab/homework exercises with AI
+  - Quizzes are supposed to be easy if you actually do the exercises yourself!
+- Do not seek help
+
+---
+
 # Program
 
 ---
