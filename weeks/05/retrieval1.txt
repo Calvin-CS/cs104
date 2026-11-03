@@ -1,0 +1,87 @@
+// Week 05 Retrieval Quiz 1 — review of last week's content — GIFT format
+// Import into Moodle: Question bank > Import > GIFT format
+// 6 questions drawn from Week 4's Conditionals slide deck (Boolean Operators, operator
+// precedence, Leap Year, the "== True" anti-pattern, if/elif/else structure, and the
+// "max of three without max()" exercise). Chosen to avoid repeating questions already
+// used in weeks/04/retrieval1.txt and weeks/04/retrieval2.txt.
+
+$CATEGORY: Week 05 / Retrieval 1
+
+// ── Section 1: Categories of Boolean Operators ──────────────────────────────
+
+::W05-R1-Q1 Categorizing Boolean Operators::Match each operator to the category of boolean operator it belongs to, as listed on the Conditionals slides.{
+=> -> Comparison
+=and -> Logical
+=in -> Membership
+=is -> Identity
+}
+
+// ── Section 2: Operator Precedence (not, and, or) ───────────────────────────
+
+::W05-R1-Q2 Evaluating not a and b or c::
+Suppose <code>a = True</code>, <code>b = False</code>, and <code>c = True</code>. What is the value of <code>not a and b or c</code>?{
+=True #Correct. Precedence is <code>not</code>, then <code>and</code>, then <code>or</code>\: first <code>not a</code> is False, then <code>False and b</code> is False, then <code>False or c</code> is True.
+~False — assuming <code>not</code> applies to the whole expression, computing <code>not (a and b or c)</code> instead of just negating a #<code>not</code> binds only to the operand right after it (here, just <code>a</code>) — it doesn't reach across the rest of the expression.
+~False — assuming <code>or</code> groups tighter than <code>and</code>, computing <code>not a and (b or c)</code> instead of <code>(not a and b) or c</code> #<code>and</code> actually binds tighter than <code>or</code>, so the <code>and</code> is evaluated first, not the <code>or</code>.
+~A SyntaxError, since chaining not, and, and or together without parentheses isn't allowed #Chaining these three operators without parentheses is completely valid Python — it's exactly how the precedence rules are meant to be used.
+}
+
+// ── Section 3: Leap Year ─────────────────────────────────────────────────────
+
+::W05-R1-Q3 The Leap Year Expression::
+A leap year is divisible by 4 and not divisible by 100, OR divisible by 400. Which expression correctly tests this for <code>year</code>?{
+=<code>(year % 4 \=\= 0 and year % 100 !\= 0) or year % 400 \=\= 0</code> #Correct. This matches the rule exactly\: divisible by 4 but not by 100, or divisible by 400 regardless.
+~<code>year % 4 \=\= 0 and year % 100 \=\= 0 or year % 400 \=\= 0</code> #This uses \=\= instead of !\= for the "not divisible by 100" part, so it wrongly requires the year to BE divisible by 100 — this incorrectly rejects an ordinary leap year like 2024, which is divisible by 4 but not by 100.
+~<code>year % 4 \=\= 0 and not year % 100 \=\= 0 and year % 400 \=\= 0</code> #This uses "and" where "or" belongs before the div-400 check, requiring the year to also be divisible by 400 — this wrongly rejects an ordinary leap year like 2024, which isn't divisible by 400.
+~<code>year % 4 !\= 0 and year % 100 \=\= 0 or year % 400 \=\= 0</code> #This flips the first check to "NOT divisible by 4," the opposite of what's needed — this wrongly marks an ordinary leap year like 2024 (which IS divisible by 4) as not a leap year.
+}
+
+// ── Section 4: The == True Anti-Pattern ──────────────────────────────────────
+
+::W05-R1-Q4 What 2 == 2 == True Actually Does::
+The slides warn that writing <code>if condition == True:</code> can make the wrong thing happen, using <code>2 == 2 == True</code> as the example. What does <code>2 == 2 == True</code> actually evaluate to?{
+=False #Correct. Chained comparisons require every link to hold\: this means <code>(2 \=\= 2) and (2 \=\= True)</code>. The first part is True, but <code>2 \=\= True</code> is False (True equals 1, not 2), so the whole chain is False.
+~True, because <code>2 \=\= 2</code> is already True, and once one part of a chained comparison is True, the whole chain is True #Chained comparisons work like <code>and</code>, requiring every linked comparison to hold — not like <code>or</code>, where just one true part is enough.
+~True, because True is "truth-y," and comparing any number to something truth-y always succeeds #Being truth-y (usable where a bool is expected) is different from being equal to True in an <code>\=\=</code> comparison — True only equals the number 1, so comparing it to 2 is False.
+~A TypeError, since you can't use \=\= to compare an int to a bool #Comparing an int and a bool with \=\= is completely valid in Python — bool is actually a subclass of int, so <code>True \=\= 1</code> and <code>False \=\= 0</code> both hold.
+}
+
+// ── Section 5: if/elif/else Structure Rules ──────────────────────────────────
+
+::W05-R1-Q5 How Many elif and else Blocks Are Allowed?::
+According to the if/elif/else syntax from class, which statement correctly describes the rules for elif and else?{
+=You can chain as many elif blocks as you like after an if, but at most one else is allowed, and it must come last #Correct. elif and else are both optional, elif can repeat any number of times, and else (if present) is limited to a single block at the very end.
+~You must include exactly one elif block whenever you use an if statement #elif is optional — a bare if with no elif or else at all is completely valid Python.
+~You can have multiple else blocks, as long as each is given a different condition #else never takes a condition of its own, and only one else block is allowed per if statement — not several.
+~elif and else must both be present whenever you use an if statement #Both are optional; you can use a plain if by itself with no elif or else at all.
+}
+
+// ── Section 6: Max of Three Without max() ───────────────────────────────────
+
+::W05-R1-Q6 Finding the Max of Three Values::
+For the "max of three" exercise (finding the largest of x, y, z without using the built-in <code>max</code> function), which code segment correctly computes <code>my_max</code>?{
+=<pre>
+my_max \= x
+if y > my_max\:
+    my_max \= y
+if z > my_max\:
+    my_max \= z
+</pre> #Correct. Each comparison is a separate, independent if, so z is always checked against the current my_max — whether or not y already updated it.
+~<pre>
+my_max \= x
+if y > my_max\:
+    my_max \= y
+elif z > my_max\:
+    my_max \= z
+</pre> #Using elif here is a bug\: if y already updated my_max, the elif branch for z is skipped entirely, even when z is actually the largest value. E.g. x\=1, y\=5, z\=10 wrongly leaves my_max at 5 instead of 10.
+~<pre>
+my_max \= x
+if y > my_max\:
+    my_max \= y
+</pre> #This never compares against z at all, so z is silently ignored even when it's the largest of the three.
+~<pre>
+my_max \= x
+if y > my_max and z > my_max\:
+    my_max \= y
+</pre> #Requiring both y and z to exceed my_max at the same time means my_max is only updated when y and z are BOTH bigger than x — and even then it's set to y, not necessarily the true largest of the three.
+}

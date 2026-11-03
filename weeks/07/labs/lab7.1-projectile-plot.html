@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Lab 7.1 — Plotting Projectile Height</title>
+<style>
+  body { font-family: Arial, Helvetica, sans-serif; color: #202124; max-width: 760px; margin: 2rem auto; line-height: 1.5; }
+  h1 { font-size: 1.5rem; margin-bottom: 0.2rem; }
+  .activity-badge { display: flex; align-items: center; gap: 0.75rem; border-left: 4px solid #2e7d32; background: #f3f7f3; padding: 0.6rem 1rem; margin: 1rem 0 1.4rem; font-size: 0.95rem; }
+  .activity-badge .tag { font-weight: bold; color: #2e7d32; font-size: 0.75rem; letter-spacing: 0.04em; }
+  .activity-badge .points { margin-left: auto; color: #555; }
+  code, .inline-code { font-family: "Courier New", Courier, monospace; background: #f1f1f1; padding: 0.1rem 0.3rem; border-radius: 3px; font-size: 0.92em; }
+  pre.codeblock { background: #f5f5f5; border: 1px solid #ccc; border-radius: 4px; padding: 0.75rem 1rem; font-family: "Courier New", Courier, monospace; font-size: 0.9rem; overflow-x: auto; }
+  pre.run { background: #fafafa; border: 1px solid #ddd; border-radius: 4px; padding: 0.75rem 1rem; font-family: "Courier New", Courier, monospace; font-size: 0.9rem; }
+  pre.run .input { color: #1a56db; }
+  ol, ul { padding-left: 1.4rem; }
+  ol li, ul li { margin-bottom: 0.35rem; }
+  h2.grading { font-size: 1.05rem; margin-top: 1.6rem; }
+  ul.grading-list { list-style: none; padding-left: 0; }
+  ul.grading-list li { margin-bottom: 0.2rem; }
+  .note { font-size: 0.85rem; color: #666; font-style: italic; }
+  .figure-placeholder { border: 1px dashed #aaa; border-radius: 4px; padding: 2rem 1rem; text-align: center; color: #777; font-size: 0.9rem; background: #fcfcfc; }
+</style>
+</head>
+<body>
+
+<h1>7.1 Plotting Projectile Height (Lab 7.1)</h1>
+
+<div class="activity-badge">
+  <span class="tag">LAB<br>ACTIVITY</span>
+  <span>7.1.1: Plotting Projectile Height (Lab 7.1)</span>
+  <span class="points">0 / 20</span>
+</div>
+
+<p>A ball is thrown straight upward with initial velocity <code>v0</code> (in m/s). Ignoring air resistance, its height above the ground at time <code>t</code> (in seconds) is given by:</p>
+<pre class="codeblock">h(t) = v0 * t - 0.5 * g * t ** 2</pre>
+<p>where <code>g = 9.8</code> (the acceleration of gravity, in m/s²). In this exercise you will use NumPy to compute the ball's height over its whole flight, and Matplotlib to plot it.</p>
+
+<p>First, download this template and rename it <code>plot_projectile.py</code>:</p>
+<ul>
+  <li><em>template.py</em> <span class="note">(replace with your course's actual template link)</span></li>
+</ul>
+
+<ol>
+  <li><strong>Import</strong> the <code>numpy</code> and <code>matplotlib.pyplot</code> libraries (already included in the template).</li>
+  <li><strong>Prompt for and read</strong> the initial velocity <code>v0</code> as a float, in m/s.</li>
+  <li><strong>Compute</strong> the total flight time <code>t_total</code> — the moment the ball returns to height 0 — using <code>t_total = 2 * v0 / g</code>.</li>
+  <li><strong>Create</strong> a NumPy array <code>t</code> of 100 evenly spaced time values from <code>0</code> to <code>t_total</code>, using <code>np.linspace</code>.</li>
+  <li><strong>Compute</strong> an array <code>h</code> holding the height at each value in <code>t</code>, using the formula above (applied to the whole array at once — no loop needed).</li>
+  <li><strong>Plot</strong> <code>h</code> versus <code>t</code> with <code>plt.plot(t, h)</code>.</li>
+  <li><strong>Label</strong> the x-axis <code>"Time (s)"</code>, the y-axis <code>"Height (m)"</code>, and set the title to <code>"Projectile Height"</code>.</li>
+  <li><strong>Turn on the grid</strong> with <code>plt.grid(True)</code>, then call <code>plt.show()</code>.</li>
+</ol>
+
+<p>Here is an example execution, for an initial velocity of 20 m/s. The ball should peak at a height of <code>v0<sup>2</sup> / (2*g)</code> ≈ 20.4 m, at time <code>v0 / g</code> ≈ 2.04 s, and land again at <code>t_total</code> ≈ 4.08 s.</p>
+<pre class="run">Initial velocity (m/s): <span class="input">20</span></pre>
+<div class="figure-placeholder">[ a smooth upward-then-downward parabola, starting and ending at height 0,<br>peaking at about (2.04 s, 20.4 m), with labeled axes, a title, and a grid ]</div>
+
+<h2 class="grading">Grading</h2>
+<ul class="grading-list">
+  <li><strong>90% — Correctness:</strong> Your program should run as specified, computing the full height array with NumPy and producing a correctly labeled plot.</li>
+  <li><strong>10% — Understandability:</strong> Your program should be easy to read.</li>
+</ul>
+
+</body>
+</html>

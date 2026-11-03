@@ -1,0 +1,92 @@
+// Week 07 Retrieval Quiz 2 — Quiz 3 prep: NumPy arrays and Matplotlib plots — GIFT format
+// Import into Moodle: Question bank > Import > GIFT format
+// 6 questions practicing the NumPy/Matplotlib skills Quiz 3 asks for\: list vs. NumPy
+// array multiplication, np.arange vs. np.linspace, element-wise array math, and
+// predicting what a labeled Matplotlib plot looks like. The function-writing prep
+// questions live in weeks/07/retrieval1.txt.
+
+$CATEGORY: Week 07 / Retrieval 2
+
+// ── Section 1: Why NumPy Arrays Instead of Lists ─────────────────────────────
+
+::W07-R2-Q1 Multiplying a List of Prices by 1.1::
+<pre>
+prices = [10, 20, 30]
+prices * 1.1
+</pre>
+What happens when this runs, and how would using a NumPy array instead change the result?{
+=A TypeError, since a plain list can't be multiplied by a float — but <code>np.array([10, 20, 30]) * 1.1</code> works, multiplying every element and giving <code>[11. 22. 33.]</code> #Correct. Lists only support multiplying by an int (which repeats the list), not a float; NumPy arrays redefine * to do element-by-element math instead.
+~A TypeError either way — NumPy arrays can't be multiplied by a float either #NumPy arrays are specifically built to support this — array * float scales every element, which is one of the main reasons to use arrays for this kind of math.
+~[11, 22, 33] — Python lists automatically do element-by-element multiplication with a float #Plain lists don't support this at all; multiplying a list by a float raises a TypeError. Only multiplying a list by an INT is defined, and that repeats the list rather than scaling its values.
+~[10, 20, 30, 10, 20, 30, 10, 20, 30] — the list gets repeated (10 times 1.1, rounded to 10 times over) #Repetition only happens when a list is multiplied by an INTEGER; multiplying by a float like 1.1 isn't repetition at all — it raises a TypeError for a plain list.
+}
+
+// ── Section 2: np.arange vs. np.linspace ─────────────────────────────────────
+
+::W07-R2-Q2 arange's Step vs. linspace's Count::
+<code>np.arange(start, stop, step)</code> and <code>np.linspace(start, stop, num)</code> both build arrays of numbers, but their arguments mean different things. Which statement correctly describes a key difference?{
+=arange's third argument is the SIZE OF EACH STEP between values (and stop is excluded, like range()), while linspace's third argument is the TOTAL NUMBER of evenly spaced points to generate (and stop IS included) #Correct. <code>np.arange(0, 10, 2)</code> steps by 2 up to (not including) 10, while <code>np.linspace(0, 1, 5)</code> produces exactly 5 points spanning 0 through 1 inclusive.
+~Both functions treat their third argument as a step size, and both exclude the stop value #linspace's third argument is a COUNT of points, not a step size, and linspace specifically includes the stop value — it does not exclude it the way arange does.
+~Both functions treat their third argument as a total count of points, and both include the stop value #arange's third argument is a step SIZE, not a point count, and arange excludes the stop value, just like range() does.
+~arange and linspace are just two different names for the exact same function #They take their third argument to mean different things entirely (a step size vs. a point count) and disagree on whether stop is included — they are not interchangeable.
+}
+
+// ── Section 3: Lists vs. NumPy Arrays ────────────────────────────────────────
+
+::W07-R2-Q3 Multiplying a List vs. an Array by 3::
+<pre>
+import numpy as np
+values = [4, 5]
+arr = np.array(values)
+print(values * 3)
+print(arr * 3)
+</pre>
+What do the two print statements output?{
+=[4, 5, 4, 5, 4, 5] and then [12 15] — multiplying a list by an integer REPEATS the list, while multiplying a NumPy array by a number multiplies EACH ELEMENT #Correct. The same * operator means two different things. For a list it is repetition (three copies joined end to end); for a NumPy array it is element-by-element math.
+~[12, 15] and then [12 15] — both multiply each element by 3 #Plain Python lists don't do element-by-element math. list * int repeats the list's contents; only the NumPy array scales each value.
+~[12, 15] and then [4 5 4 5 4 5] — the list is scaled and the array is repeated #This has the two behaviors backwards. It's the plain list that gets repeated and the NumPy array that gets multiplied element by element.
+~A TypeError on the first print, and then [12 15] — a list can't be multiplied by a number #A list can't be multiplied by a FLOAT (like 1.1), but multiplying by an INTEGER is allowed — it repeats the list that many times.
+}
+
+::W07-R2-Q4 Squaring Every Element of an Array::
+<pre>
+import numpy as np
+x = np.array([0, 1, 2, 3])
+y = x ** 2
+print(y)
+</pre>
+What does this print?{
+=[0 1 4 9] #Correct. Array math is element-by-element, so ** 2 squares every value in x at once, with no loop needed. This is exactly how an array of x values gets turned into an array of y values for a plot.
+~[0 2 4 6] #This is what <code>x * 2</code> would give. The ** operator is exponentiation, so each element is squared, not doubled.
+~[0 1 2 3 0 1 2 3] #This is list-style repetition, which doesn't apply here — x is a NumPy array (and the operator is ** rather than *), so the math happens to each element.
+~A TypeError, because you need a for loop to square each element of an array #No loop is needed. Applying an operation to a whole NumPy array at once is the main reason to use arrays instead of lists.
+}
+
+// ── Section 4: Reading a Matplotlib Plot from Its Code ──────────────────────
+
+::W07-R2-Q5 Predicting What a Plot Looks Like::
+<pre>
+import numpy as np
+import matplotlib.pyplot as plt
+x = np.linspace(0, 5, 50)
+y = 2 * x
+plt.plot(x, y)
+plt.xlabel("Time (s)")
+plt.ylabel("Distance (m)")
+plt.title("Constant Speed")
+plt.show()
+</pre>
+If you had to sketch the resulting plot by hand, which description matches it?{
+=A straight line rising from (0, 0) to (5, 10), with "Time (s)" under the horizontal axis, "Distance (m)" along the vertical axis, and "Constant Speed" centered above the plot #Correct. x runs from 0 to 5, each y is twice its x (so y runs from 0 to 10), xlabel names the horizontal axis, ylabel names the vertical axis, and title goes on top.
+~A straight line rising from (0, 0) to (5, 10), with "Distance (m)" under the horizontal axis, "Time (s)" along the vertical axis, and "Constant Speed" centered above the plot #The axis labels are swapped. xlabel always labels the horizontal (x) axis and ylabel always labels the vertical (y) axis.
+~A curve that bends upward more and more steeply from (0, 0) to (5, 25), with "Time (s)" under the horizontal axis and "Distance (m)" along the vertical axis #That bending shape and the endpoint (5, 25) belong to <code>y \= x ** 2</code>. Here y is 2 * x, which grows at a steady rate and so plots as a straight line.
+~A straight line rising from (0, 0) to (50, 100), with "Time (s)" under the horizontal axis and "Distance (m)" along the vertical axis #The 50 in linspace is the NUMBER of points, not where x stops. x still only runs from 0 to 5; there are just 50 evenly spaced values along the way.
+}
+
+::W07-R2-Q6 What Each Plotting Function Does::Match each Matplotlib call to what it contributes to the plot.{
+=plt.plot(x, y) -> Draws a line through the (x, y) points
+=plt.xlabel("...") -> Puts a label under the horizontal axis
+=plt.ylabel("...") -> Puts a label along the vertical axis
+=plt.title("...") -> Puts a heading above the plot
+=plt.show() -> Opens the window that displays the finished plot
+}
