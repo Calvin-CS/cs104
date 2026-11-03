@@ -1,8 +1,6 @@
 # CS-104 Retrieval Quiz
 meta: Fall 2026 · Week 6, Wednesday
 
-Closed book, no devices. For questions 1–3, circle the one best answer. For question 4, write your code in the space provided (no algorithm, documentation, or test cases needed).
-
 <!-- Covers: POGIL Act06 (flow of execution, arguments, return values), Labs 6.12-6.15; uses Week 5 loops. -->
 
 ## Q

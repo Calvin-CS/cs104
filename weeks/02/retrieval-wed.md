@@ -1,8 +1,6 @@
 # CS-104 Retrieval Quiz
 meta: Fall 2026 · Week 2, Wednesday
 
-Closed book, no devices. For questions 1–3, circle the one best answer. For question 4, write your code in the space provided (no algorithm, documentation, or test cases needed).
-
 <!-- Covers: POGIL Act02 (Python calculator, dividing numbers, ints and floats), Labs 2.10-2.11; reviews Week 1 errors. -->
 
 ## Q

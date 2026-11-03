@@ -1,8 +1,6 @@
 # CS-104 Retrieval Quiz
 meta: Fall 2026 · Week 2, Monday
 
-Closed book, no devices. For questions 1–3, circle the one best answer. For question 4, write your code in the space provided (no algorithm, documentation, or test cases needed).
-
 <!-- Covers: review of Week 1 Friday slides (objects vs. variables, print, input, int/float conversion; Exercises 1.c.2 and 1.c.3). -->
 
 ## Q

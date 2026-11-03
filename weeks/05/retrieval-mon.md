@@ -1,8 +1,6 @@
 # CS-104 Retrieval Quiz
 meta: Fall 2026 · Week 5, Monday
 
-Closed book, no devices. For questions 1–3, circle the one best answer. For question 4, write your code in the space provided (no algorithm, documentation, or test cases needed).
-
 <!-- Quiz 2 prep: range (including counting down), for loops with if, while-loop accumulators, sentinel loops, tracking the largest value (POGIL Act05). -->
 
 ## Q

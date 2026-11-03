@@ -1,8 +1,6 @@
 # CS-104 Retrieval Quiz
 meta: Fall 2026 · Week 4, Monday
 
-Closed book, no devices. For questions 1–3, circle the one best answer. For question 4, write your code in the space provided (no algorithm, documentation, or test cases needed).
-
 <!-- Covers: review of Week 3 (aliasing, immutable strings, negative indexing, Exercise 3.b.1 dictionaries). -->
 
 ## Q

@@ -1,9 +1,7 @@
 # CS-104 Retrieval Quiz
 meta: Fall 2026 · Week 1, Friday
 
-Closed book, no devices. For questions 1–3, circle the one best answer. For question 4, write your code in the space provided (no algorithm, documentation, or test cases needed).
-
-<!-- Covers: Week 1 slides (objects, variables, input), POGIL Act01 (Thonny, built-in functions, variables and assignment). -->
+<!-- Covers: Week 1 slides (objects, variables, input), POGIL Act01 (Thonny, built-in functions, variables and assignment); Q4: objects vs. variable names and the int/float/str types. -->
 
 ## Q
 
@@ -56,22 +54,22 @@ What happens?
 
 ## Q
 
-Write a program that asks the user for their name and their age in years, and then prints about how many days old they are (age × 365). For example:
+Variable names and objects are different things: an **object** is a piece of data (like `123` or `"hi"`), and a **variable** is a name that refers to an object. For each item below, write whether it is an **object** or a **variable name**. If it is an object, also write its type: `int`, `float`, or `str`.
 
-```python
-Name: Ana
-Age: 20
-Ana is about 7300 days old
-```
-
-[[BLANK height=170]]
+[[PAIRS]]
+EX: 12 -> object, int
+"bye"
+bye
+75
+count_2
+2.5
+"2.5"
+total
+'x'
+-4
+"7"
+[[/PAIRS]]
 
 [[KEY]]
-Sample solution:
-
-```python
-name = input("Name: ")
-age = int(input("Age: "))
-print(name, "is about", age * 365, "days old")
-```
+`"bye"` object, str; `bye` variable name; `75` object, int; `count_2` variable name; `2.5` object, float; `"2.5"` object, str (the quotes make it text); `total` variable name; `'x'` object, str; `-4` object, int; `"7"` object, str.
 [[/KEY]]

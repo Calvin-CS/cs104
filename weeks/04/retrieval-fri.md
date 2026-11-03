@@ -1,8 +1,6 @@
 # CS-104 Retrieval Quiz
 meta: Fall 2026 · Week 4, Friday
 
-Closed book, no devices. For questions 1–3, circle the one best answer. For question 4, write your code in the space provided (no algorithm, documentation, or test cases needed).
-
 <!-- Covers: Conditionals (elif order, input() types, Automobile Service Cost lab) plus boolean precedence (not/and/or). -->
 
 ## Q

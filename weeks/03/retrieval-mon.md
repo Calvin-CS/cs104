@@ -1,8 +1,6 @@
 # CS-104 Retrieval Quiz
 meta: Fall 2026 · Week 3, Monday
 
-Closed book, no devices. For questions 1–3, circle the one best answer. For question 4, write your code in the space provided (no algorithm, documentation, or test cases needed).
-
 <!-- Quiz 1 prep: strings (repetition, indexing, upper/lower), int() conversion, lists, and dictionaries from POGIL Act03. -->
 
 ## Q
