@@ -1,0 +1,99 @@
+// Week 04 Retrieval Quiz 2 — Conditionals — GIFT format
+// Import into Moodle: Question bank > Import > GIFT format
+// 7 questions covering the Conditionals slide deck / Act04-Conditions POGIL activity and
+// Labs 4.11-4.13 (Automobile Service Cost, Wind Chill, Zeller's Congruence). Chosen to
+// avoid repeating questions already used in weeks/04/retrieval1.txt.
+
+$CATEGORY: Week 04 / Retrieval 2
+
+// ── Section 1: Truthy Values (Conditionals slides / Act04-Conditions) ───────
+
+::W04-R2-Q1 A bool That Isn't Always a bool::
+Consider <code>result = (a == 3 or 4)</code>. If <code>a</code> is NOT 3, what is the value of <code>result</code>, and what does <code>bool(result)</code> evaluate to?{
+=<code>result</code> is <code>4</code> (the plain int, not a bool) — because <code>a \=\= 3</code> is False, and <code>False or 4</code> returns 4; since 4 is "truth-y", <code>bool(result)</code> is still True #Correct. <code>or</code> returns whichever operand decided the result, not necessarily a bool — here that's the int 4, and any nonzero int counts as truth-y.
+~<code>result</code> is <code>False</code>, since <code>a \=\= 3</code> was False #<code>or</code> doesn't stop at the first False operand and return False — it moves on to evaluate and return the second operand, which is 4 here.
+~<code>result</code> is <code>True</code>, since Python automatically converts the 4 into a boolean #<code>or</code> doesn't convert its operands to bool — it returns one of the original operands as-is, which is the int 4, not the bool True.
+~This raises a TypeError, since you can't use <code>or</code> between a bool and an int #Mixing a bool expression with an int in an <code>or</code> is completely valid Python — no error occurs.
+}
+
+// ── Section 2: if vs. elif (Conditionals slides) ────────────────────────────
+
+::W04-R2-Q2 Two Separate ifs Instead of elif::
+<pre>
+x = 95
+if x >= 90:
+    print("You've got an A")
+if x >= 80:
+    print("You've got a B")
+else:
+    print("Keep studying!")
+</pre>
+What does this print, and why is it a bug?{
+=Both "You've got an A" and "You've got a B" print — because the two <code>if</code> statements are completely independent, so even after the first one triggers, the second <code>if</code> is still checked on its own, and 95 >\= 80 is also true #Correct. Separate <code>if</code> statements don't know about each other; only chaining them with <code>elif</code> would make the second check "else, if x >\= 80" instead of an unrelated new check.
+~Only "You've got an A" prints, since Python stops checking further ifs once one has matched #Plain <code>if</code> statements never short-circuit each other this way — only an <code>elif</code>/<code>else</code> chain skips later branches once one matches.
+~"Keep studying!" prints instead of "You've got an A" #The first <code>if</code> (<code>x >\= 90</code>) is true for x\=95, so "You've got an A" definitely prints; "Keep studying!" would only print if both the second <code>if</code>'s condition and its <code>else</code> triggered, which isn't the case here.
+~This raises a syntax error, since you can't have two if statements about the same variable in a row #Two separate, unrelated if statements are entirely legal Python syntax — the bug is a logic error, not a syntax error.
+}
+
+// ── Section 3: Chained Comparisons (Conditionals slides — Teenager) ─────────
+
+::W04-R2-Q3 Rewriting a Teenager Check::
+The Teenager exercise treats <code>13 <= age and age < 20</code> and the chained form <code>13 <= age < 20</code> as equivalent. Which of these expressions is NOT equivalent to that teenager check?{
+=<code>13 < age <\= 20</code> #Correct. This chained form excludes 13 (so a 13-year-old wouldn't count) and includes 20 (so a 20-year-old would) — both boundaries are shifted by one compared to the original check.
+~<code>13 <\= age and age < 20</code> #This is exactly the original expression from the slides — it is equivalent (to itself).
+~<code>age < 20 and 13 <\= age</code> #<code>and</code> doesn't care about the order of its two operands — this checks the same two conditions as the original, just written in the opposite order.
+~<code>not (age < 13 or age >\= 20)</code> #By De Morgan's law, this is logically equivalent to <code>age >\= 13 and age < 20</code>, which is the same range as the original check.
+}
+
+// ── Section 4: Automobile Service Cost (Lab 4.11 / Lab 4.0) ─────────────────
+
+::W04-R2-Q4 Printing the Actual Unrecognized Service::
+In the Automobile Service Cost lab, entering "teleportation" (a service not in the list) must print exactly\: <code>error: teleportation is not recognized</code>. Assuming <code>service = input("service: ")</code>, which <code>else</code> branch correctly produces this for *any* unrecognized input, not just "teleportation"?{
+=<code>print("error\:", service, "is not recognized")</code> #Correct. Passing the variable <code>service</code> lets the message include whatever the user actually typed, so it works correctly no matter which unrecognized service name is entered.
+~<code>print("error\: teleportation is not recognized")</code> #This hardcodes the literal word "teleportation" — it would print the same message even if the user had entered a completely different, unrecognized service name.
+~<code>print("error\:", "service", "is not recognized")</code> #Quoting "service" makes it a literal string, not the variable — this would print the word service itself instead of whatever the user typed.
+~<code>print("error\: service is not recognized")</code> #This is one single hardcoded string with no variable involved at all — "service" here is just literal text, not the value the user entered.
+}
+
+// ── Section 5: Validating Input with or (Lab 4.12 / Lab 4.1) ────────────────
+
+::W04-R2-Q5 Flagging Invalid Wind Chill Input::
+The Wind Chill lab says input is invalid if the wind speed <code>v</code> is less than 2 OR the temperature <code>t</code> is less than -58 OR <code>t</code> is greater than 41. Which condition correctly implements this?{
+=<code>if v < 2 or t < -58 or t > 41\:</code> #Correct. Any one of the three problems on its own makes the input invalid, which is exactly what <code>or</code> checks — it's true as soon as at least one part is true.
+~<code>if v < 2 and t < -58 and t > 41\:</code> #Requiring all three with <code>and</code> means the input is only flagged if the temperature is simultaneously below -58 *and* above 41 at once — which can never happen, so this almost never flags bad input.
+~<code>if v > 2 or t > -58 or t < 41\:</code> #Every comparison direction is flipped from the original conditions, so this flags many valid inputs as invalid and misses genuinely invalid ones.
+~<code>if not (v >\= 2 or t >\= -58 or t <\= 41)\:</code> #By De Morgan's law this reduces to <code>v < 2 and t < -58 and t > 41</code> — the same over-restrictive "all three at once" mistake as the <code>and</code> version above.
+}
+
+// ── Section 6: elif Chains for Ranges (Lab 4.12 / Lab 4.1) ──────────────────
+
+::W04-R2-Q6 Separate ifs for Overlapping Ranges::
+A student implements the wind-chill layer cutoffs using separate <code>if</code> statements that each only check an upper bound, instead of the lab's chained ranges:
+<pre>
+if wc_temp < -40:
+    print("Stay home!")
+if wc_temp < -10:
+    print("Four layers")
+if wc_temp < 20:
+    print("Three layers")
+if wc_temp < 40:
+    print("Two layers")
+else:
+    print("One layer")
+</pre>
+For <code>wc_temp = -50</code>, what does this print, and why is it wrong?{
+=It prints all four\: "Stay home!", "Four layers", "Three layers", and "Two layers" — because -50 is less than -40, -10, 20, and 40, so every one of the first four independent ifs is true; the lab wants exactly one recommendation, not all matching ones #Correct. Since each <code>if</code> is checked independently (not chained with <code>elif</code>), a very cold value satisfies every "less than" condition on the list, printing every message instead of stopping at the first match.
+~It prints only "Stay home!" #Separate <code>if</code> statements don't stop checking after one matches — every later <code>if</code> in the list is still evaluated on its own, and -50 satisfies all of them.
+~It prints only "One layer" #The final <code>else</code> only runs if <code>wc_temp < 40</code> is False, but -50 < 40 is True, so that if-branch prints "Two layers" and the else never runs at all.
+~It raises an error, since wc_temp can't be less than -40 and also less than 40 at the same time #There's no contradiction here — -50 is simultaneously less than -40, -10, 20, and 40, so all four conditions are true with no conflict.
+}
+
+// ── Section 7: A Truthy Bug in Zeller's Congruence (Lab 4.13 / Lab 4.2) ─────
+
+::W04-R2-Q7 Checking for Month 1 or 2::
+In Zeller's Congruence, entering 1 or 2 for the month must trigger converting it to 13 or 14 (and decreasing the year by 1). Which condition below has the same truth-y bug as <code>result = (a == 3 or 4)</code> from earlier in the unit?{
+=<code>if month \=\= 1 or 2\:</code> #Correct. This is parsed as <code>month \=\= 1</code> "or" the literal <code>2</code> — since 2 is truth-y, the whole condition is always True no matter what month actually is, so it would (wrongly) try to convert every month.
+~<code>if month \=\= 1 or month \=\= 2\:</code> #This correctly compares month against both 1 and 2 separately — it doesn't have the bug at all.
+~<code>if month in \{1, 2\}\:</code> #Checking membership in the set \{1, 2\} correctly matches only months 1 and 2 — no truth-y-value bug here.
+~<code>if month \=\= 1 or month \=\= 2 or False\:</code> #Adding <code>or False</code> at the end doesn't change the outcome, since False never affects an already-correct <code>or</code> chain — this behaves identically to the correct version.
+}

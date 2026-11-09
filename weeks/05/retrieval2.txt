@@ -1,0 +1,122 @@
+// Week 05 Retrieval Quiz 2 — Loops — GIFT format
+// Import into Moodle: Question bank > Import > GIFT format
+// 7 questions covering the Loops slide deck / Act05-Loops POGIL activity and Labs
+// 5.10-5.12 (Output Range with Increment of 10, Convert to Binary, Spirograph). Chosen
+// to avoid repeating questions already used in weeks/05/retrieval1.txt.
+
+$CATEGORY: Week 05 / Retrieval 2
+
+// ── Section 1: while Loop Basics (Loops slides) ─────────────────────────────
+
+::W05-R2-Q1 Tracing a while Loop::
+<pre>
+x = 6
+while x > 4:
+    print(x, end=' ')
+    x = x - 1
+</pre>
+What does this print?{
+=6 5 #Correct. x starts at 6 (prints, becomes 5), then 5 (prints, becomes 4); once x is 4, <code>x > 4</code> is False, so the loop stops before printing 4.
+~6 5 4 #This assumes the loop body runs one extra time when x is 4 — but <code>x > 4</code> is False for x\=4, so the body never executes with that value.
+~6 5 4 3 #This overshoots even further, as if the loop condition were <code><\=</code> some lower bound rather than <code>x > 4</code>.
+~5 4 3 #This assumes 6 never gets printed, as if the condition were checked (and the value decremented) before the first print — but the print happens first, while x is still 6.
+}
+
+// ── Section 2: Converting to a Mid-Loop Test (Loops slides) ─────────────────
+
+::W05-R2-Q2 Rewriting with break::
+<pre>
+x = int(input("Enter a positive number: "))
+while x <= 0:
+    print("Try again")
+    x = int(input("Enter a positive number: "))
+print("Good job!")
+</pre>
+Which rewrite below correctly converts this to a mid-loop test with <code>break</code>, without repeating the input call twice?{
+=<pre>
+while True\:
+    x \= int(input("Enter a positive number\: "))
+    if x > 0\:
+        break
+    print("Try again")
+print("Good job!")
+</pre> #Correct. Each pass reads one value; if it's positive, break exits immediately, otherwise "Try again" prints and the loop repeats — matching the original behavior with only one input call.
+~<pre>
+while True\:
+    x \= int(input("Enter a positive number\: "))
+    if x <\= 0\:
+        print("Try again")
+print("Good job!")
+</pre> #This never actually breaks out of the loop at all — there's no <code>break</code> statement anywhere, so it would loop forever no matter what x is.
+~<pre>
+while True\:
+    x \= int(input("Enter a positive number\: "))
+    break
+    if x <\= 0\:
+        print("Try again")
+</pre> #The <code>break</code> runs unconditionally right after the input, so this exits after just one number no matter what it is — the <code>if</code> below it is unreachable dead code.
+~<pre>
+while True\:
+    if x > 0\:
+        break
+    x \= int(input("Enter a positive number\: "))
+    print("Try again")
+</pre> #This checks <code>x</code> before it has ever been assigned on the very first pass through the loop, which would raise a NameError instead of prompting for input.
+}
+
+// ── Section 3: range() and Empty Sequences (Loops slides) ───────────────────
+
+::W05-R2-Q3 Which range() Call Produces No Values?::
+Which of these <code>range(...)</code> calls produces an empty sequence (no values at all)?{
+=<code>range(10, 13, -1)</code> #Correct. Start (10) is already less than stop (13), but the step is negative, so counting downward from 10 can never reach 13 — the sequence is empty.
+~<code>range(13, 10, -1)</code> #This counts downward from a larger start to a smaller stop, which is exactly what a negative step is for — it produces 13, 12, 11 (not empty).
+~<code>range(0, 7, 2)</code> #This counts upward with a positive step from a smaller start to a larger stop — it produces 0, 2, 4, 6 (not empty).
+~<code>range(1, 7)</code> #With the default step of 1, this counts upward from 1 up to (but not including) 7 — it produces 1 through 6 (not empty).
+}
+
+// ── Section 4: The Accumulator Pattern — Find the Largest (Loops slides) ────
+
+::W05-R2-Q4 Why largest Starts at None::
+<pre>
+largest = None
+for n in numbers:
+    if largest is None or n > largest:
+        largest = n
+print(largest)
+</pre>
+Why is the accumulator <code>largest</code> initialized to <code>None</code> instead of <code>0</code>?{
+=<code>None</code> cleanly represents "no largest value found yet," regardless of what's in numbers — initializing to 0 would be wrong for a list of all-negative numbers, which would then incorrectly report 0 as the largest value (even though 0 isn't in the list) #Correct. 0 is only a safe starting point if every number in the list is guaranteed to be non-negative; None works no matter what values numbers contains.
+~Python requires numeric accumulators to always start as None #There's no such requirement — an accumulator can start at any value that correctly represents "nothing processed yet" for the situation at hand, including 0 when that's actually safe.
+~None automatically counts as being smaller than every possible number for the purposes of comparison #None isn't a numeric value and can't be compared with <code>></code> at all — that's exactly why the code checks <code>largest is None</code> first and relies on <code>or</code> short-circuiting to avoid ever comparing None to a number.
+~It doesn't matter — starting at 0 always gives the same final result as starting at None #For a list of all-negative numbers, starting at 0 would wrongly report 0 as the largest, since no negative number would ever be seen as "larger."
+}
+
+// ── Section 5: Output Range with Increment of 10 (Lab 5.10 / Lab 5.0) ───────
+
+::W05-R2-Q5 Why the Range Stops at 25, Not 30 or 35::
+For inputs -15 and 30, the Output Range lab prints -15, -5, 5, 15, 25 — stepping up by 10 each time as long as the value is less than or equal to 30. Why does it stop at 25 instead of continuing to 35?{
+=Adding 10 repeatedly to -15 never lands exactly on 30 (the sequence is ..., 15, 25, 35, ...), and 35 fails the "less than or equal to 30" check, so the loop stops after printing 25 #Correct. The stopping point depends on where the step size happens to land relative to the second integer — here it overshoots 30 entirely, landing on 35, which fails the condition.
+~The loop always stops after exactly 5 values, no matter what the two inputs are #The number of values printed depends entirely on the specific inputs — a different pair of integers would produce a different number of increments before exceeding the second integer.
+~30 is deliberately excluded, the same way range()'s stop value is excluded #The lab's condition is "less than or equal to," so a value landing exactly on 30 would in fact be printed — 30 is only skipped here because -15 plus multiples of 10 never lands exactly on it.
+~The condition really requires the value to be strictly less than 30, so even landing on 30 exactly would be excluded #The lab specifies "less than or equal to" the second integer, so a value of exactly 30 would be included if the increments ever produced it.
+}
+
+// ── Section 6: Convert to Binary — Prepending, Not Appending (Lab 5.11 / Lab 5.1) ──
+
+::W05-R2-Q6 Why result = str(x % 2) + result?::
+The Convert to Binary lab builds its accumulator with <code>result = str(x % 2) + result</code>, adding each new digit to the *front* of result rather than the end. Why?{
+=Each successive remainder is a MORE significant bit than the ones already found, so it must go in front of the existing digits to build the binary string in the correct order — appending it at the end instead would put the digits in reverse order #Correct. The algorithm finds the least-significant bit first, so prepending each new digit builds up the number from most-significant to least-significant, left to right, as the loop proceeds.
+~String concatenation with + only works when the new value comes first #<code>+</code> works fine with either operand first — <code>result + str(x % 2)</code> is just as valid Python, it just produces a different (wrong) digit order here.
+~Python requires accumulators inside a loop to always be built by prepending #There's no such rule — plenty of accumulator patterns (like summing numbers) append or add to the end; the prepend here is specifically to get the bits in the right order, not a general requirement.
+~It doesn't actually matter which side str(x % 2) goes on — both produce the same final string #Swapping the order reverses the sequence of bits, which gives the wrong binary representation for any number needing more than one bit (e.g. 6 would come out as "011" instead of "110").
+}
+
+// ── Section 7: Spirograph — Why a while Loop, Not range() (Lab 5.12 / Lab 5.2) ────
+
+::W05-R2-Q7 Advancing t with a while Loop::
+The Spirograph lab advances <code>t</code> from 0.0 up to 360 in increments of 0.1, using <code>t = 0.0</code> then <code>while t < 360: ... ; t += 0.1</code>, rather than a <code>for</code> loop over <code>range(...)</code>. Why?{
+=<code>range()</code> only produces integers, but t needs to take on fractional values (0.0, 0.1, 0.2, ...) — a while loop lets t be a float incremented by a fractional step each time, which range() can't generate directly #Correct. range()'s start/stop/step arguments are always integers, so it can't step through values like 0.1 at a time — a while loop with a float variable is needed instead.
+~for loops can't run more than 360 times #A for loop can run any number of times — the real limitation is that range() only produces whole numbers, not that for loops have some iteration cap.
+~while loops are always faster than for loops in Python #Performance isn't the reason for this choice at all — the deciding factor is that the loop variable needs fractional values, which range() simply cannot produce.
+~The turtle module doesn't support drawing inside for loops #Turtle commands work perfectly well inside a for loop — the constraint here is specifically about range()'s integer-only steps, not anything about the turtle library.
+}

@@ -1,0 +1,113 @@
+// Week 07 Retrieval Quiz 1 — Quiz 3 prep: writing and calling functions — GIFT format
+// Import into Moodle: Question bank > Import > GIFT format
+// 6 questions practicing the function skills Quiz 3 asks for next class\: writing a
+// function that receives parameters and returns a computed value (formulas, averages,
+// def syntax), and calling an existing function and combining its results.
+// Uses different functions and numbers than the quiz itself. The NumPy/Matplotlib
+// prep questions live in weeks/07/retrieval2.txt.
+
+$CATEGORY: Week 07 / Retrieval 1
+
+// ── Section 1: Writing a Function That Returns a Computed Value ─────────────
+
+::W07-R1-Q1 Writing cylinder_volume with math.pi::
+A cylinder's volume is π × radius² × height. Assume <code>import math</code> has already been done. Which definition of <code>cylinder_volume</code> correctly receives the radius and height and returns the volume?{
+=<pre>
+def cylinder_volume(radius, height)\:
+&nbsp;&nbsp;&nbsp;&nbsp;return math.pi * radius ** 2 * height
+</pre> #Correct. The two values arrive as parameters, ** is Python's exponent operator, math.pi supplies π, and return hands the computed volume back to whoever called the function.
+~<pre>
+def cylinder_volume(radius, height)\:
+&nbsp;&nbsp;&nbsp;&nbsp;return math.pi * radius ^ 2 * height
+</pre> #^ is not the exponent operator in Python (it's bitwise XOR) — squaring is written <code>radius ** 2</code>. With a float like math.pi involved, this line actually raises a TypeError.
+~<pre>
+def cylinder_volume(radius, height)\:
+&nbsp;&nbsp;&nbsp;&nbsp;print(math.pi * radius ** 2 * height)
+</pre> #This displays the volume instead of returning it. The question says "returns" — a function that only prints gives back None, so the caller can't store the volume or use it in a further calculation.
+~<pre>
+def cylinder_volume()\:
+&nbsp;&nbsp;&nbsp;&nbsp;radius \= float(input("Radius\: "))
+&nbsp;&nbsp;&nbsp;&nbsp;height \= float(input("Height\: "))
+&nbsp;&nbsp;&nbsp;&nbsp;return math.pi * radius ** 2 * height
+</pre> #This asks the user for the values instead of RECEIVING them. "Receives the radius and height" means they are parameters listed in the parentheses of the def line, supplied by the caller as arguments.
+}
+
+::W07-R1-Q2 Averaging Two Values Inside a Function::
+A function <code>average_pay(rate1, rate2, hours)</code> should return the pay for a shift, computed as average_rate × hours, where average_rate is the average (mean) of <code>rate1</code> and <code>rate2</code>. Which function body is correct?{
+=<pre>
+&nbsp;&nbsp;&nbsp;&nbsp;average_rate \= (rate1 + rate2) / 2
+&nbsp;&nbsp;&nbsp;&nbsp;return average_rate * hours
+</pre> #Correct. The parentheses force the two rates to be added BEFORE dividing by 2, giving a true average, and the result of the final multiplication is returned.
+~<pre>
+&nbsp;&nbsp;&nbsp;&nbsp;return rate1 + rate2 / 2 * hours
+</pre> #Without parentheses, division and multiplication happen before addition, so only rate2 gets halved and multiplied by hours — rate1 is just added on at the end. An average needs <code>(rate1 + rate2) / 2</code>.
+~<pre>
+&nbsp;&nbsp;&nbsp;&nbsp;average_rate \= (rate1 + rate2) / 2
+&nbsp;&nbsp;&nbsp;&nbsp;pay \= average_rate * hours
+</pre> #The math is right, but the answer is stored in a local variable and never returned. The local variable pay disappears when the function ends, and the caller gets None.
+~<pre>
+&nbsp;&nbsp;&nbsp;&nbsp;return (rate1 + rate2) * hours
+</pre> #This uses the SUM of the two rates, not their average — the division by 2 is missing, so the result is twice what it should be.
+}
+
+::W07-R1-Q3 Getting the Function Syntax Right::
+Which of these is a syntactically correct Python function that receives a temperature in Celsius and returns it in Fahrenheit?{
+=<pre>
+def fahrenheit(celsius)\:
+&nbsp;&nbsp;&nbsp;&nbsp;return celsius * 9 / 5 + 32
+</pre> #Correct. A function definition needs the keyword def, the function's name, its parameters in parentheses, a colon at the end of that line, and an indented body.
+~<pre>
+def fahrenheit(celsius)
+&nbsp;&nbsp;&nbsp;&nbsp;return celsius * 9 / 5 + 32
+</pre> #The colon at the end of the def line is missing, which is a SyntaxError. Every def line ends with a colon, just like if, for, and while lines do.
+~<pre>
+function fahrenheit(celsius)\:
+&nbsp;&nbsp;&nbsp;&nbsp;return celsius * 9 / 5 + 32
+</pre> #Python's keyword for defining a function is def, not function (that's the keyword in some other languages, like JavaScript).
+~<pre>
+def fahrenheit(celsius)\:
+return celsius * 9 / 5 + 32
+</pre> #The body isn't indented, so Python raises an IndentationError — indentation is how Python knows which lines belong to the function.
+}
+
+// ── Section 2: Calling a Function That Already Exists ───────────────────────
+
+::W07-R1-Q4 Defining a Function vs. Calling It::
+Assume <code>cylinder_volume(radius, height)</code> has already been defined and returns a cylinder's volume. Which line calls it for a radius of 2 and a height of 10 and saves the result in a variable?{
+=<code>v \= cylinder_volume(2, 10)</code> #Correct. A call is the function's name followed by the arguments in parentheses, and the value it returns is assigned to v.
+~<code>def cylinder_volume(2, 10)\:</code> #def is for DEFINING a function, which has already been done. To use the function you just write its name with arguments — and numbers can't be parameter names anyway, so this is a SyntaxError.
+~<code>v \= cylinder_volume[2, 10]</code> #Square brackets are for indexing into lists and other collections. Calling a function takes parentheses.
+~<code>cylinder_volume(2, 10) \= v</code> #The assignment is backwards. The variable receiving the value goes on the left of the \= sign and the function call goes on the right.
+}
+
+::W07-R1-Q5 Calling cube() and Adding Up the Results::
+Assume a function <code>cube(x)</code> has already been defined that returns <code>x</code> cubed. Which code segment uses (calls) this function to compute and print the sum of <code>cube(1)</code>, <code>cube(2)</code>, and <code>cube(3)</code>?{
+=<pre>
+total \= cube(1) + cube(2) + cube(3)
+print(total)
+</pre> #Correct. Each call is replaced by the value it returns, so this adds 1 + 8 + 27 and prints 36. Notice there's no need to define cube again — it already exists, so you just call it.
+~<pre>
+print(cube(1 + 2 + 3))
+</pre> #This adds the ARGUMENTS first and makes a single call, cube(6), which prints 216. The sum of three separate results needs three separate calls.
+~<pre>
+cube(1) + cube(2) + cube(3)
+</pre> #This does compute the sum, but the result is immediately thrown away — nothing stores it and nothing prints it, so the program shows no output.
+~<pre>
+print(cube(1), cube(2), cube(3))
+</pre> #This prints the three results side by side (1 8 27) rather than adding them together — commas inside print() separate values, they don't sum them.
+}
+
+::W07-R1-Q6 Using Returned Values in an Expression::
+<pre>
+def half(x):
+&nbsp;&nbsp;&nbsp;&nbsp;return x / 2
+# --- main program ---
+total = half(10) + half(4)
+print(total)
+</pre>
+What does this print?{
+=7.0 #Correct. half(10) returns 5.0 and half(4) returns 2.0. Each call is replaced by its returned value, the two are added, and the single total is printed (as a float, because / always produces a float).
+~5.0 and then 2.0 on separate lines #The function returns its results rather than printing them, so nothing is displayed during the calls. The only print statement runs once, on the total.
+~None #That would happen if half printed its result instead of returning it. Because half uses return, each call gives back a real number that can be added.
+~14 #This adds the arguments (10 + 4) and ignores what the function does. Each argument is halved first, and it's the returned values, 5.0 and 2.0, that get added.
+}
