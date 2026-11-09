@@ -166,7 +166,7 @@ x = ['m', 'n', 'o']
 x[1] = 'q'
 x.append('p')
 y = x[0] + x[1]
-x = x + ['r']
+x[-1] = 'r'
 print(x)
 print(y)
 print(len(x))
@@ -175,5 +175,5 @@ print(len(x))
 [[BLANK height=110]]
 
 [[KEY]]
-`['m', 'q', 'o', 'p', 'r']`, then `'mq'`, then `5`. Grading: 1 point per line, plus 1 point for all three correct.
+`['m', 'q', 'o', 'r']`, then `'mq'`, then `4`. Grading: 1 point per line, plus 1 point for all three correct.
 [[/KEY]]

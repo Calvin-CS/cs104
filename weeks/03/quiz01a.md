@@ -74,7 +74,7 @@ a = [4, 8, 15]
 a[0] = 16
 a.append(23)
 b = a[1] + a[2]
-a = a + [42]
+a[-1] = 42
 print(a)
 print(b)
 print(len(a))
@@ -83,7 +83,7 @@ print(len(a))
 [[BLANK height=110]]
 
 [[KEY]]
-`[16, 8, 15, 23, 42]`, then `23`, then `5`. Grading: 1 point per line, plus 1 point for all three correct.
+`[16, 8, 15, 42]`, then `23`, then `4`. Grading: 1 point per line, plus 1 point for all three correct.
 [[/KEY]]
 
 ## Q (4 points)
