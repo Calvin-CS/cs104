@@ -1,65 +1,72 @@
 # CS-104 Retrieval Quiz
 meta: Fall 2026 · Week 4, Wednesday
 
-<!-- Covers: Conditionals slides, POGIL Act04, Labs 4.11-4.13. -->
+<!-- Covers: Labs 4.11-4.13 (Automobile Service Cost, Wind Chill, Zeller's Congruence). -->
 
 ## Q
 
-What does this code print?
+In the Automobile Service Cost lab, a student wrote the code below. What does it print when the user enters `oil change`?
 
 ```python
-x = 95
-if x >= 90:
-    print("You've got an A")
-if x >= 80:
-    print("You've got a B")
+service = input("service: ")
+if service == "oil change":
+    print("cost of oil change: $35")
+if service == "tire rotation":
+    print("cost of tire rotation: $19")
+if service == "car wash":
+    print("cost of car wash: $7")
 else:
-    print("Keep studying!")
+    print("error:", service, "is not recognized")
 ```
 
 [[CHOICES]]
-- Only `You've got an A`
-- Only `You've got a B`
-* `You've got an A` and then `You've got a B`
-- `You've got an A` and then `Keep studying!`
+- Only `cost of oil change: $35`
+* `cost of oil change: $35` and then `error: oil change is not recognized`
+- Only `error: oil change is not recognized`
+- Nothing, because only the last `if` has an `else`
 [[/CHOICES]]
 
 ## Q
 
-Which expression is **not** equivalent to `13 <= age < 20`?
+In the Wind Chill lab, the formula only works when the wind speed `v` is at least 2 mph **and** the temperature `ta` is between -58 and 41 degrees. Which condition is `True` exactly when the input is **invalid**?
 
 [[CHOICES]]
-- `13 <= age and age < 20`
-- `age >= 13 and age < 20`
-- `not (age < 13 or age >= 20)`
-* `13 < age <= 20`
+- `v < 2 and (ta < -58 or ta > 41)`
+- `v >= 2 and -58 <= ta <= 41`
+* `v < 2 or ta < -58 or ta > 41`
+- `v < 2 and ta < -58 and ta > 41`
 [[/CHOICES]]
 
 ## Q
 
-What does this code print?
+In the Zeller's Congruence lab, January and February must become months 13 and 14 of the previous year. A student wrote the code below. What are `month` and `year` after the user enters `2026` and then `5`?
 
 ```python
-a = 5
-result = (a == 3 or 4)
-if result:
-    print("yes")
-else:
-    print("no")
+year = int(input("Enter year: "))
+month = int(input("Enter month: "))
+if month == 1 or 2:
+    month = month + 12
+    year = year - 1
 ```
 
 [[CHOICES]]
-* `yes`, because `False or 4` gives `4`, which is truthy
-- `no`, because `a` is not 3
-- Nothing; it raises a `TypeError`
-- Nothing; neither branch runs
+- `5` and `2026`, because 5 is neither 1 nor 2
+* `17` and `2025`, because `month == 1 or 2` gives `2`, which is truthy
+- `17` and `2026`, because only the first line of the block runs
+- Nothing; it raises a `SyntaxError`
 [[/CHOICES]]
 
 [[PAGEBREAK]]
 
 ## Q
 
-Write a code segment that reads a pH value (a float) from the user and prints `error` if it is outside the range 0 to 14. Otherwise it prints `acid` if the pH is below 7, `base` if it is above 7, and `neutral` if it is exactly 7.
+Assume `wc_temp` already holds the wind-chill temperature (a float). Write a code segment that prints how many layers to wear, using the Wind Chill lab's cutoffs:
+
+- below -40: `Stay home!`
+- from -40 up to (not including) -10: `Four layers`
+- from -10 up to (not including) 20: `Three layers`
+- from 20 up to (not including) 40: `Two layers`
+- 40 or above: `One layer`
 
 [[BLANK height=170]]
 
@@ -67,14 +74,15 @@ Write a code segment that reads a pH value (a float) from the user and prints `e
 Sample solution:
 
 ```python
-ph = float(input("pH: "))
-if ph < 0 or ph > 14:
-    print("error")
-elif ph < 7:
-    print("acid")
-elif ph > 7:
-    print("base")
+if wc_temp < -40:
+    print("Stay home!")
+elif wc_temp < -10:
+    print("Four layers")
+elif wc_temp < 20:
+    print("Three layers")
+elif wc_temp < 40:
+    print("Two layers")
 else:
-    print("neutral")
+    print("One layer")
 ```
 [[/KEY]]

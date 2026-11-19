@@ -1,25 +1,28 @@
 # CS-104 Retrieval Quiz
 meta: Fall 2026 · Week 6, Monday
 
-<!-- Covers: review of Week 5 Loops (for over strings, accumulators, cycling with %). -->
+<!-- Quiz 2 prep (Quiz 2 is this Wednesday): boolean expressions, range (including counting down), for loops with if, while-loop accumulators, sentinel loops, tracking the largest value (POGIL Act05, Week 5 slides and lab). -->
 
 ## Q
 
-What does this code print?
-
-```python
-s = "abc"
-new_s = ''
-for c in s:
-    new_s = c + new_s
-print(new_s)
-```
+Assume `a = 6` and `b = 10`. Which expression evaluates to `True`?
 
 [[CHOICES]]
-- `abc`
-* `cba`
-- `a`
-- `c`
+- `a > 5 and b < 10`
+- `not (a < b)`
+- `a % 2 == 0 and b % 2 == 1`
+* `a > 5 or b < 10`
+[[/CHOICES]]
+
+## Q
+
+Which loop prints `20`, `15`, `10`, `5` (in that order)?
+
+[[CHOICES]]
+- `for n in range(20, 5, -5): print(n)`
+- `for n in range(5, 20, 5): print(n)`
+* `for n in range(20, 0, -5): print(n)`
+- `for n in range(20, 0, 5): print(n)`
 [[/CHOICES]]
 
 ## Q
@@ -29,15 +32,18 @@ What does this code print?
 ```python
 total = 0
 for i in range(1, 6):
-    total = total + i
+    if i % 2 == 0:
+        total = total + i
+    else:
+        total = total - 1
 print(total)
 ```
 
 [[CHOICES]]
-- `10`
-- `21`
-* `15`
-- `5`
+- `15`
+* `3`
+- `6`
+- `-3`
 [[/CHOICES]]
 
 ## Q
@@ -45,35 +51,41 @@ print(total)
 What does this code print?
 
 ```python
-colors = ['red', 'black', 'blue']
-i = 7
-print(colors[i % len(colors)])
+i = 10
+total = 0
+while i > 0:
+    total = total + i
+    i = i - 3
+print(total)
 ```
 
 [[CHOICES]]
-- `red`
-- `blue`
-- It raises an `IndexError`
-* `black`
+- `21`
+- `18`
+* `22`
+- `10`
 [[/CHOICES]]
 
 [[PAGEBREAK]]
 
 ## Q
 
-Write a code segment that reads a string from the user and uses a `for` loop to count how many times the letter `a` appears in it, in either lowercase or uppercase. Print the count. For example, `Banana Bread` gives `4`.
+Write a code segment that keeps asking the user for whole numbers until they enter `0`. Then it prints how many numbers were entered (not counting the 0) and the largest one. It must work even if every number is negative, and you may not use `max` or a list.
 
-[[BLANK height=170]]
+[[BLANK height=190]]
 
 [[KEY]]
 Sample solution:
 
 ```python
-s = input("Text: ")
 count = 0
-for c in s:
-    if c == 'a' or c == 'A':
-        count = count + 1
-print(count)
+largest = None
+n = int(input("Number: "))
+while n != 0:
+    count = count + 1
+    if largest is None or n > largest:
+        largest = n
+    n = int(input("Number: "))
+print(count, largest)
 ```
 [[/KEY]]

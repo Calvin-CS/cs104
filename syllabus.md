@@ -97,8 +97,8 @@ Moodle is the home page for all class materials, with links to additional resour
 | 5% | Preparation Reading | Weekly reading and participation exercises that prepare you for each week |
 | 15% | Lab Activities | Practice programming in a structured environment with help available and in pairs |
 | 10% | Homework (3) | Practice solving open-ended problems with less structure |
-| 5% | Forum Activities (3) | In-class, on Wednesdays every other week, reflection on broader perspectives on programming |
-| 65% | Quizzes (3) | In-class, on Wednesdays every other week |
+| 5% | Forum Activities (3) | In-class, about every other week, reflection on broader perspectives on programming (see [Weekly Materials](/weeks/) for dates) |
+| 65% | Quizzes (3) | In-class, on Wednesdays (see [Weekly Materials](/weeks/) for dates) |
 
 Unless otherwise stated, assignments are due by 11:59pm on their due date (see the Moodle calendar for exact dates/times).
 

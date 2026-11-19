@@ -1,17 +1,25 @@
 # CS-104 Retrieval Quiz
 meta: Fall 2026 · Week 5, Monday
 
-<!-- Quiz 2 prep: range (including counting down), for loops with if, while-loop accumulators, sentinel loops, tracking the largest value (POGIL Act05). -->
+<!-- Covers: Week 5 Loops slides, taught on Week 4 Friday (for over strings, accumulators, cycling with %), plus Forum 2 (On Coding with Wisdom and Justice). -->
 
 ## Q
 
-Which loop prints `20`, `15`, `10`, `5` (in that order)?
+What does this code print?
+
+```python
+s = "abc"
+new_s = ''
+for c in s:
+    new_s = c + new_s
+print(new_s)
+```
 
 [[CHOICES]]
-- `for n in range(20, 5, -5): print(n)`
-- `for n in range(5, 20, 5): print(n)`
-* `for n in range(20, 0, -5): print(n)`
-- `for n in range(20, 0, 5): print(n)`
+- `abc`
+* `cba`
+- `a`
+- `c`
 [[/CHOICES]]
 
 ## Q
@@ -21,18 +29,15 @@ What does this code print?
 ```python
 total = 0
 for i in range(1, 6):
-    if i % 2 == 0:
-        total = total + i
-    else:
-        total = total - 1
+    total = total + i
 print(total)
 ```
 
 [[CHOICES]]
-- `15`
-* `3`
-- `6`
-- `-3`
+- `10`
+- `21`
+* `15`
+- `5`
 [[/CHOICES]]
 
 ## Q
@@ -40,41 +45,46 @@ print(total)
 What does this code print?
 
 ```python
-i = 10
-total = 0
-while i > 0:
-    total = total + i
-    i = i - 3
-print(total)
+colors = ['red', 'black', 'blue']
+i = 7
+print(colors[i % len(colors)])
 ```
 
 [[CHOICES]]
-- `21`
-- `18`
-* `22`
-- `10`
+- `red`
+- `blue`
+- It raises an `IndexError`
+* `black`
+[[/CHOICES]]
+
+## Q
+
+Which statement best captures the main argument of *On Coding with Wisdom and Justice* (Forum 2)?
+
+[[CHOICES]]
+- Algorithms are less fair than people, so decisions like welfare eligibility should never be automated.
+- Code is neutral; any injustice comes from the people who use a program, not from the rules programmers write.
+* Writing code means making judgments: rules leave out context that wisdom needs, so programmers must ask what their conditions assume.
+- Failures like Indiana's come from bugs, so testing every branch carefully is enough to make an algorithm just.
 [[/CHOICES]]
 
 [[PAGEBREAK]]
 
 ## Q
 
-Write a code segment that keeps asking the user for whole numbers until they enter `0`. Then it prints how many numbers were entered (not counting the 0) and the largest one. It must work even if every number is negative, and you may not use `max` or a list.
+Write a code segment that reads a string from the user and uses a `for` loop to count how many times the letter `a` appears in it, in either lowercase or uppercase. Print the count. For example, `Banana Bread` gives `4`.
 
-[[BLANK height=190]]
+[[BLANK height=170]]
 
 [[KEY]]
 Sample solution:
 
 ```python
+s = input("Text: ")
 count = 0
-largest = None
-n = int(input("Number: "))
-while n != 0:
-    count = count + 1
-    if largest is None or n > largest:
-        largest = n
-    n = int(input("Number: "))
-print(count, largest)
+for c in s:
+    if c == 'a' or c == 'A':
+        count = count + 1
+print(count)
 ```
 [[/KEY]]

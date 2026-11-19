@@ -1,24 +1,25 @@
 # CS-104 Retrieval Quiz
 meta: Fall 2026 · Week 4, Monday
 
-<!-- Covers: review of Week 3 (aliasing, immutable strings, negative indexing, Exercise 3.b.1 dictionaries). -->
+<!-- Covers: POGIL Act04 (Conditions and Logic): comparison operators and = vs ==, if/else and indented blocks, not/and/or precedence. -->
 
 ## Q
 
 What does this code print?
 
 ```python
-a = [3, 2, 1]
-b = a
-b[0] = 50
-print(a)
+three = 3
+four = 4
+check = three > four
+three = four
+print(check, three == four)
 ```
 
 [[CHOICES]]
-- `[3, 2, 1]`
-- `[50, 2, 1, 3, 2, 1]`
-* `[50, 2, 1]`
-- It raises an error
+* `False True`
+- `True True`
+- `False False`
+- `False 4`
 [[/CHOICES]]
 
 ## Q
@@ -26,34 +27,37 @@ print(a)
 What does this code print?
 
 ```python
-s = "bht"
-s.upper()
-print(s)
+number = 6
+if number % 2 == 0:
+    print(number, "is even")
+else:
+    print(number, "is odd")
+    print("Until next time...")
 ```
 
 [[CHOICES]]
-* `bht`
-- `BHT`
-- `Bht`
-- `None`
+* Only `6 is even`
+- `6 is even` and then `Until next time...`
+- `6 is odd` and then `Until next time...`
+- It raises a `SyntaxError`, because an `else` block can only hold one line
 [[/CHOICES]]
 
 ## Q
 
-Given `x = 'alphabet'`, what is `x[-3]`?
+Suppose `p`, `q`, and `r` are Boolean variables. Which version, with parentheses added, shows how Python evaluates `not p or q and r`?
 
 [[CHOICES]]
-- `'e'`
-- `'a'`
-- `'h'`
-* `'b'`
+- `not (p or (q and r))`
+* `(not p) or (q and r)`
+- `((not p) or q) and r`
+- `not ((p or q) and r)`
 [[/CHOICES]]
 
 [[PAGEBREAK]]
 
 ## Q
 
-Write a code segment that creates a dictionary `person` with the keys `"name"`, `"email"`, and `"major"` holding `"Alice"`, `"ak12@calvin.edu"`, and `"Biology"`. Then read a new major from the user, update the dictionary with it, and print a message like `Alice (ak12@calvin.edu) now majors in Chemistry`.
+Write a code segment that reads two integers `x` and `y` from the user. If both are positive, print their sum. Otherwise, print `at least one is not positive`. Finally, no matter which case happened, print `Until next time...`.
 
 [[BLANK height=170]]
 
@@ -61,8 +65,12 @@ Write a code segment that creates a dictionary `person` with the keys `"name"`, 
 Sample solution:
 
 ```python
-person = {"name": "Alice", "email": "ak12@calvin.edu", "major": "Biology"}
-person["major"] = input("New major: ")
-print(person["name"], "(" + person["email"] + ")", "now majors in", person["major"])
+x = int(input("x: "))
+y = int(input("y: "))
+if x > 0 and y > 0:
+    print(x + y)
+else:
+    print("at least one is not positive")
+print("Until next time...")
 ```
 [[/KEY]]

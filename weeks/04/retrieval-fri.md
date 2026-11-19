@@ -1,18 +1,7 @@
 # CS-104 Retrieval Quiz
 meta: Fall 2026 · Week 4, Friday
 
-<!-- Covers: Conditionals (elif order, input() types, Automobile Service Cost lab) plus boolean precedence (not/and/or). -->
-
-## Q
-
-Suppose `x = 4` and `y = 9`. What is the value of `not x == 4 or y < 5`?
-
-[[CHOICES]]
-- `True`
-* `False`
-- `None`
-- It raises an error
-[[/CHOICES]]
+<!-- Covers: the week on conditionals (elif order, equivalent conditions, input() types, pH exercise) plus POGIL Act05 Model 3 (while loops: order of statements in the body). Forum 2 is in this class, so its question moved to Week 5 Monday. -->
 
 ## Q
 
@@ -41,6 +30,17 @@ else:
 
 ## Q
 
+Which expression is **not** equivalent to `13 <= age < 20`?
+
+[[CHOICES]]
+- `13 <= age and age < 20`
+- `age >= 13 and age < 20`
+- `not (age < 13 or age >= 20)`
+* `13 < age <= 20`
+[[/CHOICES]]
+
+## Q
+
 What happens when the user enters `3`?
 
 ```python
@@ -56,11 +56,29 @@ if ph < 7.0:
 * It raises a `TypeError`, because a string can't be compared with a float
 [[/CHOICES]]
 
+## Q
+
+What does this code print?
+
+```python
+i = 0
+while i < 3:
+    i = i + 1
+    print(i)
+```
+
+[[CHOICES]]
+- `0`, `1`, `2`
+* `1`, `2`, `3`
+- `0`, `1`, `2`, `3`
+- Nothing; it loops forever
+[[/CHOICES]]
+
 [[PAGEBREAK]]
 
 ## Q
 
-Assume `prices = {"oil change": 35, "tire rotation": 19, "car wash": 7}`. Write a code segment that reads a service name from the user. If the service is in `prices`, print its cost (e.g. `car wash costs $7`); otherwise print an error such as `error: teleportation is not recognized`, using whatever the user typed.
+Write a code segment that reads a pH value (a float) from the user and prints `error` if it is outside the range 0 to 14. Otherwise it prints `acid` if the pH is below 7, `base` if it is above 7, and `neutral` if it is exactly 7.
 
 [[BLANK height=170]]
 
@@ -68,10 +86,14 @@ Assume `prices = {"oil change": 35, "tire rotation": 19, "car wash": 7}`. Write 
 Sample solution:
 
 ```python
-service = input("Service: ")
-if service in prices:
-    print(service, "costs $" + str(prices[service]))
+ph = float(input("pH: "))
+if ph < 0 or ph > 14:
+    print("error")
+elif ph < 7:
+    print("acid")
+elif ph > 7:
+    print("base")
 else:
-    print("error:", service, "is not recognized")
+    print("neutral")
 ```
 [[/KEY]]

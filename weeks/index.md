@@ -17,6 +17,8 @@ Each topic follows the same three-step cycle:
 
 Weeks 1 and 2 are the exception: POGIL Activity 1 (plus lab recap) is on Wednesday of Week 1, and POGIL Activity 2 is on Monday of Week 2.
 
+**Thanksgiving break shift:** there is no class on Wednesday and Friday of Week 5, so the schedule moves earlier from Week 4 on. POGIL Activity 5 is on Wednesday of Week 4, the Week 5 slides and Forum 2 are on Friday of Week 4, and POGIL Activity 6 is on Monday of Week 5. After the break, Quiz 2 is on Wednesday of Week 6 and Forum 3 is on Monday of Week 7.
+
 - [Week 1: Introduction](#week-1)
 - [Week 2: Operators](#week-2)
 - [Week 3: Data Types](#week-3)
@@ -139,9 +141,9 @@ Check this on ZyBooks! Deadline will be on Monday of next week.
 
 **Monday** — Slides; prep for lab
 
-**Wednesday** — Lab recap; Forum 2
+**Wednesday** — [POGIL Activity 5: Loops](../pogil/Act05-Iteration_Student.pdf) (prepares for Week 5)
 
-**Friday** — [POGIL Activity 5: Loops](../pogil/Act05-Iteration_Student.pdf) (prepares for Week 5)
+**Friday** — [Week 5 slides (Loops)](05/slides.html); prep for lab; Forum 2
 
 ---
 
@@ -158,19 +160,19 @@ By the end of this week, students will be able to:
 
 ### Slides
 
-[View slides](05/slides.html)
+[View slides](05/slides.html) (covered on Friday of Week 4)
 
-### Quiz 2 on Wednesday!
+### Thanksgiving Break
 
-In-class, in paper, closed book.
+No class on Wednesday or Friday this week. Quiz 2 moves to Wednesday of Week 6.
 
 ### Class Planning
 
-**Monday** — Slides; prep for lab
+**Monday** — [POGIL Activity 6: Functions](../pogil/Act06-Functions_Student.pdf) (prepares for Week 6)
 
-**Wednesday** — Lab recap; Quiz 2
+**Wednesday** — Thanksgiving break (no class)
 
-**Friday** — Holiday (no class)
+**Friday** — Thanksgiving break (no class)
 
 ---
 
@@ -193,15 +195,15 @@ By the end of this week, students will be able to:
 
 Check this on ZyBooks! Deadline will be on Monday of next week.
 
-### Forum 3 
+### Quiz 2 on Wednesday!
 
-[Forum 3: One Does Not Simply Use a Technology](06/forum.html)
+In-class, in paper, closed book. Covers conditionals (`if`/`elif`/`else`) and loops.
 
 ### Class Planning
 
-**Monday** — [POGIL Activity 6: Functions](../pogil/Act06-Functions_Student.pdf) (moved from the Week 5 holiday); short slides; prep for lab
+**Monday** — Slides; prep for lab
 
-**Wednesday** — Lab recap; Forum 3
+**Wednesday** — Lab recap; Quiz 2
 
 **Friday** — [POGIL Activity 9: Libraries, NumPy, and Matplotlib](../pogil/Act09-Libraries_Student.pdf) (prepares for Week 7)
 
@@ -222,13 +224,17 @@ By the end of this week, students will be able to:
 
 [View slides](07/slides.html)
 
+### Forum 3
+
+[Forum 3: One Does Not Simply Use a Technology](06/forum.html)
+
 ### Quiz 3 on Wednesday!
 
 In-class, in paper, closed book.
 
 ### Class Planning
 
-**Monday** — Slides; prep for lab
+**Monday** — Slides; prep for lab; Forum 3
 
 **Wednesday** — Lab recap; Quiz 3
 
