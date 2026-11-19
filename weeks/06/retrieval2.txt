@@ -1,0 +1,112 @@
+// Week 06 Retrieval Quiz 2 — Functions — GIFT format
+// Import into Moodle: Question bank > Import > GIFT format
+// 7 questions covering the Act06-Functions POGIL activity (Model 1: Flow of Execution,
+// Model 2: Passing Arguments, Model 3: Returning Values) and Labs 6.12-6.15 (Function
+// Practice, Search, Longest, Unique). Chosen to avoid repeating questions already used
+// in weeks/06/retrieval1.txt.
+
+$CATEGORY: Week 06 / Retrieval 2
+
+// ── Section 1: Flow of Execution (Act06-Functions Model 1) ──────────────────
+
+::W06-R2-Q1 What Order Do These Print Statements Run In?::
+<pre>
+def greet(name):
+    print("Hello, " + name)
+# --- main program ---
+print("Start")
+greet("Sam")
+print("End")
+</pre>
+What order do the three print statements actually run in?{
+=Start, then Hello, Sam, then End #Correct. Calling <code>greet("Sam")</code> transfers control into the function body immediately, and execution only returns to the line after the call once the function finishes.
+~Start, End #This misses that calling greet("Sam") actually runs the function's print statement — a function call executes the function's body, it isn't skipped.
+~Hello, Sam, Start, End #This assumes the function's body runs as soon as it's defined (at the def line), before the rest of the script — but defining a function does nothing by itself; its body only runs when the function is called.
+~Start, End, Hello, Sam #This assumes function calls are somehow queued up and run only after the rest of the script finishes — but a call transfers control immediately, right where it's written.
+}
+
+// ── Section 2: Passing Arguments (Act06-Functions Model 2) ──────────────────
+
+::W06-R2-Q2 Positional vs. Keyword Arguments::
+<pre>
+def show(a, b):
+    print(a, b)
+# --- main program ---
+show(1, 2)
+show(b=1, a=2)
+</pre>
+What do the two calls print?{
+=1 2, then 2 1 #Correct. Positional arguments (1, 2) fill a and b in the order written, but keyword arguments assign by name regardless of order — so <code>b\=1, a\=2</code> gives a the value 2 and b the value 1.
+~1 2, then 1 2 #This assumes keyword arguments still fill parameters in the order they're written, ignoring that <code>b\=1, a\=2</code> explicitly assigns each value by name, not position.
+~2 1, then 2 1 #This assumes arguments are always matched in reverse of how they're written — that isn't how positional or keyword arguments work in either call.
+~1 2, then a TypeError, since you can't mix positional and keyword styles between two different calls #Nothing is actually mixed within either individual call — the first call is fully positional and the second is fully keyword, and both are completely valid on their own.
+}
+
+// ── Section 3: Returning Values vs. Printing (Act06-Functions Model 3) ──────
+
+::W06-R2-Q3 What Does print(result) Actually Show?::
+<pre>
+def add_one(x):
+    print(x + 1)
+# --- main program ---
+result = add_one(5)
+print(result)
+</pre>
+What does the final <code>print(result)</code> output?{
+=None #Correct. add_one prints x + 1 (6) but never uses a return statement, so calling it gives back the value None by default — and that's what gets stored in result and printed.
+~6 #Printing a value inside a function only displays it on the screen — it doesn't automatically make that value available as the function's result. Only an explicit <code>return</code> does that.
+~6, printed twice #The missing return doesn't duplicate anything — the function still only prints once (6) during the call, and separately returns None, which prints once more afterward.
+~A TypeError, since add_one has no return statement #This is completely valid Python — a function with no return statement simply returns None implicitly, it doesn't raise an error.
+}
+
+// ── Section 4: compute_cost (Lab 6.12 / Lab 6.0) ────────────────────────────
+
+::W06-R2-Q4 Implementing compute_cost Correctly::
+The Function Practice lab requires <code>compute_cost(200, 20, 4)</code> to return <code>40.0</code>, using the formula (miles / miles_per_gallon) * dollars_per_gallon. Which definition correctly implements this?{
+=<pre>
+def compute_cost(miles, miles_per_gallon, dollars_per_gallon)\:
+    return (miles / miles_per_gallon) * dollars_per_gallon
+</pre> #Correct. (200 / 20) * 4 gives 10 * 4 \= 40.0, matching the required result, and the value is properly returned rather than just displayed.
+~<pre>
+def compute_cost(miles, miles_per_gallon, dollars_per_gallon)\:
+    print((miles / miles_per_gallon) * dollars_per_gallon)
+</pre> #This only prints the cost instead of returning it, so any code trying to use compute_cost's result (in an assert test, or another calculation) would get None instead of 40.0.
+~<pre>
+def compute_cost(miles_per_gallon, miles, dollars_per_gallon)\:
+    return (miles / miles_per_gallon) * dollars_per_gallon
+</pre> #This swaps the order of the first two parameters, so calling compute_cost(200, 20, 4) actually computes (20 / 200) * 4 \= 0.4, not 40.0.
+~<pre>
+def compute_cost(miles, miles_per_gallon, dollars_per_gallon)\:
+    return miles / (miles_per_gallon * dollars_per_gallon)
+</pre> #This groups the division and multiplication differently than specified, computing 200 / (20 * 4) \= 2.5 instead of 40.0.
+}
+
+// ── Section 5: Where Does return -1 Go? (Lab 6.13 / Lab 6.1) ────────────────
+
+::W06-R2-Q5 Placing return -1 in the Search Function::
+The Search lab's algorithm loops over every index, returning i on a match, and must return -1 for <code>search([], 'this')</code> as well as when the target simply isn't found. Where must the final <code>return -1</code> go?{
+=Outside (after) the for loop, at the same indentation level as the for statement — not inside it #Correct. A for loop over an empty list never runs its body at all, so a return -1 placed inside the loop would never execute when str_list is empty; only a return -1 positioned after the whole loop is guaranteed to run whenever no match was found.
+~As the very first line of the function, before the loop even starts #This would make the function always return -1 immediately, before ever searching the list, so a genuine match would never be found or returned.
+~It doesn't matter where return -1 goes, as long as it's somewhere in the function #Placement matters a great deal here — only right after (outside) the loop guarantees it runs precisely when no match was found, including for an empty list.
+~Inside the for loop, right after the if check #Putting it inside the loop body means it would run (and incorrectly return -1) as soon as the first element checked isn't the target, without ever checking the rest of the list.
+}
+
+// ── Section 6: Initializing longest_word_so_far (Lab 6.14 / Lab 6.2) ────────
+
+::W06-R2-Q6 An Accumulator That Must Handle an Empty List::
+find_longest must return <code>''</code> when given an empty list, and otherwise return the longest string in the list. Which initial value for <code>longest_word_so_far</code> correctly handles every case, including the empty list?{
+=<code>''</code> (the empty string) #Correct. len('') is 0, so it's guaranteed to be no longer than any real word — and if the list is empty, the loop never runs at all, leaving longest_word_so_far at '', exactly the required result.
+~<code>None</code> #Comparing len(None) would raise a TypeError the moment the loop tries to check a word's length against it — None has no length at all.
+~<code>'a'</code> #This is only shorter than words with 2 or more characters — a genuinely one-character word wouldn't correctly update it, and it still isn't the empty string the empty-list case requires.
+~The first word in the list #This breaks the empty-list case entirely, since there is no "first word" to grab when the list has zero elements — that would raise an IndexError.
+}
+
+// ── Section 7: Reusing search() to Check Uniqueness (Lab 6.15 / Lab 6.2) ───
+
+::W06-R2-Q7 Why == -1 Means "Not Already Seen"::
+The Unique lab checks whether a word is new with <code>search(unique_words, current_word) == -1</code>, reusing the search function from Lab 6.13. Why does this comparison correctly mean "not already in unique_words"?{
+=search returns the index of the first match if the word IS found, and returns exactly -1 only when it searches the whole list without finding a match — so getting -1 back means the word isn't in unique_words yet #Correct. -1 is search's dedicated "not found" signal, so comparing the result to -1 is exactly the right way to detect a brand-new word.
+~-1 means the search failed with an error, so this comparison is really just error-checking #search doesn't raise or represent any error with -1 — it's a normal, expected return value that specifically signals "target not found," not a failure.
+~search always returns -1 when unique_words is empty, so this only works correctly at the very start #search returns -1 whenever the target isn't found, regardless of whether the list is currently empty or simply doesn't contain that word yet — the check is correct at every step, not only the first.
+~\=\= -1 checks that current_word was the last element examined during the search #-1 is simply the sentinel value search returns for "not found" — it carries no information about which position was checked last.
+}

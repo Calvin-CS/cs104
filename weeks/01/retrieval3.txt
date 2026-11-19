@@ -1,0 +1,85 @@
+// Week 01 Retrieval Quiz 3 (Friday) — objects, variables, Thonny, and the Intro to Python POGIL — GIFT format
+// Import into Moodle: Question bank > Import > GIFT format
+// 8 questions covering: Week 1 slides (objects, variable naming, running code, Thonny IDE,
+// converting input to numbers) and the previous class's POGIL activity, Act01-Intro
+// (Model 1: Getting Started with Thonny, Model 2: Built-In Functions, Model 3: Variables and Assignment)
+
+$CATEGORY: Week 01 / Retrieval 3
+
+// ── Section 1: Objects & Variables ──────────────────────────────────────────
+
+::W01-R3-Q1 Identifying Object Types::
+In Python, what object type is used to represent a value like 3.14?{
+=float #Correct. A decimal number is represented by the float type.
+~int #int is for whole numbers with no decimal point, like 123 — 3.14 has a fractional part.
+~string #3.14 isn't inside quotes, so it's a number, not text.
+~bool #bool only has two possible values, True and False — it can't hold a numeric value like 3.14.
+}
+
+// ── Section 2: Naming Variables ─────────────────────────────────────────────
+
+::W01-R3-Q2 Valid Variable Names::
+Based on Python's variable naming rules (and the examples tested in the POGIL activity, like my_data vs. 3data vs. "my data"), which of these is a valid Python variable name?{
+=my_data #Correct. It starts with a letter, contains no spaces, and isn't a reserved word.
+~3data #Variable names can't start with a number — Python would raise a SyntaxError, just like 3data = "hello" did in the POGIL activity.
+~my data #Variable names can't contain a space — Python treats this as two separate words, causing a SyntaxError (as seen with "my data = 56").
+~True #True is a reserved word in Python (it's the bool value) and can't be used as a variable name.
+}
+
+// ── Section 3: Getting Input as Numbers ─────────────────────────────────────
+
+::W01-R3-Q3 Converting Input to a Number::
+Given x = input("Please enter your age: "), what does the line x = int(x) accomplish?{
+=It converts the string that input() returned into an integer, so x can now be used in math operations #Correct. input() always returns a string, so int() (or float()) is needed before you can do arithmetic with the value.
+~It permanently changes the input() function so it always returns integers from then on #int() only converts the one value it's given — it doesn't change how input() behaves elsewhere.
+~It doubles the numeric value that was entered #int() converts a value's type; it doesn't perform any arithmetic on it.
+~It checks whether the text entered was a valid number and returns True or False #int() tries to convert the value (and raises an error if it can't) — it doesn't return a True/False result.
+}
+
+// ── Section 4: Thonny: Editor vs. Shell ─────────────────────────────────────
+
+::W01-R3-Q4 Editor vs. Shell in Thonny::
+In Thonny, where do you write and save the lines of your program before running it?{
+=The Editor window #Correct. The Editor holds the series of statements that make up your program, like the hello.py file from the POGIL activity.
+~The Shell window #The Shell is where the program's output appears and where you can type input — it isn't where you write and save your program's code.
+~The Tools menu #The Tools menu is used for things like managing packages, not for writing program code.
+~The Variables pane #The Variables pane displays the current values of variables while debugging — it doesn't hold your program's code.
+}
+
+// ── Section 5: Functions and Input Types ────────────────────────────────────
+
+::W01-R3-Q5 Why input() Caused a TypeError::
+In the POGIL activity, after mass = input("enter another mass in grams: ") was entered (typing 10), running print(mass / 2) raised a TypeError. Why?{
+=input() always returns a string, and Python won't let you divide a string by a number #Correct. Even though "10" looks numeric, it's stored as text; it would need int(mass) or float(mass) first.
+~The number 10 is too large for the / operator to handle #The size of the number isn't the issue — the problem is its type (string vs. number).
+~The / operator only works with whole numbers, not results with decimals #The / operator works fine with numbers like the int ten in the same activity (ten / 2 correctly gave 5.0) — the issue is that mass is a string, not a number.
+~mass hadn't been given a value yet, so Python didn't know what to divide #mass was already assigned the string '10' from the input() call — the error is about its type, not a missing value.
+}
+
+// ── Section 6: Reading Error Messages ───────────────────────────────────────
+
+::W01-R3-Q6 SyntaxError vs. NameError::
+In the POGIL activity, my_data = 56 (written as "my data = 56") raised a SyntaxError, while data3 = hello raised a NameError. What's the real difference between these two errors?{
+=A SyntaxError means the code isn't valid Python at all (like a space in a name); a NameError means the code is valid Python but refers to a variable that doesn't exist yet #Correct. "my data" isn't a legal name at all, but hello is a legal-looking name Python just hasn't seen defined.
+~A NameError means the code isn't valid Python at all, and a SyntaxError means it refers to an undefined variable #This swaps the two definitions — it's backwards.
+~They mean the same thing; Python just uses different wording depending on the situation #They flag different problems: one is about the code's structure, the other is about undefined names.
+~SyntaxError only happens with numbers in a name, and NameError only happens with letters #The actual distinction is about structure (SyntaxError) vs. undefined names (NameError), not which characters are used.
+}
+
+::W01-R3-Q7 Case Sensitivity and NameError::
+In the POGIL activity, after only running hot = 273 + 100, typing Hot + 100 (capital H) raised a NameError, even though hot - 100 correctly returned 273. What does this show?{
+=Python treats Hot and hot as two completely different variables, and only hot had been assigned a value #Correct. Variable names are case-sensitive, so capitalizing a letter refers to a variable that was never created.
+~Python evaluates addition and subtraction differently, which caused the error #The operator isn't the issue — both lines use hot's value correctly when the name matches exactly.
+~hot's value must have changed to something non-numeric between the two lines #hot kept its value of 373 throughout; only the capitalized name Hot was undefined.
+~NameError means the number 100 wasn't recognized as valid #100 is a normal integer; the error is about the undefined name Hot, not the number.
+}
+
+// ── Section 7: Assignment Statements ────────────────────────────────────────
+
+::W01-R3-Q8 Copying a Variable's Value::
+To copy the current value of hot into a new variable called cold (as in the POGIL activity), which line of code should you write?{
+=cold \= hot #Correct. Assignment reads right to left: Python evaluates hot's current value first, then stores that value in cold.
+~hot \= cold #This overwrites hot with cold's value instead — backwards from what's needed, and cold doesn't have a value yet anyway.
+~cold \=\= hot #Double equals checks whether two values are equal (a comparison); it doesn't assign a value to anything.
+~cold \= "hot" #This assigns the literal text "hot" to cold, not the value currently stored in the variable hot.
+}

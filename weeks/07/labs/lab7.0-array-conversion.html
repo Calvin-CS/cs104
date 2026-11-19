@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Lab 7.0 — Array Unit Conversion</title>
+<style>
+  body { font-family: Arial, Helvetica, sans-serif; color: #202124; max-width: 760px; margin: 2rem auto; line-height: 1.5; }
+  h1 { font-size: 1.5rem; margin-bottom: 0.2rem; }
+  .activity-badge { display: flex; align-items: center; gap: 0.75rem; border-left: 4px solid #2e7d32; background: #f3f7f3; padding: 0.6rem 1rem; margin: 1rem 0 1.4rem; font-size: 0.95rem; }
+  .activity-badge .tag { font-weight: bold; color: #2e7d32; font-size: 0.75rem; letter-spacing: 0.04em; }
+  .activity-badge .points { margin-left: auto; color: #555; }
+  code, .inline-code { font-family: "Courier New", Courier, monospace; background: #f1f1f1; padding: 0.1rem 0.3rem; border-radius: 3px; font-size: 0.92em; }
+  pre.codeblock { background: #f5f5f5; border: 1px solid #ccc; border-radius: 4px; padding: 0.75rem 1rem; font-family: "Courier New", Courier, monospace; font-size: 0.9rem; overflow-x: auto; }
+  pre.run { background: #fafafa; border: 1px solid #ddd; border-radius: 4px; padding: 0.75rem 1rem; font-family: "Courier New", Courier, monospace; font-size: 0.9rem; }
+  pre.run .input { color: #1a56db; }
+  ol, ul { padding-left: 1.4rem; }
+  ol li, ul li { margin-bottom: 0.35rem; }
+  h2.grading { font-size: 1.05rem; margin-top: 1.6rem; }
+  ul.grading-list { list-style: none; padding-left: 0; }
+  ul.grading-list li { margin-bottom: 0.2rem; }
+  .note { font-size: 0.85rem; color: #666; font-style: italic; }
+</style>
+</head>
+<body>
+
+<h1>7.0 Array Unit Conversion (Lab 7.0)</h1>
+
+<div class="activity-badge">
+  <span class="tag">LAB<br>ACTIVITY</span>
+  <span>7.0.1: Array Unit Conversion (Lab 7.0)</span>
+  <span class="points">0 / 10</span>
+</div>
+
+<p>First, download this template and rename it <code>array_conversion.py</code>:</p>
+<ul>
+  <li><em>template.py</em> <span class="note">(replace with your course's actual template link)</span></li>
+</ul>
+
+<p>Write a program that uses NumPy to convert a list of Celsius temperatures to Fahrenheit, all at once — with no explicit loop over the values.</p>
+
+<ol>
+  <li><strong>Prompt for and read</strong> a comma-separated list of Celsius temperatures from the user as a single line of text, e.g. <code>0,20,37,100</code>.</li>
+  <li><strong>Split</strong> the input on commas and convert each piece to a <code>float</code>, storing the results in a NumPy array called <code>celsius</code>. (You may build a plain Python list first with <code>float(x)</code> for each piece, then pass it to <code>np.array(...)</code>.)</li>
+  <li><strong>Compute</strong> a new array <code>fahrenheit</code> using the formula <code>F = C * 9 / 5 + 32</code> applied to the whole <code>celsius</code> array at once — NumPy applies the arithmetic element-by-element automatically.</li>
+  <li><strong>Print</strong> the <code>fahrenheit</code> array.</li>
+</ol>
+
+<p>Here is an example execution.</p>
+<pre class="run">Celsius temperatures (comma-separated): <span class="input">0,20,37,100</span>
+[ 32.   68.   98.6 212. ]</pre>
+
+<p>Note: printing a NumPy array directly (rather than looping over it yourself to call <code>print()</code> on each value) is expected here — that's exactly the output shown above.</p>
+
+<h2 class="grading">Grading</h2>
+<ul class="grading-list">
+  <li><strong>90% — Correctness:</strong> Your program should run as specified, using NumPy's element-wise arithmetic rather than a manual loop over the array.</li>
+  <li><strong>10% — Understandability:</strong> Your program should be easy to read.</li>
+</ul>
+
+</body>
+</html>

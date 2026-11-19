@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Lab 7.2 — Newton's Law of Cooling</title>
+<style>
+  body { font-family: Arial, Helvetica, sans-serif; color: #202124; max-width: 760px; margin: 2rem auto; line-height: 1.5; }
+  h1 { font-size: 1.5rem; margin-bottom: 0.2rem; }
+  .activity-badge { display: flex; align-items: center; gap: 0.75rem; border-left: 4px solid #2e7d32; background: #f3f7f3; padding: 0.6rem 1rem; margin: 1rem 0 1.4rem; font-size: 0.95rem; }
+  .activity-badge .tag { font-weight: bold; color: #2e7d32; font-size: 0.75rem; letter-spacing: 0.04em; }
+  .activity-badge .points { margin-left: auto; color: #555; }
+  code, .inline-code { font-family: "Courier New", Courier, monospace; background: #f1f1f1; padding: 0.1rem 0.3rem; border-radius: 3px; font-size: 0.92em; }
+  pre.codeblock { background: #f5f5f5; border: 1px solid #ccc; border-radius: 4px; padding: 0.75rem 1rem; font-family: "Courier New", Courier, monospace; font-size: 0.9rem; overflow-x: auto; }
+  pre.run { background: #fafafa; border: 1px solid #ddd; border-radius: 4px; padding: 0.75rem 1rem; font-family: "Courier New", Courier, monospace; font-size: 0.9rem; }
+  pre.run .input { color: #1a56db; }
+  ol, ul { padding-left: 1.4rem; }
+  ol li, ul li { margin-bottom: 0.35rem; }
+  h2.iteration { font-size: 1.1rem; margin-top: 1.6rem; border-top: 1px solid #ddd; padding-top: 1rem; }
+  h2.grading { font-size: 1.05rem; margin-top: 1.6rem; }
+  ul.grading-list { list-style: none; padding-left: 0; }
+  ul.grading-list li { margin-bottom: 0.2rem; }
+  .note { font-size: 0.85rem; color: #666; font-style: italic; }
+  .figure-placeholder { border: 1px dashed #aaa; border-radius: 4px; padding: 2rem 1rem; text-align: center; color: #777; font-size: 0.9rem; background: #fcfcfc; }
+</style>
+</head>
+<body>
+
+<h1>7.2 Newton's Law of Cooling (Lab 7.2)</h1>
+
+<div class="activity-badge">
+  <span class="tag">LAB<br>ACTIVITY</span>
+  <span>7.2.1: Newton's Law of Cooling (Lab 7.2)</span>
+  <span class="points">0 / 30</span>
+</div>
+
+<p>Newton's Law of Cooling says a hot object left in a room doesn't cool down at a constant rate — it cools quickly at first, then more and more slowly as its temperature approaches the room's. The object's temperature at time <code>t</code> (in minutes) is given by:</p>
+<pre class="codeblock">T(t) = T_room + (T0 - T_room) * e^(-t / tau)</pre>
+<p>where <code>T0</code> is the object's starting temperature, <code>T_room</code> is the (constant) room temperature, and <code>tau</code> is the <strong>time constant</strong>, in minutes — how quickly the object cools. This is the same kind of exponential behavior as an RC circuit's charging and discharging curves, applied to temperature instead of voltage.</p>
+
+<p>First, download this template and rename it <code>cooling.py</code>:</p>
+<ul>
+  <li><em>template.py</em> <span class="note">(replace with your course's actual template link)</span></li>
+</ul>
+
+<h2 class="iteration">Iteration 1</h2>
+<p>Implement the following algorithm:</p>
+<ol>
+  <li><strong>Import</strong> the <code>numpy</code> and <code>math</code> (or <code>numpy</code>'s own <code>np.exp</code>) and <code>matplotlib.pyplot</code> libraries (already included in the template).</li>
+  <li><strong>Prompt for and read</strong> floating point values for <code>T0</code> (the starting temperature, in °C), <code>T_room</code> (the room temperature, in °C), and <code>tau</code> (the time constant, in minutes).</li>
+  <li><strong>Create</strong> a NumPy array <code>t</code> of 200 evenly spaced minutes from <code>0</code> to <code>5 * tau</code>, using <code>np.linspace</code>.</li>
+  <li><strong>Compute</strong> an array <code>temp</code> holding the temperature at each value in <code>t</code>, using the formula above (applied to the whole array at once).</li>
+  <li><strong>Plot</strong> <code>temp</code> versus <code>t</code>, with an x-axis label of <code>"Time (minutes)"</code>, a y-axis label of <code>"Temperature (°C)"</code>, a title of <code>"Newton's Law of Cooling"</code>, and the grid turned on.</li>
+</ol>
+
+<p>Here is an example execution, for a cup of coffee starting at 90°C in a 20°C room with a 15-minute time constant.</p>
+<pre class="run">T0 (°C): <span class="input">90</span>
+T room (°C): <span class="input">20</span>
+tau (minutes): <span class="input">15</span></pre>
+<div class="figure-placeholder">[ a curve starting at 90°C, dropping quickly at first, then leveling off<br>and approaching (but never quite reaching) 20°C, with labeled axes, a title, and a grid ]</div>
+
+<h2 class="iteration">Iteration 2</h2>
+<p>Add a horizontal marker line at the temperature reached after exactly one time constant, and a vertical marker line at <code>t = tau</code>:</p>
+<pre class="codeblock">plt.axhline(T_room + (T0 - T_room) * np.exp(-1), color="gray", linestyle="--")
+plt.axvline(tau, color="gray", linestyle="--")</pre>
+<p>Confirm on your plot: after exactly one time constant, the object has cooled about 63% of the way from <code>T0</code> down to <code>T_room</code> — the same "63%" milestone from the RC circuit activity in class, here applied to a cooling curve instead of a charging one.</p>
+
+<h2 class="grading">Grading</h2>
+<ul class="grading-list">
+  <li><strong>90% — Correctness:</strong> Your program should run as specified, computing the full temperature array with NumPy and producing a correctly labeled, correctly marked plot.</li>
+  <li><strong>10% — Understandability:</strong> Your program should be easy to read.</li>
+</ul>
+
+</body>
+</html>

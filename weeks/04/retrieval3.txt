@@ -1,0 +1,212 @@
+// Week 04 Retrieval Quiz 3 — Conditionals, plus a little Week 3 review — GIFT format
+// Import into Moodle: Question bank > Import > GIFT format
+// 12 questions\: Q1-Q3 review Week 3 (negative indexing, dictionary aliasing, integer
+// reassignment); Q4-Q12 cover Week 4's Conditionals slides (Boolean values, if/elif
+// execution, the pH exercise) and Labs 4.11-4.13 (Automobile Service Cost, Wind Chill,
+// Zeller's Congruence). Chosen to avoid repeating questions already used in
+// weeks/04/retrieval1.txt, weeks/04/retrieval2.txt and weeks/05/retrieval1.txt.
+
+$CATEGORY: Week 04 / Retrieval 3
+
+// ── Section 1: Review from Week 3 ───────────────────────────────────────────
+
+::W04-R3-Q1 Week 3 Review: Negative Indexing::
+Given <code>word = 'python'</code>, what is <code>word[-2]</code>?{
+=<code>'o'</code> #Correct. Negative indexes count from the end of the string\: -1 is the last character ('n'), so -2 is the one just before it, 'o' (the same character as <code>word[4]</code>).
+~<code>'n'</code> #That's <code>word[-1]</code>, the very last character — -2 goes one step further back.
+~<code>'t'</code> #That's <code>word[2]</code>; this ignores the minus sign and counts from the front of the string instead of the end.
+~<code>'y'</code> #That's <code>word[1]</code>; it picks the second character from the front rather than the second character from the end.
+}
+
+::W04-R3-Q2 Week 3 Review: Two Names for One Dictionary::
+<pre>
+d1 = \{'a': 1\}
+d2 = d1
+d2['a'] = 99
+print(d1['a'])
+</pre>
+What does this print?{
+=99 #Correct. <code>d2 \= d1</code> makes both names refer to the same dictionary object, and dictionaries are mutable — so changing a value through d2 is visible through d1 too.
+~1 #This assumes <code>d2 \= d1</code> copies the dictionary — but assignment only copies the reference to it, not the dictionary itself.
+~A KeyError #The key 'a' is still in the dictionary, so the lookup succeeds; nothing here removes or renames it.
+~A TypeError #Dictionaries do support item assignment (unlike strings and tuples) — they're mutable.
+}
+
+::W04-R3-Q3 Week 3 Review: Reassigning vs. Sharing::
+<pre>
+x = 5
+y = x
+x = x + 1
+print(y)
+</pre>
+What does this print, and why isn't the result the same kind of surprise as with lists?{
+=5 — integers are immutable, so <code>x \= x + 1</code> doesn't change the object 5; it builds a new object 6 and re-points x at it, while y still refers to 5 #Correct. Rebinding a name to a new object never affects other names pointing at the old one; the "shared change" surprise only happens when a mutable object (like a list) is modified in place.
+~6 — because <code>y \= x</code> makes y always follow x #A name isn't linked to another name; <code>y \= x</code> makes y refer to whatever object x referred to at that moment, and later re-pointing x doesn't drag y along.
+~5 — but only because x and y were copied when they were assigned, the same way lists are copied #Lists are NOT copied by assignment (they're shared, as with <code>b \= a</code> earlier in the unit). Integers behave differently because they can't be modified in place, not because assignment copies them.
+~A TypeError, since you can't add to an integer that another variable also refers to #Sharing an object between two names never blocks arithmetic — <code>x + 1</code> simply produces a new int.
+}
+
+// ── Section 2: Boolean Values and Operators (Conditionals slides) ───────────
+
+::W04-R3-Q4 Storing a Comparison in a Variable::
+<pre>
+a = 3
+b = (a != 3)
+print(b)
+</pre>
+What is printed?{
+=False #Correct. <code>a !\= 3</code> is a comparison that produces a bool — since a is 3, "a is not equal to 3" is False — and that bool is stored in b and then printed.
+~True #This reads <code>!\=</code> as "equals"; it actually means "is not equal to," which is False when a is exactly 3.
+~3 #A comparison produces True or False, not the value being compared — b holds a bool, not a's value.
+~A syntax error #Parentheses around an expression are fine, and assigning a comparison's result to a variable is valid — comparison operators produce bool objects like any other value.
+}
+
+::W04-R3-Q5 At Least One of Two Conditions::
+Which expression is True exactly when at least one of these holds — a and b are equal, or a has the value 5?{
+=<code>a \=\= b or a \=\= 5</code> #Correct. <code>or</code> is True when either side is True, which is exactly "at least one" of the two conditions.
+~<code>a \=\= b and a \=\= 5</code> #<code>and</code> requires BOTH conditions to hold at once (a equals b and a is 5), which is stricter than "at least one."
+~<code>a \=\= b \=\= 5</code> #A chained comparison means <code>a \=\= b and b \=\= 5</code> — all three values equal — so this also requires both conditions, not just one.
+~<code>a \=\= (b \=\= 5)</code> #This compares a to the bool result of <code>b \=\= 5</code> (True or False), not to b — it doesn't express either of the two conditions.
+}
+
+// ── Section 3: How if/elif Chains Execute (Conditionals slides) ─────────────
+
+::W04-R3-Q6 What Is x After the if/else?::
+<pre>
+x = 5
+if x > 2:
+&nbsp;&nbsp;&nbsp;&nbsp;x = -3
+&nbsp;&nbsp;&nbsp;&nbsp;x = 1
+else:
+&nbsp;&nbsp;&nbsp;&nbsp;x = 3
+&nbsp;&nbsp;&nbsp;&nbsp;x = 2
+</pre>
+What is the value of <code>x</code> after this code runs?{
+=1 #Correct. <code>x > 2</code> is True, so the whole if-block runs from top to bottom (x becomes -3, then 1) and the else-block is skipped entirely.
+~-3 #This stops after the first line of the if-block — but every statement in the block runs in order, so the later assignment <code>x \= 1</code> overwrites -3.
+~2 #This runs the else-block, but else only runs when the if condition is False — here <code>x > 2</code> is True.
+~5 #This assumes neither block ran — but the if condition is True, so its block does execute and reassigns x.
+}
+
+::W04-R3-Q7 An elif Chain in the Wrong Order::
+<pre>
+x = 95
+if x >= 60:
+&nbsp;&nbsp;&nbsp;&nbsp;print("You've got a D")
+elif x >= 70:
+&nbsp;&nbsp;&nbsp;&nbsp;print("You've got a C")
+elif x >= 80:
+&nbsp;&nbsp;&nbsp;&nbsp;print("You've got a B")
+elif x >= 90:
+&nbsp;&nbsp;&nbsp;&nbsp;print("You've got an A")
+else:
+&nbsp;&nbsp;&nbsp;&nbsp;print("Keep studying!")
+</pre>
+What does this print, and how should the chain be fixed?{
+=It prints "You've got a D" — the first condition <code>x >\= 60</code> is already True for 95, so the chain stops there; the fix is to test the highest cutoff first (90, then 80, then 70, then 60) #Correct. An if/elif chain runs only the first branch whose condition is True, so a broad condition has to come after the narrower ones it would otherwise swallow.
+~It prints "You've got an A" — Python checks every branch and picks the best match #elif branches are checked in order and only the FIRST True one runs — Python doesn't compare all the branches to find the "best" one.
+~It prints all four grade messages, since 95 satisfies every cutoff #Only one branch of an if/elif chain ever runs; once <code>x >\= 60</code> matches, the remaining elifs are skipped. (Separate <code>if</code> statements would behave the way this option describes.)
+~It prints "Keep studying!" because no branch is a perfect match #The else branch only runs when NO earlier condition is True — here the very first one is.
+}
+
+// ── Section 4: The pH Exercise (Conditionals slides) ────────────────────────
+
+::W04-R3-Q8 Rejecting Invalid pH Values::
+The pH exercise classifies a value as acid (below 7), base (above 7), or neutral (exactly 7), and must show an error for any pH outside 0 to 14 instead of classifying it. Which structure does this correctly?{
+=<pre>
+if ph < 0 or ph > 14\:
+&nbsp;&nbsp;&nbsp;&nbsp;print("error")
+elif ph < 7\:
+&nbsp;&nbsp;&nbsp;&nbsp;print("acid")
+elif ph > 7\:
+&nbsp;&nbsp;&nbsp;&nbsp;print("base")
+else\:
+&nbsp;&nbsp;&nbsp;&nbsp;print("neutral")
+</pre> #Correct. The range check comes first, so an out-of-range value like 20 is rejected before the acid/base tests can misclassify it, and the elifs guarantee exactly one message is printed.
+~<pre>
+if ph < 7\:
+&nbsp;&nbsp;&nbsp;&nbsp;print("acid")
+elif ph > 7\:
+&nbsp;&nbsp;&nbsp;&nbsp;print("base")
+elif ph < 0 or ph > 14\:
+&nbsp;&nbsp;&nbsp;&nbsp;print("error")
+else\:
+&nbsp;&nbsp;&nbsp;&nbsp;print("neutral")
+</pre> #The error branch is unreachable\: every number below 0 already satisfies <code>ph < 7</code> and every number above 14 already satisfies <code>ph > 7</code>, so bad values get classified as acid or base before the range check is ever reached.
+~<pre>
+if ph < 0 and ph > 14\:
+&nbsp;&nbsp;&nbsp;&nbsp;print("error")
+elif ph < 7\:
+&nbsp;&nbsp;&nbsp;&nbsp;print("acid")
+elif ph > 7\:
+&nbsp;&nbsp;&nbsp;&nbsp;print("base")
+else\:
+&nbsp;&nbsp;&nbsp;&nbsp;print("neutral")
+</pre> #<code>and</code> requires ph to be below 0 AND above 14 at the same time, which is impossible, so the error branch never runs and bad values are classified anyway.
+~<pre>
+if ph < 7\:
+&nbsp;&nbsp;&nbsp;&nbsp;print("acid")
+elif ph > 7\:
+&nbsp;&nbsp;&nbsp;&nbsp;print("base")
+else\:
+&nbsp;&nbsp;&nbsp;&nbsp;print("neutral")
+if ph < 0 or ph > 14\:
+&nbsp;&nbsp;&nbsp;&nbsp;print("error")
+</pre> #The final separate <code>if</code> runs no matter what the chain above did, so an invalid pH like 20 prints "base" AND "error" — the classification isn't skipped.
+}
+
+::W04-R3-Q9 Comparing Raw input() to a Number::
+<pre>
+ph = input("pH: ")
+if ph < 7.0:
+&nbsp;&nbsp;&nbsp;&nbsp;print("acid")
+</pre>
+What happens when the user enters <code>3</code>?{
+=A TypeError — <code>input()</code> always returns a string, and Python won't order a string against a float; wrapping the call as <code>float(input("pH\: "))</code> fixes it #Correct. Even though the user typed a digit, <code>ph</code> holds the text "3", and a less-than comparison between a str and a float isn't supported, so Python raises an error.
+~It prints "acid" — Python automatically converts the digits to a number for the comparison #Python never converts a string to a number implicitly for comparisons, which is exactly why an explicit <code>int()</code> or <code>float()</code> is needed.
+~It prints nothing, because the comparison is simply False #Ordering comparisons between a string and a number don't quietly return False — they raise a TypeError.
+~It compares the text alphabetically and prints "acid" only if "3" sorts before "7.0" #Python does compare strings alphabetically when both sides are strings, but it won't mix a string with a float — that mix is what raises the error.
+}
+
+// ── Section 5: Automobile Service Cost (Lab 4.11 / Lab 4.0) ─────────────────
+
+::W04-R3-Q10 Checking Whether a Service Is Supported::
+A student stores the Automobile Service Cost prices in a dictionary and reads the service\:
+<pre>
+prices = \{'oil change': 35, 'tire rotation': 19, 'car wash': 7\}
+service = input("service: ")
+</pre>
+Which condition correctly checks whether the service the user entered is one the program supports?{
+=<code>service in prices</code> #Correct. <code>in</code> on a dictionary tests its KEYS, which here are the service names — exactly what needs checking before looking up a price.
+~<code>service \=\= prices</code> #This compares a string to an entire dictionary, which are never equal — the condition is always False.
+~<code>service in prices.values()</code> #The dictionary's values are the prices (35, 19, 7), not the service names, so a service name will never be found there.
+~<code>prices[service]</code> #Used as a condition, this looks the price up directly — but for an unsupported service it raises a KeyError instead of quietly being False, so the "not recognized" branch never gets a chance to run.
+}
+
+// ── Section 6: Wind Chill (Lab 4.12 / Lab 4.1) ──────────────────────────────
+
+::W04-R3-Q11 Exactly on a Layer Cutoff::
+The Wind Chill lab recommends layers with these cutoffs\:
+<pre>
+wc_temp < -40          Stay home!
+-40 <= wc_temp < -10   Four layers
+-10 <= wc_temp < 20    Three layers
+20 <= wc_temp < 40     Two layers
+wc_temp >= 40          One layer
+</pre>
+If the computed wind chill is exactly <code>-40.0</code>, which recommendation is printed?{
+=Four layers #Correct. -40 is not less than -40, so "Stay home!" doesn't apply; the next range, <code>-40 <\= wc_temp < -10</code>, includes its lower endpoint, so it matches.
+~Stay home! #That range uses a strict less-than, <code>wc_temp < -40</code>, so exactly -40 doesn't qualify.
+~Three layers #That range starts at -10, well above -40.
+~Invalid input #"Invalid input" is for bad temperature or wind speed INPUT values (wind speed under 2, temperature under -58 or over 41), not for a computed wind chill of -40.
+}
+
+// ── Section 7: Zeller's Congruence (Lab 4.13 / Lab 4.2) ─────────────────────
+
+::W04-R3-Q12 Zeller's Month and Year Adjustment::
+For the lab's sample input (year 2020, month 2, day 27), the program first adjusts January and February. After that adjustment, with J = year // 100 and K = year % 100, what are month, year, J, and K?{
+=month 14, year 2019, J 20, K 19 #Correct. February counts as month 14 of the PREVIOUS year, so month becomes 14 and year drops to 2019; then <code>2019 // 100</code> is 20 and <code>2019 % 100</code> is 19.
+~month 14, year 2020, J 20, K 20 #The month was converted but the year wasn't decreased — the lab requires BOTH changes, because January and February belong to the previous year in this formula.
+~month 2, year 2019, J 20, K 19 #The year was decreased but the month wasn't converted to 14 — the lab requires both changes together.
+~month 14, year 2019, J 19, K 20 #J and K are swapped — J is the century (<code>year // 100</code> gives 20) and K is the year within the century (<code>year % 100</code> gives 19).
+}

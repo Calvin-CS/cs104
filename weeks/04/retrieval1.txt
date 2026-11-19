@@ -1,0 +1,91 @@
+// Week 04 Retrieval Quiz 1 — review of Week 3 (Data Types) content — GIFT format
+// Import into Moodle: Question bank > Import > GIFT format
+// 6 questions reviewing Week 3's Data Types slide deck (Exercise 3.b.1 and the
+// Name-Object Diagrams with Lists exercises) plus the Act03-DataStruct POGIL activity
+// and Labs 3.8-3.11 referenced there. Chosen to avoid repeating questions already used
+// in weeks/03/retrieval1.txt and weeks/03/retrieval2.txt.
+
+$CATEGORY: Week 04 / Retrieval 1
+
+// ── Section 1: Choosing a Data Type (Exercise 3.b.1) ────────────────────────
+
+::W04-R1-Q1 A Dictionary for an Address Book Entry::
+In Exercise 3.b.1, part (e) represents an address book entry as <code>e = \{"name"\: "Alice", "email"\: "ak12@calvin.edu", "major"\: "Biology"\}</code>. Why is a dictionary a better fit here than a list like <code>e = ["Alice", "ak12@calvin.edu", "Biology"]</code>?{
+=A dictionary labels each value with a named key ("name", "email", "major"), so you look values up by what they mean, while a list only tracks values by position, leaving you to remember that position 0 is always the name #Correct. Named keys make the entry self-describing and safe to reorder, while a list's meaning depends entirely on remembering the right position for each field.
+~A dictionary is required because the values are all strings, and lists can't hold strings #Lists hold strings just fine — <code>["Alice", "ak12@calvin.edu", "Biology"]</code> is perfectly valid Python.
+~A dictionary is faster to create than a list, since it needs less typing #The dictionary version actually requires more typing (the keys as well as the values) — ease of typing isn't the reason to prefer it.
+~There's no real difference; both store the same three pieces of information equally well #The two aren't equivalent in practice — the dictionary lets you retrieve a field by name (e.g. <code>e["email"]</code>), while the list forces you to remember and count positions.
+}
+
+// ── Section 2: String Indexing Syntax ───────────────────────────────────────
+
+::W04-R1-Q2 Indexing Syntax for a String::
+Assume <code>x = 'alphabet'</code>. Which expression correctly gets the character <code>'b'</code> (at position 5, counting from 0)?{
+=<code>x[5]</code> #Correct. Square brackets index a string by position, and position 5 in "alphabet" (a-l-p-h-a-b-e-t) is 'b'.
+~<code>x(5)</code> #Parentheses call a function or method — they don't index a sequence. Indexing always uses square brackets in Python.
+~<code>x[6]</code> #Index 6 lands one character too far, on 'e' rather than 'b'.
+~<code>x(-4)</code> #Parentheses are the wrong syntax for indexing, and even as a negative index, -4 would land on 'a' (4 characters from the end), not 'b'.
+~<code>x\{-3\}</code> #Curly braces aren't used for indexing at all in Python — only square brackets are.
+}
+
+// ── Section 3: Aliasing — Two Names, One List ───────────────────────────────
+
+::W04-R1-Q3 What Does b = a Actually Do?::
+Consider this code from the Name-Object Diagrams with Lists exercise:
+<pre>
+a = [3, 2, 1]
+b = a
+b[0] = 50
+c = b + a
+print(c)
+</pre>
+What does this print?{
+=<code>[50, 2, 1, 50, 2, 1]</code> #Correct. <code>b \= a</code> makes b and a refer to the *same* list object, not a copy, so changing <code>b[0]</code> also changes <code>a[0]</code>; both are 50 by the time <code>c \= b + a</code> concatenates them.
+~<code>[50, 2, 1, 3, 2, 1]</code> #This assumes <code>b \= a</code> makes b a separate copy of a, so changing b[0] wouldn't affect a — but b and a are the same list here, so a[0] becomes 50 too.
+~<code>[100, 4, 2]</code> #This treats <code>+</code> between two lists as adding them element-by-element — Python's <code>+</code> on lists concatenates them into one longer list instead.
+~<code>[53, 4, 2]</code> #This combines two misconceptions at once\: that <code>+</code> adds lists elementwise, and that <code>b \= a</code> copies a — neither is how Python actually behaves here.
+}
+
+// ── Section 4: Copying — b = a.copy() ───────────────────────────────────────
+
+::W04-R1-Q4 What Changes When You Use .copy()?::
+Now consider the follow-up version of that same exercise:
+<pre>
+a = [3, 2, 1]
+b = a.copy()
+b[0] = 50
+c = b + a
+print(c)
+</pre>
+What does this print, and why is the result different from the b = a version?{
+=<code>[50, 2, 1, 3, 2, 1]</code> — because <code>.copy()</code> makes b a separate list, changing <code>b[0]</code> no longer affects a, so a still contributes its original [3, 2, 1] to c #Correct. <code>.copy()</code> breaks the aliasing\: a and b are now two independent lists, so mutating one leaves the other untouched.
+~<code>[50, 2, 1, 50, 2, 1]</code> — the same as the b \= a version, since .copy() doesn't actually change anything #This is what happens *without* .copy(). Calling <code>.copy()</code> specifically prevents b from sharing a's underlying list, which is the whole point of using it here.
+~<code>[100, 4, 2]</code> #This treats <code>+</code> as adding the lists elementwise rather than concatenating them into one longer list.
+~<code>[53, 4, 2]</code> #This assumes both elementwise addition and that .copy() still leaves a and b aliased — neither matches how <code>+</code> or <code>.copy()</code> actually work.
+}
+
+// ── Section 5: String Immutability via Methods ──────────────────────────────
+
+::W04-R1-Q5 Does .upper() Change the Original String?::
+Consider this code from the Name-Object Diagrams exercise:
+<pre>
+s = "bht"
+s.upper()
+print(s)
+</pre>
+What does this print?{
+=<code>bht</code> #Correct. Strings are immutable, so <code>s.upper()</code> builds and returns a brand-new uppercase string without modifying s in place — since that returned value is never saved (e.g. back into s), s is left completely unchanged.
+~<code>BHT</code> #This assumes <code>.upper()</code> modifies s in place, the way a list method like <code>append()</code> would — but strings are immutable, so no string method can change s itself, only return a new string.
+~A TypeError, since strings can't have .upper() called on them #<code>.upper()</code> is a perfectly valid string method — it just doesn't mutate its target the way some list methods do.
+~<code>Bht</code> #.upper() capitalizes every letter, not just the first one — that behavior belongs to a method like <code>.capitalize()</code>, not <code>.upper()</code>.
+}
+
+// ── Section 6: List vs. Dictionary Trade-offs (Exercise 3.b.1) ──────────────
+
+::W04-R1-Q6 List of Scores vs. Dictionary of Scores::
+Exercise 3.b.1 part (c) offers two valid ways to store the Quiz 1 scores for Alice, Bob, and Charlie\: <code>c = [90, 85, 95]</code> or <code>c = \{"Alice"\: 90, "Bob"\: 85, "Charlie"\: 95\}</code>. What is the key trade-off between these two choices?{
+=The list only stores scores by position, so you'd need a separate, carefully-ordered list of names to know whose score is whose, while the dictionary links each name directly to their score without needing a second matching list #Correct. Position-based data (the list) requires keeping a parallel structure in sync, while key-based data (the dictionary) keeps the name-score pairing built in.
+~The list can't store numbers, only strings, so a dictionary is required #Lists store numbers perfectly well — <code>[90, 85, 95]</code> is entirely valid.
+~The dictionary is required because the scores need to be sorted #Neither structure sorts automatically, and sorting isn't the reason to prefer one over the other here — it's about whether a name is attached to each value.
+~There's no real trade-off; a dictionary is just a slower version of a list #Speed isn't the relevant difference here — the real trade-off is whether each score keeps track of whose it is (dictionary) or relies on position alone (list).
+}

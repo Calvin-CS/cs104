@@ -1,0 +1,85 @@
+// Week 03 Retrieval Quiz 2 — lists, tuples, and dictionaries — GIFT format
+// Import into Moodle: Question bank > Import > GIFT format
+// 8 questions covering the POGIL activity Act03-DataStruct (Model 1: Lists, Model 2:
+// Sequences, Model 3: Dictionaries) and Labs 3.8-3.11 (Type Practice, User ID, Scores,
+// Sorting).
+
+$CATEGORY: Week 03 / Retrieval 2
+
+// ── Section 1: Lists and Indexing (POGIL Act03 Model 1) ─────────────────────
+
+::W03-R2-Q1 Zero-Based Indexing::
+In the POGIL activity, <code>primes = [2, 3, 5, 7, 11, 13, 17, 19, 23, 29]</code>. What is <code>primes[4]</code>?{
+=11 #Correct. Indexing starts at 0, so index 4 is actually the 5th element\: 2 is index 0, 3 is index 1, 5 is index 2, 7 is index 3, and 11 is index 4.
+~7 #This is the value at index 3 — it assumes indexing starts at 1 instead of 0.
+~13 #This is the value at index 5, one position too far.
+~4 #This confuses the index number itself with the value stored at that index.
+}
+
+::W03-R2-Q2 Indexing Past the End of a List::
+In Model 1, <code>odd = [1, 3, 5, 7]</code> has four elements. What happens when you run <code>odd[4]</code>?{
+=It raises an IndexError, because valid indexes for a 4-element list only go from 0 to 3 #Correct. Index 4 would be a 5th element that doesn't exist, so Python raises an error rather than guessing.
+~It returns None, since index 4 is just one past the end of the list #Python doesn't quietly return None for an out-of-range index — it raises an IndexError instead.
+~It returns 7, wrapping back around to the last element #Python doesn't wrap positive out-of-range indexes back to the start or end — that behavior doesn't exist for simple indexing.
+~It automatically extends the list with a new empty slot #Indexing only reads a list; it never modifies its length, even when the index is invalid.
+}
+
+// ── Section 2: Mutability (POGIL Act03 Model 2) ─────────────────────────────
+
+::W03-R2-Q3 Lists vs. Strings and Tuples::
+In Model 2, <code>seq3 = ["one", "two"]</code> followed by <code>seq3[1] = 1</code> works fine. But <code>seq1 = "one two"</code> followed by <code>seq1[1] = '1'</code>, and <code>seq2 = "one", "two"</code> followed by <code>seq2[1] = '1'</code>, both raise a TypeError. What does this tell you about strings and tuples compared to lists?{
+=Strings and tuples are immutable — their elements can't be changed after creation — while lists are mutable and can be modified in place #Correct. This is a fundamental difference between the sequence types\: only lists allow you to reassign an individual element after the fact.
+~Strings and tuples can only hold one value, so there's nothing at index 1 to change #Both clearly have more than one value — index 1 can still be read from either one; it just can't be written to.
+~The TypeError happens because '1' is the wrong data type for those sequences #Assigning a matching type wouldn't fix it either — the real issue is that strings and tuples can't be modified at all, regardless of the new value's type.
+~Tuples and strings don't support indexing at all #Reading seq1[1] or seq2[1] works fine — it's only assignment (writing to an index) that fails.
+}
+
+// ── Section 3: Dictionaries (POGIL Act03 Model 3) ───────────────────────────
+
+::W03-R2-Q4 NameError vs. KeyError::
+In Model 3, <code>elements \= \{'C': 'carbon', 'H': 'hydrogen', 'O': 'oxygen', 'N': 'nitrogen'\}</code>. Running <code>elements[N]</code> raises a NameError, while running <code>elements['nitrogen']</code> raises a KeyError. What's the difference between these two mistakes?{
+=elements[N] uses N as an undefined variable name instead of the string 'N'; elements['nitrogen'] uses a valid string, but 'nitrogen' is a value stored in the dictionary, not one of its keys #Correct. The first mistake is about a missing variable, and the second is about looking up by the wrong thing — a value instead of a key.
+~Both mean the same thing — the dictionary doesn't contain that data anywhere #'nitrogen' actually is in the dictionary, just as a value rather than a key — the two errors point to different problems.
+~NameError means the key doesn't exist, and KeyError means the variable doesn't exist #This swaps the two definitions — it's backwards.
+~elements[N] is actually valid syntax, but elements['nitrogen'] is not #It's the other way around\: 'nitrogen' in quotes is syntactically a valid string, it's just the wrong key; N with no quotes is the one referring to an undefined variable.
+}
+
+// ── Section 4: Choosing a Data Structure (Lab 3.8) ──────────────────────────
+
+::W03-R2-Q5 Picking the Right Structure for GPS Coordinates::
+In Lab 3.8, you need to store the GPS coordinates (latitude and longitude) of your dorm in a single variable named <code>dorm</code>. Which data structure best fits this, and why?{
+=A tuple — the two values form a fixed, ordered pair that isn't meant to be reordered or changed after it's created #Correct. A tuple communicates "this is a fixed pairing of values" — exactly what a single coordinate pair is.
+~A dictionary — so you can look up "latitude" and "longitude" by name #This adds unnecessary complexity for a simple, fixed two-value pair — a tuple already captures the position of each value without needing named keys.
+~A list — because coordinates might need to be modified later #The lab doesn't call for editable coordinates, and a tuple's immutability better reflects that a specific location shouldn't casually change.
+~A string — since coordinates are often written out as text #Coordinates here are numeric values meant for calculation, not just text to display — a string would lose that numeric meaning.
+}
+
+// ── Section 5: String Slicing and Concatenation (Lab 3.9) ───────────────────
+
+::W03-R2-Q6 Building a Login ID::
+In Lab 3.9, for <code>first = "Jane"</code>, <code>last = "Doe"</code>, and <code>student_id = "123456789"</code>, the login id combines the first letter of the first name, the full last name, and the first two digits of the student ID (before lowercasing). Which expression builds this correctly?{
+=<code>first[0] + last + student_id[\:2]</code> #Correct. first[0] takes just the first letter ("J"), and student_id[\:2] slices out the first two characters ("12") — concatenated with the full last name ("Doe"), this builds "JDoe12" (which .lower() then turns into "jdoe12").
+~<code>first + last[0] + student_id[\:2]</code> #This uses the whole first name and only the first letter of the last name — backwards from what the algorithm needs.
+~<code>first[0] + last + student_id[2]</code> #student_id[2] is a single character (just the third digit) rather than a two-character slice — this wouldn't capture the first two digits.
+~<code>first[0] + last + student_id[0\:1]</code> #This slice only grabs one character (index 0), not the first two digits the algorithm requires.
+}
+
+// ── Section 6: Modifying a Dictionary (Lab 3.10) ────────────────────────────
+
+::W03-R2-Q7 Removing a Dictionary Entry::
+In Lab 3.10, after creating <code>score_dict</code> with entries for Joe, Tom, Barb, Sue, and Sally, the algorithm calls for deleting Tom's entry entirely because he dropped the course. Which statement correctly does this?{
+=<code>del score_dict['Tom']</code> #Correct. del removes a key, along with its associated value, from a dictionary entirely.
+~<code>score_dict.delete('Tom')</code> #Dictionaries don't have a delete() method in Python — del is a statement, not something you call on the dictionary.
+~<code>score_dict['Tom'] \= None</code> #This leaves Tom's key in the dictionary with a value of None — it changes the entry rather than removing it.
+~<code>score_dict.remove('Tom')</code> #remove() is a list method for removing a value by searching for it; dictionaries don't have a remove() method at all.
+}
+
+// ── Section 7: List Methods in an Algorithm (Lab 3.11) ──────────────────────
+
+::W03-R2-Q8 Removing by Value During Selection Sort::
+In Lab 3.11's selection sort, you repeatedly find the smallest remaining value with <code>min(lst)</code> and need to take it out of the unsorted list. If <code>unsorted = [5.0, 1.0, 3.0, 0.0]</code> and 0.0 is the smallest value found, which method call removes 0.0 from <code>unsorted</code> using its value rather than its position?{
+=<code>unsorted.remove(0.0)</code> #Correct. remove(item) searches the list for a matching value and removes its first occurrence — exactly what's needed right after finding the smallest value with min().
+~<code>unsorted.pop(0.0)</code> #pop() expects an index (a whole-number position), not a value to search for — passing 0.0 doesn't search the list for that value.
+~<code>unsorted[0.0] \= None</code> #A float can't be used as a list index at all, and this wouldn't actually shrink the list even if it worked.
+~<code>min(unsorted)</code> #min() only finds and returns the smallest value again — it doesn't remove anything from the list.
+}
